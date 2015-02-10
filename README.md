@@ -5,7 +5,7 @@
 ## Team
 
   - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
+  - __Scrum Master__: Robert Ing
   - __Development Team Members__: teamMember, teamMember
 
 ## Table of Contents
