@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
+  - __Product Owner__: Ryan Mccarter
   - __Scrum Master__: Robert Ing
-  - __Development Team Members__: teamMember, teamMember
+  - __Development Team Members__: Peter Kim, Henry Wong, Robert Ing, Ryan Mccarter
 
 ## Table of Contents
 
@@ -24,11 +24,10 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node
+- Express
+- Mongo
+- Mongoose
 
 ## Development
 
