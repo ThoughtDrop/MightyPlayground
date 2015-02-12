@@ -1,6 +1,6 @@
 # Project Name
 
-> Pithy project description
+Thought Drop creates serendipitous message discovery as users go about their day. You can leave a public note, or a private one for your friends!
 
 ## Team
 
@@ -43,7 +43,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/mightyplayground/mightyplayground/issues)
 
 
 ## Contributing
