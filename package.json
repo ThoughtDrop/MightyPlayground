@@ -1,0 +1,40 @@
+{
+  "name": "MightyPlayground",
+  "version": "1.0.0",
+  "description": "Thought Drop creates serendipitous message discovery as users go about their day. You can leave a public note, or a private one for your friends!",
+  "main": "server/server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MightyPlayground/MightyPlayground"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MightyPlayground/MightyPlayground/issues"
+  },
+  "homepage": "https://github.com/MightyPlayground/MightyPlayground",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.11.0",
+    "express": "^4.11.2",
+    "mongo": "^0.1.0",
+    "mongoose": "^3.8.23",
+    "morgan": "^1.5.1",
+    "passport": "^0.2.1",
+    "passport-facebook": "^1.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.4.3",
+    "gulp-jshint": "^1.9.2",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.1.0",
+    "karma": "^0.12.31"
+  }
+}
