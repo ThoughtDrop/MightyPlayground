@@ -8,8 +8,8 @@ var messagesSchema = mongoose.Schema({
   created_at: { type: Date },
   recipient: [{type: Number, ref: 'User'}],
   geometry: {
-    type: 'Point',
-    coordinates: [Number, Number]
+    type: 'Pointx',
+    coordinates: [Number, Number]   // [longitude,latitude]
   },
   public: boolean1
 });
