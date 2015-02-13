@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
-var Message = require('/messages');
+var Message = require('./messages');
 
 var usersSchema = new mongoose.Schema({
-  _id: {type: number, min: 9, max: 9},
-  messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
+  // _id: {type: number, min: 9, max: 9},
+  // messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
 });
 
 // var rob = new User({_id: 9175202524});

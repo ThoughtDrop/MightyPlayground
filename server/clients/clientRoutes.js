@@ -1,7 +1,8 @@
 // api routes here
-var userController = require('../users/userController.js');
-var messageController = require('../messages/messageController.js');
-
-module.exports = {
-
+var clientController = require('../messages/messageController.js');
+ 
+module.exports = function(app) {
+ 
+   // app.get('/', clientController.validate);
+ 
 };
