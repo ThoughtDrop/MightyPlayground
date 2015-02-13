@@ -1,11 +1,10 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var db = require('../db/config.js');
 
 var app = express();
 
 var port = process.env.PORT || 3000;
-
-mongoose.connect();
 
 app.listen(port);
 console.log('Server now listening on port ' + port);

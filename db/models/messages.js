@@ -11,7 +11,7 @@ var messagesSchema = mongoose.Schema({
     type: 'Pointx',
     coordinates: [Number, Number]   // [longitude,latitude]
   },
-  public: boolean1
+  public: 'boolean1'
 });
 
 message.pre('save', function(next) {
