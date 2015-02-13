@@ -3,9 +3,9 @@ var Message = require('../../db/models/messages.js');
 
   //these need to be changed as they are for SQL
 module.exports = {
-  login: function(req, res) {
+  signin: function(req, res) {
     User
-      .findOne({fbid: req.body.fbid})
+      .findOne({fbid: req.body.fbid})   //facebook ID for signin
       .exec(function (err, foundUser) {
         if (err) {
           throw err;
@@ -23,7 +23,7 @@ module.exports = {
   },
 
   signup: function() {
-
+    
   }
   
 };

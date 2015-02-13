@@ -16,7 +16,7 @@ module.exports = function (app, express) {
 
 
   app.use('/api/users', userRouter); // use user router for all user request
-  app.use('/api/messages', messageRouter); // use group router for group request
+  app.use('/api/messages', messageRouter); // use message router for all message requests
   app.use('/api/clients', clientRouter); // use client router for all client request
 
 
@@ -25,6 +25,6 @@ module.exports = function (app, express) {
 
   // inject our routers into their respective route files
   require('./users/userRoutes.js')(userRouter);
-  require('./messages/messageRoutes.js')(groupRouter);
+  require('./messages/messageRoutes.js')(messageRouter);
   require('./clients/clientRoutes.js')(clientRouter);
 };

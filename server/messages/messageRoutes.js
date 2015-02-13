@@ -3,14 +3,14 @@ var messageController = require('./messageController.js');
 module.exports = function (app) {
   // app is injected from middlware.js
     //change these later
-  app.param('group', groupController.parseGroupUrl);
+  // app.param('group', groupController.parseGroupUrl);
 
-  app.get('/', groupController.browse);
-  app.post('/', groupController.create);
+  app.get('/', messageController.fetch);
+  app.post('/', messageController.create);
 
-  app.get('/:group', groupController.members);
-  app.post('/:group', groupController.join);
+  // app.get('/:group', messageController.members);
+  // app.post('/:group', messageController.join);
 
-  app.get('/:group/pings/', groupController.history);
-  app.post('/:group/pings/', groupController.ping);
+  // app.get('/:group/pings/', messageController.history); //: means variable
+  // app.post('/:group/pings/', messageController.ping);
 };
