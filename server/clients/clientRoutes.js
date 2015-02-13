@@ -2,3 +2,6 @@
 var userController = require('../users/userController.js');
 var messageController = require('../messages/messageController.js');
 
+module.exports = {
+
+};
