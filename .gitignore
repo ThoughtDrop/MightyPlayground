@@ -10,5 +10,5 @@ local.0
 local.ns
 mongod.lock
 server/keys.js
-plugins
+plugins/
 
