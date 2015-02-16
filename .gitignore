@@ -4,3 +4,8 @@ bower_components/
 
 build/
 dist/
+
+#mongodb --dbpath if inside folder
+local.0
+local.ns
+mongod.lock
