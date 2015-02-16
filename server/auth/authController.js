@@ -33,5 +33,20 @@ module.exports = {
         res.status(200).send('User found, redirecting to phone number');
       }
     );
+  },
+
+  delete: function(req, res) {
+    User
+    .findOne({phonenumber:phoneNumber})//find user by phone number TODO
+    .remove()
+    .exec(function (err, success) {
+      console.log(success);
+      if (err) {
+        throw err;
+      }
+      if (success) {
+        res.status(200).send('User deleted'); //redirect to facebook login screen
+      }
+    });
   }
 };
