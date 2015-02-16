@@ -5,7 +5,8 @@ var helpers = require('./helpers.js'); // our custom middleware
 
 module.exports = function (app, express) {
   // Express 4 allows us to use multiple routers with their own configurations
-  var userRouter = express.Router();
+  var authRouter = express.Router();
+  // var userRouter = express.Router();
   var messageRouter = express.Router();
   var clientRouter = express.Router();
 
@@ -15,7 +16,8 @@ module.exports = function (app, express) {
   app.use(express.static(__dirname + '/../www'));
 
 
-  app.use('/api/users', userRouter); // use user router for all user request
+  app.use('/api/auth', authRouter); // use user router for all auth request
+  // app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/messages', messageRouter); // use message router for all message requests
   app.use('/api/clients', clientRouter); // use client router for all client request
 
@@ -24,7 +26,8 @@ module.exports = function (app, express) {
   app.use(helpers.errorHandler);
 
   // inject our routers into their respective route files
-  require('./users/userRoutes.js')(userRouter);
+  require('./auth/authRoutes.js')(authRouter);
+  // require('./users/userRoutes.js')(userRouter);
   require('./messages/messageRoutes.js')(messageRouter);
   require('./clients/clientRoutes.js')(clientRouter);
 };

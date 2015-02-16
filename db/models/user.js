@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var Message = require('./messages');
 
 var usersSchema = new mongoose.Schema({
-  // _id: {type: number, min: 9, max: 9},
+  _id: {type: number, min: 9, max: 9}, //phone number
+  facebookid: {type: STRING}
   // messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
 });
 
@@ -28,24 +29,6 @@ var usersSchema = new mongoose.Schema({
 //     if (err) return handleError(err);
 //   });
 // });
-
-// usersSchema.methods.comparePassword = function(attemptedPassword, callback) {
-//   bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
-//     callback(isMatch);
-//   });
-// };
-
-// usersSchema.methods.hashPassword = function(next){
-//   var user = this;
-//   bcrypt.genSalt(10, function(error, result) {
-//     user.set('salt', result);
-//     bcrypt.hash(user.get('password'), user.get('salt'), null, function(error, res) {
-//       console.log('got into hash');
-//       user.set('password', res);
-//       next();
-//     });
-//   });
-// };
 
 // usersSchema.pre('save', function(next) {
 //   this.hashPassword(next);

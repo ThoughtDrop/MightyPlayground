@@ -28,6 +28,12 @@
 
 ## Detailed Workflow
 
+  -When done working on FeatureBranch1
+  -Rebase your local master with upstream local 
+  -Rebase FB1 with local master
+  -Push origin FB1
+  -Pull request from origin FB1 to Upstream Master
+
 ### Fork the repo
 
 Use github’s interface to make a fork of the repo, then add that repo as an upstream remote:
