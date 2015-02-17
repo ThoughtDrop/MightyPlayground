@@ -1,0 +1,17 @@
+<ion-view view-title="New Thought">
+  <ion-content class="padding">
+
+    <form ng-submit="sendMessage(message.text)">
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Submit!</button>
+        </label>
+      </div>
+    </form>
+
+
+  </ion-content>
+</ion-view>

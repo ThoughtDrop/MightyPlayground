@@ -4,6 +4,8 @@ var Q = require('q');
 module.exports = {
 
   create: function (req, res) {
+    console.log('create message!');
+    console.log(req.body);
     var createMessage = Q.nbind(Message.create, Message);
 
     var data = {
