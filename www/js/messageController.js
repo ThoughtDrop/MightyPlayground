@@ -26,7 +26,10 @@ angular.module('starter.messageController', [])
 
   $scope.getAll = function() {
 
-    $scope.message.messages = Messages.getMessages()
+    Messages.getMessages() 
+      .then(function(data) {
+        $scope.message.messages = data;
+      })
 
   };
 
