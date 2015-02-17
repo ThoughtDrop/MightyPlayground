@@ -1,9 +1,10 @@
-<ion-view view-title="Messages!!!">
+<ion-view view-title="Messages">
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in message.messages" type="item-text-wrap">
         <img ng-src="{{message.face}}">
-        <p>{{message}}</p>
+          <h2>{{ message.name}} </h2> 
+          <p>{{message.message}}</p>
         
         <i class="icon ion-chevron-right icon-accessory"></i>
 
@@ -11,7 +12,6 @@
           Delete
         </ion-option-button>
       </ion-item>
-      <h1> hello </h1>
     </ion-list>
   </ion-content>
 </ion-view>
