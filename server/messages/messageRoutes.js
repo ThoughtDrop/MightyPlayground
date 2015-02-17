@@ -5,8 +5,8 @@ module.exports = function (app) {
     //change these later
   // app.param('group', groupController.parseGroupUrl);
 
-  app.get('/messages', messageController.fetch);
-  app.post('/messages', messageController.create);
+  app.get('/', messageController.fetch);
+  app.post('/', messageController.create);
 
   // app.get('/:group', messageController.members);
   // app.post('/:group', messageController.join);

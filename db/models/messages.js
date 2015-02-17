@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User = require('./user');
 
-var messagesSchema = mongoose.Schema({
+var messagesSchema = new mongoose.Schema({
   // _id: Number,
   // text: String,
   // _creator: [{type: Number, ref: 'User'}],
@@ -12,6 +12,8 @@ var messagesSchema = mongoose.Schema({
   //   coordinates: [Number, Number]   // [longitude,latitude]
   // },
   // public: 'boolean1'
+  message: String
+
 });
 
 // message.pre('save', function(next) {
@@ -28,6 +30,6 @@ var messagesSchema = mongoose.Schema({
 //   // prints "The creator is Aaron"
 // });
 
-var Message = mongoose.model('Url', messagesSchema);
+var Message = mongoose.model('Message', messagesSchema);
 
 module.exports = Message;

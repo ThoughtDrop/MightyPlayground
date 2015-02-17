@@ -7,10 +7,11 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
 
     var data = {
-      latitude: req.body.latitude,
-      longitude: req.body.longitude,
-      radius: req.body.radius,
-      created_by: req.body.created_by
+      // latitude: req.body.latitude,
+      // longitude: req.body.longitude,
+      // radius: req.body.radius,
+      // created_by: req.body.created_by,
+      message: req.body.message
     };
 
     console.log(data);
