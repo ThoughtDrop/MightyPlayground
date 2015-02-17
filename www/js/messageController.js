@@ -1,6 +1,6 @@
 angular.module('starter.messageController', [])
 
-.controller('messageController', function($scope, $http) {
+.controller('messageController', function($scope, $http, Messages) {
   $scope.message = {};
   $scope.message.text = '';
 
@@ -22,5 +22,13 @@ angular.module('starter.messageController', [])
     .catch(function(err) {
       console.log(err);
     });
+  },
+
+  $scope.getAll = function() {
+
+    $scope.message.messages = Messages.getMessages()
+
   };
+
+  $scope.getAll();
 });
