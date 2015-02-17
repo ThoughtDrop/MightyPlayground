@@ -1,5 +1,4 @@
 {
-
   "name": "MightyPlayground",
   "version": "1.0.0",
   "description": "Thought Drop creates serendipitous message discovery as users go about their day. You can leave a public note, or a private one for your friends!",
@@ -22,7 +21,8 @@
     "express": "^4.11.2",
     "mongo": "^0.1.0",
     "mongoose": "^3.8.23",
-    "morgan": "^1.5.1"
+    "morgan": "^1.5.1",
+    "q": "^1.1.2"
   },
   "devDependencies": {
     "bower": "^1.3.3",
