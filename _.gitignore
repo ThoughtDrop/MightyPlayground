@@ -29,3 +29,8 @@ node_modules/
 bower_components/
 server/keys.js
 
+#mongodb --dbpath
+local.0
+local.ns
+mongod.lock
+
