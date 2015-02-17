@@ -1,19 +1,16 @@
 var Auth = require('../../db/models/user.js');
-
+var Q = require('q');
 module.exports = {
 
-  findUser: function(req, res) {
-    User
-    .findOne({facebookid: req.body.facebookid})   //facebook ID for signin
-    .exec(function (err, foundUser) {
-      console.log(foundUser);
-      if (err) {
-        throw err;
-      }
+  find: function(req, res) {
+    var findUser = Q.nbind(User.findOne, User);
+
+    findUser({facebookid: req.body.facebookid})   //facebook ID for signin
+    .then(function(foundUser) {
       if (foundUser) {
         res.status(200).send('User found, redirecting to stream!');
       }
-      if (!foundUser) {
+      if (foundUser === null) {
         var newUser = {
           facebookid: req.body.facebookid
           //add first name
@@ -22,30 +19,35 @@ module.exports = {
         newUser.save();
         res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
       }
+    })
+    .catch(function(err) {
+      console.log(err);
     });
   },
 
-  getPhoneNumber: function(req, res) {
-    User
-    .update({facebookid: req.body.facebookid}, {
-      _id: req.body.phoneNumber
-    }, function(err, numberAffected, rawReponse) {
-        res.status(200).send('User found, redirecting to phone number');
+  savePhoneNumber: function(req, res) {
+    var updateUser = Q.nbind(User.update, User);
+
+    updateUser({facebookid: req.body.facebookid})
+    .then(function(foundUser) {
+      if (foundUser) {
+        foundUser._id = req.body.phoneNumber;
+        foundUser.save();
       }
-    );
+    })
+    .then(function() {
+      res.status(200).send('User found, redirecting to phone number');  
+    });
   },
 
   delete: function(req, res) {
-    User
-    .findOne({phonenumber:phoneNumber})//find user by phone number TODO
-    .remove()
-    .exec(function (err, success) {
-      console.log(success);
-      if (err) {
-        throw err;
-      }
-      if (success) {
-        res.status(200).send('User deleted'); //redirect to facebook login screen
+    var findUser = Q.nbind(User.findOne, User);
+    
+    findUser({facebookid: req.body.facebookid})
+    .then(function(foundUser) {
+      if (foundUser) {
+        foundUser.remove();
+        res.status(200).send('User deleted!');  //redirect to facebook login screen
       }
     });
   }
