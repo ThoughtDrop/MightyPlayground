@@ -37,8 +37,8 @@ angular.module('starter.controllers', [])
           console.log('result: ' + JSON.stringify(result));
 
           Facebook.storeId($scope.init());
-
           $location.path("/phone"); // redirect to phone number input
+
       }, function(error) {
           alert("There was a problem signing in!  See the console for logs");
           console.log(error);
