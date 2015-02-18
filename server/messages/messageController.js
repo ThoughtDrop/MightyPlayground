@@ -1,22 +1,32 @@
 var Message = require('../../db/models/messages.js');
 var Q = require('q');
-
 module.exports = {
 
+  findAround: function(req, res) {
+    // var findAround = Q.nbind(Message.find, Message);
+    var query = {};
+    query.location = {
+      $near : {
+        $geometry : {
+          type : "Point",
+          coordinates : [-122.408995, 37.783624] //TODO - modify to use own coordinates on app open
+        },
+        $maxDistance : 100
+      }
+    };
+    Message.find(query, function(err, result){
+      res.send(result);
+    });
+  },
+
   create: function (req, res) {
-    console.log('create message!');
-    console.log(req.body);
     var createMessage = Q.nbind(Message.create, Message);
 
     var data = {
-      // latitude: req.body.latitude,
-      // longitude: req.body.longitude,
-      // radius: req.body.radius,
-      // created_by: req.body.created_by,
+      _id: Math.floor(Math.random()*100000),
+      location: {coordinates: [req.body.long, req.body.lat] },
       message: req.body.message
     };
-
-    console.log(data);
 
     createMessage(data) 
       .then(function (createdMessage) {
@@ -25,10 +35,8 @@ module.exports = {
       .fail(function (error) {
         next(error);
       });
-
-
   },
-    //this gets all data points for now. Will have to refactor once we know how the db will work.
+    //TODO - probably replaced by findAround
   fetch: function(req, res) {
     var findAll = Q.nbind(Message.find, Message);
 

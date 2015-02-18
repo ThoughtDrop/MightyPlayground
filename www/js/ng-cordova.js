@@ -2,7 +2,25 @@
 angular.module('ngCordova', [
   'ngCordova.plugins'
 ]);
-angular.module('ngCordova.plugins', [	 'camera',	 'capture',	 'contact',	 'splashscreen',	 'geolocation',	 'spinnerDialog',	 'push',	 'device',	 'keyboard',	 'localNotification',	 'toast',	 'vibration']);//#### Begin Individual Plugin Code ####// install   :   cordova plugin add org.apache.cordova.camera
+
+angular.module('ngCordova.plugins', [
+	 // 'camera',
+	 // 'capture',
+	 // 'contact',
+	 // 'splashscreen',
+	 'geolocation'
+	 // 'spinnerDialog',
+	 // 'push',
+	 // 'device',
+	 // 'keyboard',
+	 // 'localNotification',
+	 // 'toast',
+	 // 'vibration'
+]);
+
+//#### Begin Individual Plugin Code ####
+
+// install   :   cordova plugin add org.apache.cordova.camera
 // link      :   https://github.com/apache/cordova-plugin-camera/blob/master/doc/index.md#orgapachecordovacamera
 
 angular.module('ngCordova.plugins.camera', [])
