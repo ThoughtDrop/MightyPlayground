@@ -11,18 +11,7 @@ angular.module('starter.messageController', [])
       var lat = position.coords.latitude;
       var long = position.coords.longitude;
       $scope.sendMessage($scope.message.text, long, lat);
-
-
     });
-
-    // cordovaGeolocation
-    // .getCurrentPosition(posOptions)
-    // .then(function (position) {
-    //   var lat  = position.coords.latitude
-    //   var long = position.coords.longitude
-    // }, function(err) {
-    //   // error
-    // });
   };
 
   $scope.sendMessage = function(message, long, lat) {
@@ -45,18 +34,19 @@ angular.module('starter.messageController', [])
     .catch(function(err) {
       console.log(err);
     });
-  },
+  };
 
   $scope.getNearby = function() {
-    console.log('getNearby triggered');
     Messages.findNearby();
   };
 
+
+  //TODO - remove soon in favor of getNearby above?
   $scope.getAll = function() {
     Messages.getMessages() 
-      .then(function(data) {
-        $scope.message.messages = data;
-      });
+    .then(function(data) {
+      $scope.message.messages = data;
+    });
   };
 
   $scope.getAll();

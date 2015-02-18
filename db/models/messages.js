@@ -13,7 +13,7 @@ var messagesSchema = new mongoose.Schema({
     },
     coordinates: [Number]
   },
-  // public: boolean,
+  // public: boolean, //for private or public messages (non MVP)
   message: String
 });
 
@@ -21,6 +21,7 @@ messagesSchema.index({ location : '2dsphere' });
 
 var Message = mongoose.model('Message', messagesSchema);
 
+// Sample message data
 // Message.create({
 //       _id: Math.floor(Math.random()*100000),
 //       location: {coordinates: [-122.408994, 37.783624] },
@@ -49,15 +50,5 @@ var Message = mongoose.model('Message', messagesSchema);
 //   this.created_at = new Date();
 //   next();
 // });
-
-// Story
-// .findOne({ _id: 'Once upon a timex.' })
-// .populate('_creator')
-// .exec(function (err, story) {
-//   if (err) return handleError(err);
-//   console.log('The creator is %s', story._creator.name);
-//   // prints "The creator is Aaron"
-// });
-
 
 module.exports = Message;
