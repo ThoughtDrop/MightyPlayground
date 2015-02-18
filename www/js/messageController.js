@@ -1,8 +1,15 @@
 angular.module('starter.messageController', [])
 
-.controller('messageController', function($scope, $http, Messages, $cordovaGeolocation) {
+.controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal) {
+  
   $scope.message = {};
   $scope.message.text = '';
+
+  $ionicModal.fromTemplateUrl('templates/tab-post.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modalNewMessage = modal;
+  });
 
   $scope.submit = function() {
     $cordovaGeolocation
@@ -11,7 +18,23 @@ angular.module('starter.messageController', [])
       var lat = position.coords.latitude;
       var long = position.coords.longitude;
       $scope.sendMessage($scope.message.text, long, lat);
+    })
+    .then(function() {
+      $scope.getAll();
     });
+  
+    $timeout(function() {
+      $scope.closeMessageBox();
+    }, 500);
+  };
+
+  $scope.closeMessageBox = function() {
+    $scope.modalNewMessage.hide();
+  };
+
+  $scope.newMessage = function() {
+    console.log('hey');
+    $scope.modalNewMessage.show();
   };
 
   $scope.sendMessage = function(message, long, lat) {
