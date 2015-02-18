@@ -90,7 +90,7 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('Messages', function($http) {
+.factory('Messages', function($http, $cordovaGeolocation) {
 
   var getMessages = function() {
     return $http({
@@ -103,15 +103,32 @@ angular.module('starter.services', [])
   };
 
   var findNearby = function() {
-    console.log('invoke services/findnearby');
-    return $http({
-      method: 'GET',
-      url: '/api/messages/nearby'
-    })
-    .then(function (resp) {
-      console.log(resp);  
+    
+    var sendPosition = function(data) {
+        return $http({
+          method: 'POST',
+          url: '/api/messages/nearby',
+          data: JSON.stringify(data)
+        })
+        .then(function (resp) {
+          console.log('Server resp to func call to findNearby', resp);  
+          return resp.data;
+        });
+      };
+    
+    $cordovaGeolocation
+    .getCurrentPosition()
+    .then(function(position) {
+      var coordinates = {};
+      coordinates['lat'] = position.coords.latitude;
+      coordinates['long'] = position.coords.longitude;
+      //console.log(coordinates);
+      sendPosition(coordinates);
     });
-  };
+   
+    console.log('invoke services/findnearby');
+}
+
 
   return {
     getMessages: getMessages,

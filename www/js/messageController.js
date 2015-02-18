@@ -61,16 +61,20 @@ angular.module('starter.messageController', [])
 
   $scope.getNearby = function() {
     Messages.findNearby();
+    // .then(function(data) {
+    //   console.log('ALL NEAR MESSAGES', data);
+    //   $scope.message.messages = data;
+    // });
   };
 
 
   //TODO - remove soon in favor of getNearby above?
-  $scope.getAll = function() {
-    Messages.getMessages() 
-    .then(function(data) {
-      $scope.message.messages = data;
-    });
-  };
+  // $scope.getAll = function() {
+  //   Messages.getMessages() 
+  //   .then(function(data) {
+  //     $scope.message.messages = data;
+  //   });
+  // };
 
-  $scope.getAll();
+  $scope.getNearby();
 });
