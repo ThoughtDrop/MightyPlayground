@@ -92,7 +92,7 @@ angular.module('starter.services', [])
       // Simple index lookup
       return friends[friendId];
     }
-  }
+  };
 })
 
 .factory('Messages', function($http) {
@@ -104,7 +104,18 @@ angular.module('starter.services', [])
     })
     .then(function (resp) {
       return resp.data;
+    });
+  };
+
+  var findNearby = function() {
+    console.log('invoke services/findnearby');
+    return $http({
+      method: 'GET',
+      url: '/api/messages/nearby'
     })
+    .then(function (resp) {
+      console.log(resp);  
+    });
   };
 
     // return messages = [{
@@ -137,7 +148,8 @@ angular.module('starter.services', [])
 
 
   return {
-    getMessages: getMessages
+    getMessages: getMessages,
+    findNearby: findNearby
   };
 
 });

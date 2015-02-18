@@ -1,13 +1,36 @@
 angular.module('starter.messageController', [])
 
-.controller('messageController', function($scope, $http, Messages) {
+.controller('messageController', function($scope, $http, Messages, $cordovaGeolocation) {
   $scope.message = {};
   $scope.message.text = '';
 
-  $scope.sendMessage = function(message) {
+  $scope.submit = function() {
+    $cordovaGeolocation
+    .getCurrentPosition()
+    .then(function(position) {
+      var lat = position.coords.latitude;
+      var long = position.coords.longitude;
+      $scope.sendMessage($scope.message.text, long, lat);
+
+
+    });
+
+    // cordovaGeolocation
+    // .getCurrentPosition(posOptions)
+    // .then(function (position) {
+    //   var lat  = position.coords.latitude
+    //   var long = position.coords.longitude
+    // }, function(err) {
+    //   // error
+    // });
+  };
+
+  $scope.sendMessage = function(message, long, lat) {
 
     var data = {};
     data.message = message;
+    data.long = long;
+    data.lat = lat;
 
     console.log('sending data! ' + data.message);
     return $http({
@@ -24,13 +47,16 @@ angular.module('starter.messageController', [])
     });
   },
 
-  $scope.getAll = function() {
+  $scope.getNearby = function() {
+    console.log('getNearby triggered');
+    Messages.findNearby();
+  };
 
+  $scope.getAll = function() {
     Messages.getMessages() 
       .then(function(data) {
         $scope.message.messages = data;
-      })
-
+      });
   };
 
   $scope.getAll();
