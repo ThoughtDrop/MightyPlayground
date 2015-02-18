@@ -35,3 +35,7 @@
 .bar {
   position: relative;
 }
+
+.button-positive{
+     right:70px !important;
+}
