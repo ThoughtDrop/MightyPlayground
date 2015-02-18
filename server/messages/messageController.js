@@ -23,7 +23,7 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
 
     var data = {
-      _id: Math.floor(Math.random()*100000),
+      _id: Math.floor(Math.random()*100000), //change to facebookID
       location: {coordinates: [req.body.long, req.body.lat] },
       message: req.body.message
     };
