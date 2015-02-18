@@ -32,6 +32,7 @@ angular.module('starter.controllers', [])
   $scope.login = function() {
       $cordovaOauth.facebook(427819184047831, []).then(function(result) {
           // $localStorage.accessToken = result.access_token;
+          console.log(JSON.stringify(result));
           $location.path("/tab/messages");
       }, function(error) {
           alert("There was a problem signing in!  See the console for logs");
