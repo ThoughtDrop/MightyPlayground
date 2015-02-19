@@ -59,6 +59,13 @@ ionic platform build ios
 ionic platform build android
 ```
 
+### Plugins
+Thought Drop relies on several Cordova plugins to work properly. Use the following commands to add them:
+```
+cordova plugin add org.apache.cordova.geolocation
+cordova plugin add org.apache.cordova.inappbrowser
+```
+
 ### Roadmap
 
 View the project roadmap [here](https://github.com/mightyplayground/mightyplayground/issues)
