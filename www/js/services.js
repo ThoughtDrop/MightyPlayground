@@ -134,4 +134,58 @@ angular.module('starter.services', [])
     getMessages: getMessages,
     findNearby: findNearby
   };
+})
+
+.factory('Facebook', function($http){
+
+  var storeId = function(data) {
+    console.log(data);
+    return $http({
+      method: 'POST',
+      url: '/api/auth/id',
+      data: data
+    })
+    .then(function(resp) {
+      console.log("user id stored", resp);
+
+    })
+  };
+
+  var updatePhone = function(data) {
+    console.log(data);
+    return $http({
+      method: 'POST',
+      url: '/api/auth/phone',
+      data: data
+    })
+    .then (function(resp) {
+      console.log('userPhone is stored', resp);
+    })
+  };
+
+  return {
+    storeId: storeId,
+    updatePhone: updatePhone
+  };
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

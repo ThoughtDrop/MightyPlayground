@@ -5,9 +5,9 @@
     </div>
     <div class="item item-input-inset">
       <label class="item-input-wrapper">
-        <input type="text" placeholder="XXX-XXX-XXXX">
+        <input ng-model="data.phoneNumber" type="text" placeholder="XXX-XXX-XXXX">
       </label>
-      <button class="button button-small">
+      <button class="button button-small" ng-click="updatePhone()">
         Submit
       </button>
     </div>

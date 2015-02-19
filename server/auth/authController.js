@@ -5,14 +5,14 @@ module.exports = {
   find: function(req, res) {
     var findUser = Q.nbind(User.findOne, User);
 
-    findUser({facebookid: req.body.facebookid})   //facebook ID for signin
+    findUser({facebookid: req.body.id})   //facebook ID for signin
     .then(function(foundUser) {
       if (foundUser) {
         res.status(200).send('User found, redirecting to stream!');
       }
       if (foundUser === null) {
         var newUser = {
-          facebookid: req.body.facebookid
+          facebookid: req.body.id
           //add first name
           //add last name
         };
@@ -28,7 +28,7 @@ module.exports = {
   savePhoneNumber: function(req, res) {
     var updateUser = Q.nbind(User.update, User);
 
-    updateUser({facebookid: req.body.facebookid})
+    updateUser({facebookid: req.body.id})
     .then(function(foundUser) {
       if (foundUser) {
         foundUser._id = req.body.phoneNumber;
