@@ -63,7 +63,7 @@ angular.module('starter.controllers', [])
               });
           } else {
               alert("Not signed in");
-              $location.path("/login");
+              //$location.path("/login");
           }
       };
 
