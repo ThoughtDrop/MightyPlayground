@@ -103,7 +103,7 @@ angular.module('starter.services', [])
   };
 
   var findNearby = function() {
-    
+    console.log('factory findNearby invoked');
     var sendPosition = function(data) {
         return $http({
           method: 'POST',
@@ -120,14 +120,14 @@ angular.module('starter.services', [])
     .getCurrentPosition()
     .then(function(position) {
       var coordinates = {};
-      coordinates['lat'] = position.coords.latitude;
-      coordinates['long'] = position.coords.longitude;
+      coordinates.lat = position.coords.latitude;
+      coordinates.long = position.coords.longitude;
       //console.log(coordinates);
       sendPosition(coordinates);
     });
    
     console.log('invoke services/findnearby');
-}
+  };
 
 
   return {
