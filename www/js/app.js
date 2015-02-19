@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('phone', {
     url: '/phone',
     templateUrl: 'templates/phonenumber.html',
-    //controller: '??????'
+    controller: 'AuthCtrl'
   })
 
   // setup an abstract state for the tabs directive
