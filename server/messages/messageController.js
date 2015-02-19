@@ -3,9 +3,9 @@ var Q = require('q');
 
 module.exports = {
 
-  findAround: function(req, res) {
+  getNearby: function(req, res) {
     var findAround = Q.nbind(Message.find, Message);
-    console.log(req.body.long, req.body.lat);
+    console.log('get current location = ' + req.body.long, req.body.lat);
 
     var query = {};
     query.location = {
@@ -17,10 +17,10 @@ module.exports = {
         $maxDistance : 100
       }
     };
-    Message.find(query, function(err, result){
+    
+    findAround(query, function(err, result){
       console.log('DATABASE RESULT', result);
       res.send(result);
-      // res.json(result);
     });
   },
 
@@ -41,7 +41,7 @@ module.exports = {
         next(error);
       });
   },
-    //TODO - probably replaced by findAround
+    // - probably replaced by findAround
   fetch: function(req, res) {
     var findAll = Q.nbind(Message.find, Message);
 

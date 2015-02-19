@@ -20,7 +20,7 @@ angular.module('starter.messageController', [])
       $scope.sendMessage($scope.message.text, long, lat);
     })
     .then(function() {
-      $scope.getAll();
+      $scope.getNearby();
     });
   
     $timeout(function() {
@@ -52,20 +52,50 @@ angular.module('starter.messageController', [])
     })
     .then(function(resp) {
       console.log('send message successful!');
-      return resp.data;
+      console.log(resp);
+      return resp;
     })
     .catch(function(err) {
       console.log(err);
     });
   };
 
-  $scope.getNearby = function() {
-    Messages.findNearby();
-    // .then(function(data) {
-    //   console.log('ALL NEAR MESSAGES', data);
-    //   $scope.message.messages = data;
-    // });
+  $scope.findNearby = function() {
+    var sendPosition = function(data) {
+        return $http({
+          method: 'POST',
+          url: '/api/messages/nearby',
+          data: JSON.stringify(data)
+        })
+        .then(function (resp) {
+          console.log('Server resp to func call to findNearby', resp);  
+          $scope.message.messages = resp.data;
+          // $scope.apply();
+          // return resp.data;
+        });
+      };
+    
+    $cordovaGeolocation
+    .getCurrentPosition()
+    .then(function(position) {
+      var coordinates = {};
+      coordinates.lat = position.coords.latitude;
+      coordinates.long = position.coords.longitude;
+      //console.log(coordinates);
+      sendPosition(coordinates);
+    });
+   
+    console.log('invoke services/findnearby');
   };
+
+  // TODO - take another look at this to modularize all http requests to services. for some reason getNearby worked
+  // but the .then in Messages.findNearby() was causing errors.
+  
+  //   Messages.findNearby() 
+  //   .then(function(data) {
+  //     $scope.message.messages = data;
+  //   });
+  // };
 
 
   //TODO - remove soon in favor of getNearby above?
@@ -76,5 +106,5 @@ angular.module('starter.messageController', [])
   //   });
   // };
 
-  $scope.getNearby();
+  $scope.findNearby();
 });

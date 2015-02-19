@@ -4,6 +4,6 @@ module.exports = function (app) {
 
   app.get('/', messageController.fetch);
   app.post('/', messageController.create);
-  app.post('/nearby', messageController.findAround);
+  app.post('/nearby', messageController.getNearby);
 
 };
