@@ -1,16 +1,9 @@
-<ion-view view-title="login">
-  <ion-content>
-  <div class = 'container'>
-  	<div class = 'logo'>
-			<img src="../img/logo.png" alt="Logo">
-		</div>
-
-		<div class = 'title'>THOUGHT DROP</div>
-		<div class = 'slogan'>Discover what's around you</div>
-		<div class = 'fb-button' ng-click="login()">
-			<img src="../img/fb_login_button.png" alt="Facebook Button">
-		</div>
-	</div>
-
+<ion-view view-title="Log In!">
+  <ion-content class="padding">
+    <form ng-click="login()">
+      <label class="item">
+        <button class="button button-block button-dark" type="submit">Log in with Facebook!</button>
+      </label>
+    </form>
   </ion-content>
 </ion-view>
