@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/post',
     views: {
       'tab-post': {
-        templateUrl: 'templates/post.html',
+        templateUrl: 'templates/tab-post.html',
         controller: 'messageController'
       }
     }
