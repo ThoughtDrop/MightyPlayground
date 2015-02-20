@@ -23,11 +23,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 
   if(window.localStorage.token === undefined) {
-    console.log('not found!');
     $location.path('/login');
   } else {
-    console.log('found!');
-    console.log(window.localStorage.token);
     $state.go('tab.messages');
   }
 
