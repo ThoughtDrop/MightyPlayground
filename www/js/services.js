@@ -1,4 +1,4 @@
-var base = "http://mightyplayground.herokuapp.com";
+var base = "https://mightyplayground.herokuapp.com";
 
 angular.module('starter.services', [])
 
