@@ -33,7 +33,6 @@ angular.module('thoughtdrop.messageController', [])
   };
 
   $scope.newMessage = function() {
-    console.log('hey');
     $scope.modalNewMessage.show();
   };
 
@@ -72,6 +71,7 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.messages = resp.data;
       });
     };
+       
     
     $cordovaGeolocation
     .getCurrentPosition()
@@ -79,7 +79,6 @@ angular.module('thoughtdrop.messageController', [])
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
-      //console.log(coordinates);
       sendPosition(coordinates);
     });
    
