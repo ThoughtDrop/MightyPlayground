@@ -4,9 +4,9 @@ var db = require('../db/config.js');
 
 var app = express();
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log("Server started @ ", process.env.PORT || 3000);
-});
+var port = process.env.PORT || 3000;
+
+console.log(port);
 
 app.listen(port);
 console.log('Server now listening on port ' + port);
@@ -16,3 +16,4 @@ require('./middleware.js')(app, express);
 
 // export app for testing and flexibility
 module.exports = app;
+
