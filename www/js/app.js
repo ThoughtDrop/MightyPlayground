@@ -8,8 +8,6 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.messageController', 'ngCordova.plugins.geolocation', 'ngCordovaOauth', 'ngStorage'])
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location) {
-  console.log('running');
-  console.log('window: ' + JSON.stringify(window.localStorage.token));
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
