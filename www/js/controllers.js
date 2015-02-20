@@ -11,12 +11,12 @@ angular.module('thoughtdrop.controllers', [])
   $scope.data = {};
 
   $scope.login = function() {
-
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
       $localStorage.accessToken = result.access_token;
 
       window.localStorage.token = result.access_token; //store token locally
       Facebook.storeId($scope.init()); //store id in db
+
       $location.path("/phone"); // redirect to phone number input
 
     }, function(error) {
@@ -26,21 +26,24 @@ angular.module('thoughtdrop.controllers', [])
   };
 
   $scope.init = function() {
-    if($localStorage.hasOwnProperty("accessToken") === true) {
-      $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
-        $scope.profileData = result.data;
-        $scope.data.id = result.data.id;
+    console.log('init');
+      if($localStorage.hasOwnProperty("accessToken") === true) {
+        $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
+          $scope.profileData = result.data;
+          console.log('init!');
+          console.log(JSON.stringify(result.data.id));
+          $scope.data.id = result.data.id;
 
-        return result.data.id;
-      }, function(error) {
-        alert("There was a problem getting your profile.  Check the logs for details.");
-        console.log(error);
-      });
+          return result.data.id;
+        }, function(error) {
+          alert("There was a problem getting your profile.  Check the logs for details.");
+          console.log(error);
+        });
     } else {
-      alert("Not signed in");
-      $location.path("/login");
-    }
-  };
+        alert("Not signed in");
+        $location.path("/login");
+      }
+    };
 
   $scope.updatePhone = function() {
     Facebook.updatePhone($scope.data);
