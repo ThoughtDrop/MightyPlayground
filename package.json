@@ -34,6 +34,7 @@
     "browser-sync": "^2.2.0",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.4.3",
+    "gulp-inject-string": "0.0.2",
     "gulp-jshint": "^1.9.2",
     "gulp-nodemon": "^1.0.5",
     "gulp-rename": "^1.2.0",
