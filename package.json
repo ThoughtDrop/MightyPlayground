@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Thought Drop creates serendipitous message discovery as users go about their day. You can leave a public note, or a private one for your friends!",
   "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "postinstall": "bower install"
+  },
+
   "directories": {
     "test": "test"
   },
