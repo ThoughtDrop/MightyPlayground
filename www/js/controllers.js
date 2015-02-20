@@ -27,15 +27,17 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('AuthCtrl', function($scope, $cordovaOauth, $location, $localStorage, $http, Facebook){
+.controller('AuthCtrl', function($scope, $cordovaOauth, $location, $localStorage, $http, Facebook, $window, $state){
 
   $scope.data = {};
 
   $scope.login = function() {
+<<<<<<< HEAD
       $cordovaOauth.facebook(632339323578963, []).then(function(result) {
           $localStorage.accessToken = result.access_token;
-          console.log('result: ' + JSON.stringify(result));
 
+          window.localStorage.token = result.access_token;
+          // console.log('window: ' + JSON.stringify(window.localStorage.token));
           Facebook.storeId($scope.init());
           $location.path("/phone"); // redirect to phone number input
 
@@ -76,6 +78,7 @@ angular.module('starter.controllers', [])
     $location.path('/tab/messages')
   };     
 
+  
 });
 
 
