@@ -13,7 +13,7 @@ angular.module('thoughtdrop.controllers', [])
   $scope.login = function() {
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
       $localStorage.accessToken = result.access_token;
-
+      console.log('result ID: ' + JSON.stringify(result));
       window.localStorage.token = result.access_token; //store token locally
       Facebook.storeId($scope.init()); //store id in db
 
@@ -31,8 +31,9 @@ angular.module('thoughtdrop.controllers', [])
         $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
           $scope.profileData = result.data;
           console.log('init!');
-          console.log(JSON.stringify(result.data.id));
+          console.log('ID: ' + JSON.stringify(result.data.id));
           $scope.data.id = result.data.id;
+
 
           return result.data.id;
         }, function(error) {
@@ -51,4 +52,39 @@ angular.module('thoughtdrop.controllers', [])
         //otherwise redirect to /login
     $location.path('/tab/messages');
   };
+
+  $scope.logout = function() {
+    console.log('logout!');
+    window.localStorage.token = undefined;
+    console.log(window.localStorage.token);
+    $location.path('/login');
+  };
+  
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
