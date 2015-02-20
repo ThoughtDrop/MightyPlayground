@@ -1,6 +1,4 @@
-var base = "https://mightyplayground.herokuapp.com";
-
-angular.module('starter.messageController', [])
+angular.module('thoughtdrop.messageController', [])
 
 .controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal) {
   
@@ -49,7 +47,7 @@ angular.module('starter.messageController', [])
     console.log('sending data! ' + data.message);
     return $http({
       method: 'POST',
-      url: base + '/api/messages',
+      url: '/api/messages',
       data: JSON.stringify(data)
     })
     .then(function(resp) {
@@ -64,18 +62,16 @@ angular.module('starter.messageController', [])
 
   $scope.findNearby = function() {
     var sendPosition = function(data) {
-        return $http({
-          method: 'POST',
-          url: base + '/api/messages/nearby',
-          data: JSON.stringify(data)
-        })
-        .then(function (resp) {
-          console.log('Server resp to func call to findNearby', resp);  
-          $scope.message.messages = resp.data;
-          // $scope.apply();
-          // return resp.data;
-        });
-      };
+      return $http({
+        method: 'POST',
+        url:  '/api/messages/nearby',
+        data: JSON.stringify(data)
+      })
+      .then(function (resp) {
+        console.log('Server resp to func call to findNearby', resp);  
+        $scope.message.messages = resp.data;
+      });
+    };
     
     $cordovaGeolocation
     .getCurrentPosition()
