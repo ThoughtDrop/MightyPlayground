@@ -73,7 +73,6 @@ angular.module('thoughtdrop.messageController', [])
       });
     };
        
-    
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
