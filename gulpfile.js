@@ -3,6 +3,8 @@ var bower = require('bower');
 var nodemon   = require('gulp-nodemon');
 var bs = require('browser-sync');
 var reload = bs.reload;
+var inject = require('gulp-inject-string');
+var rename = require('gulp-rename');
 
 // var gutil = require('gulp-util');
 // var concat = require('gulp-concat');
@@ -35,8 +37,15 @@ gulp.task('serve', function() {
 });
 
 //=====TEST=====
-gulp.task('karma', shell.task([
-  'karma start'
-]));
+// gulp.task('karma', shell.task([
+//   'karma start'
+// ]));
+
+gulp.task('injectbefore', function(){
+  gulp.src('www/js/messageController.js')
+    .pipe(inject.before('/api/messages', 'http://mightyplayground.heroku.com'))
+    .pipe(rename('before.html'))
+    .pipe(gulp.dest('prod'));
+});
 
 gulp.task('default', ['start']);

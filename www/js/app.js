@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.messageController', 'ngCordova.plugins.geolocation', 'ngCordovaOauth', 'ngStorage'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'ngCordova.plugins.geolocation', 'ngCordovaOauth', 'ngStorage'])
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location) {
   $ionicPlatform.ready(function() {
@@ -71,16 +71,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'tab-privateMessages': {
         templateUrl: 'templates/tab-privateMessages.html',
         controller: 'messageController'
-      }
-    }
-  })
-  
-  .state('tab.friend-detail', {
-    url: '/friend/:friendId',
-    views: {
-      'tab-friends': {
-        templateUrl: 'templates/friend-detail.html',
-        controller: 'FriendDetailCtrl'
       }
     }
   })
