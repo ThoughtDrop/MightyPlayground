@@ -34,4 +34,9 @@ gulp.task('serve', function() {
   nodemon({script: 'server/server.js', ignore: 'node_modules/**/*.js'});
 });
 
+//=====TEST=====
+gulp.task('karma', shell.task([
+  'karma start'
+]));
+
 gulp.task('default', ['start']);
