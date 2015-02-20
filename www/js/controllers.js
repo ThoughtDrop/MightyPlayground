@@ -27,16 +27,16 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('AuthCtrl', function($scope, $cordovaOauth, $location, $localStorage, $http, Facebook){
+.controller('AuthCtrl', function($scope, $cordovaOauth, $location, $localStorage, $http, Facebook, $window, $state){
 
   $scope.data = {};
 
   $scope.login = function() {
-      $cordovaOauth.facebook(632339323578963, []).then(function(result) {
+      $cordovaOauth.facebook(427819184047831, []).then(function(result) {
           $localStorage.accessToken = result.access_token;
-          console.log('result: ' + JSON.stringify(result));
 
-          Facebook.storeId($scope.init());
+          window.localStorage.token = result.access_token; //store token locally
+          Facebook.storeId($scope.init()); //store id in db
           $location.path("/phone"); // redirect to phone number input
 
       }, function(error) {
@@ -52,8 +52,6 @@ angular.module('starter.controllers', [])
           if($localStorage.hasOwnProperty("accessToken") === true) {
               $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
                   $scope.profileData = result.data;
-                  console.log('init!');
-                  console.log(JSON.stringify(result.data.id));
                   $scope.data.id = result.data.id;
 
                   return result.data.id;
@@ -68,7 +66,6 @@ angular.module('starter.controllers', [])
       };
 
   $scope.updatePhone = function() {
-    console.log('updatePhone butotn');
     Facebook.updatePhone($scope.data);
       //check if id & # mathches for returning users in db
         //otherwise redirect to /login
@@ -76,18 +73,5 @@ angular.module('starter.controllers', [])
     $location.path('/tab/messages')
   };     
 
+  
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
