@@ -20,7 +20,7 @@ angular.module('starter.messageController', [])
       $scope.sendMessage($scope.message.text, long, lat);
     })
     .then(function() {
-      $scope.getNearby();
+      $scope.findNearby();
     });
   
     $timeout(function() {
