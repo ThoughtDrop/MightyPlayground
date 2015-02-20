@@ -4,7 +4,9 @@ var db = require('../db/config.js');
 
 var app = express();
 
-var port = process.env.PORT || 3000;
+server.listen(process.env.PORT || 3000, function () {
+    console.log("Server started @ ", process.env.PORT || 3000);
+});
 
 app.listen(port);
 console.log('Server now listening on port ' + port);
