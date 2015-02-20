@@ -5,7 +5,7 @@ angular.module('thoughtdrop.services', [])
   var getMessages = function() {
     return $http({
       method: 'GET',
-      url: base + '/api/messages/'
+      url: '/api/messages/'
     })
     .then(function (resp) {
       return resp.data;
@@ -16,7 +16,7 @@ angular.module('thoughtdrop.services', [])
     var sendPosition = function(data) {
       return $http({
         method: 'POST',
-        url: base + '/api/messages/nearby',
+        url: '/api/messages/nearby',
         data: JSON.stringify(data)
       })
       .then(function (resp) {
@@ -47,7 +47,7 @@ angular.module('thoughtdrop.services', [])
     console.log(data);
     return $http({
       method: 'POST',
-      url: base + '/api/auth/id',
+      url: '/api/auth/id',
       data: data
     })
     .then(function(resp) {
@@ -59,7 +59,7 @@ angular.module('thoughtdrop.services', [])
     console.log(data);
     return $http({
       method: 'POST',
-      url: base + '/api/auth/phone',
+      url: '/api/auth/phone',
       data: data
     })
     .then (function(resp) {
