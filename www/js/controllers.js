@@ -32,7 +32,6 @@ angular.module('starter.controllers', [])
   $scope.data = {};
 
   $scope.login = function() {
-<<<<<<< HEAD
       $cordovaOauth.facebook(632339323578963, []).then(function(result) {
           $localStorage.accessToken = result.access_token;
 
