@@ -33,7 +33,6 @@ angular.module('thoughtdrop.messageController', [])
   };
 
   $scope.newMessage = function() {
-    console.log('hey');
     $scope.modalNewMessage.show();
   };
 
@@ -62,6 +61,7 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.findNearby = function() {
     var sendPosition = function(data) {
+
       return $http({
         method: 'POST',
         url:  '/api/messages/nearby',
@@ -72,14 +72,13 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.messages = resp.data;
       });
     };
-    
+       
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
-      //console.log(coordinates);
       sendPosition(coordinates);
     });
    
