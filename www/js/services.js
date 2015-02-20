@@ -1,3 +1,5 @@
+var base = "http://mightyplayground.herokuapp.com";
+
 angular.module('starter.services', [])
 
 .factory('Chats', function() {
@@ -95,7 +97,7 @@ angular.module('starter.services', [])
   var getMessages = function() {
     return $http({
       method: 'GET',
-      url: '/api/messages/'
+      url: base + '/api/messages/'
     })
     .then(function (resp) {
       return resp.data;
@@ -107,7 +109,7 @@ angular.module('starter.services', [])
     var sendPosition = function(data) {
         return $http({
           method: 'POST',
-          url: '/api/messages/nearby',
+          url: base + '/api/messages/nearby',
           data: JSON.stringify(data)
         })
         .then(function (resp) {
@@ -142,25 +144,24 @@ angular.module('starter.services', [])
     console.log(data);
     return $http({
       method: 'POST',
-      url: '/api/auth/id',
+      url: base + '/api/auth/id',
       data: data
     })
     .then(function(resp) {
       console.log("user id stored", resp);
-
-    })
+    });
   };
 
   var updatePhone = function(data) {
     console.log(data);
     return $http({
       method: 'POST',
-      url: '/api/auth/phone',
+      url: base + '/api/auth/phone',
       data: data
     })
     .then (function(resp) {
       console.log('userPhone is stored', resp);
-    })
+    });
   };
 
   return {
@@ -169,23 +170,3 @@ angular.module('starter.services', [])
   };
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
