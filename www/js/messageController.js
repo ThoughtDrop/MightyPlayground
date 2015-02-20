@@ -35,7 +35,6 @@ angular.module('starter.messageController', [])
   };
 
   $scope.newMessage = function() {
-    console.log('hey');
     $scope.modalNewMessage.show();
   };
 
@@ -72,7 +71,6 @@ angular.module('starter.messageController', [])
         .then(function (resp) {
           console.log('Server resp to func call to findNearby', resp);  
           $scope.message.messages = resp.data;
-          // $scope.apply();
           // return resp.data;
         });
       };
@@ -83,7 +81,6 @@ angular.module('starter.messageController', [])
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
-      //console.log(coordinates);
       sendPosition(coordinates);
     });
    
