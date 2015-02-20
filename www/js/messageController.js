@@ -1,3 +1,5 @@
+var base = "http://mightyplayground.herokuapp.com";
+
 angular.module('starter.messageController', [])
 
 .controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal) {
@@ -64,7 +66,7 @@ angular.module('starter.messageController', [])
     var sendPosition = function(data) {
         return $http({
           method: 'POST',
-          url: '/api/messages/nearby',
+          url: base + '/api/messages/nearby',
           data: JSON.stringify(data)
         })
         .then(function (resp) {
