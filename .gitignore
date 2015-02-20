@@ -11,7 +11,7 @@ local.ns
 mongod.lock
 keys.js
 plugins/
-db
+db/*
 
 
 
