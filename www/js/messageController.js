@@ -72,7 +72,6 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.messages = resp.data;
       });
     };
-
     
     $cordovaGeolocation
     .getCurrentPosition()
