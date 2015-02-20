@@ -12,6 +12,9 @@ mongod.lock
 keys.js
 plugins/
 
+db/*
+
+
 
 
 #Platforms
