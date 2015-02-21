@@ -21,6 +21,7 @@ angular.module('thoughtdrop.services', [])
       })
       .then(function (resp) {
         console.log('Server resp to func call to findNearby', resp);  
+        $scope.$broadcast('scroll.refreshComplete');
         return resp.data;
       });
     };

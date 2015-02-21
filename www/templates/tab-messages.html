@@ -4,6 +4,8 @@
       <button class="button icon ion-navicon"></button>
       <button class="button" ng-click='newMessage()'>New</button>
     </div>
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
+        </ion-refresher>
     <div class="card" ng-repeat="message in message.messages">
       <div class="item item-text-wrap">
       <b>Name:</b> {{message.message}}
