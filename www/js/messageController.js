@@ -85,6 +85,12 @@ angular.module('thoughtdrop.messageController', [])
     console.log('invoke services/findnearby');
   };
 
+  $scope.doRefresh = function() {
+    $scope.findNearby('scroll.refreshComplete');
+    $scope.$broadcast('scroll.refreshComplete');
+    // $scope.apply();
+  }
+
   // TODO - take another look at this to modularize all http requests to services. for some reason getNearby worked
   // but the .then in Messages.findNearby() was causing errors.
   
