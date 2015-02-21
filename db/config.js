@@ -10,7 +10,6 @@ if (process.env.PORT) {
 
 var message = require('./models/messages');
 var user = require('./models/user');
-
 var db = mongoose.connection;
 
 module.exports = db;

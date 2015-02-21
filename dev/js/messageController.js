@@ -52,9 +52,8 @@ angular.module('thoughtdrop.messageController', [])
         }
       })
     }
-};
+  }
   
-
   $scope.submit = function() {
     $cordovaGeolocation
     .getCurrentPosition()
@@ -90,10 +89,10 @@ angular.module('thoughtdrop.messageController', [])
 
 
     console.log('sending Geolocation data! ' + data.message);
-
     return $http({
       method: 'POST',
-      url: '/api/messages',
+      url: //base
+      '/api/messages',
       data: JSON.stringify(data)
     })
     .then(function(resp) {
@@ -110,7 +109,8 @@ angular.module('thoughtdrop.messageController', [])
     var sendPosition = function(data) {
       return $http({
         method: 'POST',
-        url:  '/api/messages/nearby',
+        url:  //base
+        '/api/messages/nearby',
         data: JSON.stringify(data)
       })
       .then(function (resp) {
@@ -118,23 +118,18 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.messages = resp.data;
       });
     };
-       
         console.log('MESSAGE ARRAY', $scope.message.messages);
-      });
-    };
-    
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
-
-      //console.log(coordinates);
       sendPosition(coordinates);
     });
    
     console.log('invoke services/findnearby');
+
   };
 
   $scope.doRefresh = function() {
