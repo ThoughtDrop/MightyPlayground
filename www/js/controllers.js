@@ -14,6 +14,7 @@ angular.module('thoughtdrop.controllers', [])
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
 
       $scope.data = result
+
       $localStorage.accessToken = result.access_token;
       window.localStorage.token = result.access_token; //store token locally
       $scope.getProfile();  //gets profile data and stores profile data in factory
@@ -31,6 +32,8 @@ angular.module('thoughtdrop.controllers', [])
       if($localStorage.hasOwnProperty("accessToken") === true) {
         $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,picture", format: "json" }}).then(function(result) {
 
+          $scope.data = result;
+          
           Facebook.keepInfo($scope.data); //saves userData in factory
             
         }, function(error) {

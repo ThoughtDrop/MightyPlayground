@@ -86,18 +86,18 @@ angular.module('thoughtdrop.services', [])
 
   var keepInfo = function(data) {
     dataStorage.userData = data;
-    console.log('keptData: ' + JSON.stringify(dataStorage.userData));
+    console.log('keptData: ' + JSON.stringify(dataStorage.userData.data));
   }
 
   var storeUser = function(data) {
     console.log('stre data' + JSON.stringify(data));
-    dataStorage.userData.phoneNumber = data.phoneNumber; 
-    console.log('server data' + JSON.stringify(dataStorage.userData));
+    dataStorage.userData.data.phoneNumber = data.phoneNumber; 
+    console.log('final data before db' + JSON.stringify(dataStorage.userData.data));
 
     return $http({
       method: 'POST',
       url: '/api/auth/id',
-      data: dataStorage.userData
+      data: dataStorage.userData.data
     })
     .then(function(resp) {
       console.log('stored!');

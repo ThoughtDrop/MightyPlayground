@@ -15,8 +15,9 @@ module.exports = {
       if (foundUser === null) {
         var newUser = {
           facebookid: req.body.id,
-          phoneNumber: req.body.phoneNumber
-          //add last name
+          phoneNumber: req.body.phoneNumber,
+          name: req.body.name,
+          picture: req.body.picture
         };
         newUser.save();
         res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
