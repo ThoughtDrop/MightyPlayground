@@ -1,4 +1,4 @@
-var base = 'https://mightyplayground.heroku.com';
+var base = 'https://mightyplayground.herokuapp.com';
 
 angular.module('thoughtdrop.messageController', [])
 
