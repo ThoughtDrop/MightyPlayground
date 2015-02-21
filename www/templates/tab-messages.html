@@ -8,9 +8,22 @@
         </ion-refresher>
     <div class="card" ng-repeat="message in message.messages">
       <div class="item item-text-wrap">
-      <b>Name:</b> {{message.message}}
-      <!-- <i class ='ion-heart'></i> -->
+        <div class = "message-container">
+          
+          <b>Name:</b> {{message.message}}
+          <b>{{message.votes}}</b>
+          <i class ='ion-plus-round' ng-click="vote(message._id, message.votes, 'upVote')"></i> 
+          <i class ='ion-cash'></i> 
+          <i class ='ion-minus-round' ng-click="vote(message._id, message.votes, 'downVote')"></i> 
+        </div>
       </div>
     </div>
   </ion-content>
 </ion-view>
+
+
+
+
+
+
+

@@ -2,6 +2,11 @@ var Message = require('../../db/models/messages.js');
 var Q = require('q');
 
 module.exports = {
+  updateVote: function(req, res) {
+    console.log('Received updated voteCount from client, where votes = ', req.body.voteCount);
+    var updateVote = Q.nbind(Message.findByIdAndUpdate, Message);
+    updateVote(req.body.messageID, { votes : req.body.voteCount } );
+  },
 
   getNearby: function(req, res) {
     var findAround = Q.nbind(Message.find, Message);
