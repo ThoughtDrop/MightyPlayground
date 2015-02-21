@@ -1,3 +1,5 @@
+var base = 'https://mightyplayground.heroku.com';
+
 angular.module('thoughtdrop.services', [])
 
 .factory('Messages', function($http, $cordovaGeolocation) {
@@ -16,7 +18,7 @@ angular.module('thoughtdrop.services', [])
     var sendPosition = function(data) {
       return $http({
         method: 'POST',
-        url: '/api/messages/nearby',
+        url: base + '/api/messages/nearby',
         data: JSON.stringify(data)
       })
       .then(function (resp) {
@@ -48,7 +50,7 @@ angular.module('thoughtdrop.services', [])
     console.log(data);
     return $http({
       method: 'POST',
-      url: '/api/auth/id',
+      url: base + '/api/auth/id',
       data: data
     })
     .then(function(resp) {
@@ -60,7 +62,7 @@ angular.module('thoughtdrop.services', [])
     console.log(data);
     return $http({
       method: 'POST',
-      url: '/api/auth/phone',
+      url: base + '/api/auth/phone',
       data: data
     })
     .then (function(resp) {
