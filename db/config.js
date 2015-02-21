@@ -8,6 +8,9 @@ if (process.env.PORT) {
   mongoose.connect('mongodb://localhost/mightyPlayground');
 }
 
+var message = require('./models/messages');
+var user = require('./models/user');
+
 var db = mongoose.connection;
 
 module.exports = db;

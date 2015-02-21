@@ -60,3 +60,32 @@ angular.module('thoughtdrop.controllers', [])
   };
   
 });
+  };
+
+  $scope.init = function() {
+    console.log('init');
+      if($localStorage.hasOwnProperty("accessToken") === true) {
+        $http.get("https://graph.facebook.com/v2.2/me", { params: { access_token: $localStorage.accessToken, fields: "id,name,gender,location,website,picture,relationship_status", format: "json" }}).then(function(result) {
+          $scope.profileData = result.data;
+          console.log('init!');
+          console.log(JSON.stringify(result.data.id));
+          $scope.data.id = result.data.id;
+
+          return result.data.id;
+        }, function(error) {
+          alert("There was a problem getting your profile.  Check the logs for details.");
+          console.log(error);
+        });
+    } else {
+        alert("Not signed in");
+        $location.path("/login");
+      }
+    };
+
+  $scope.updatePhone = function() {
+    Facebook.updatePhone($scope.data);
+      //check if id & # mathches for returning users in db
+        //otherwise redirect to /login
+    $location.path('/tab/messages');
+  };
+});

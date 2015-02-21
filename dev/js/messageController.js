@@ -11,6 +11,50 @@ angular.module('thoughtdrop.messageController', [])
     $scope.modalNewMessage = modal;
   });
 
+  $scope.sendVote = function(messageID, voteCount) {
+    console.log('Sending vote of: ' + voteCount + ' to server!');
+    var data = {}
+    data.messageID = messageID;
+    data.voteCount = voteCount;
+
+  return $http({
+     method: 'POST',
+     url: '/api/messages/votes',
+     data: JSON.stringify(data)
+   })
+  };
+
+//for some reason, I'm adding the value of the count from the dom to the database
+  $scope.vote = function(messageID, voteCount, className) {
+    console.log('All Messages', $scope.message.messages);
+    
+    if (className === 'upVote') {
+      //Increment vote count in the DOM
+      $scope.message.messages.forEach(function(message) {
+        if (message._id === messageID) {
+          //incrment count in DOM
+          message.votes++;
+          //send incremented count along with messageID to server
+          console.log('upVOTING and changing vote to: ' + message.votes);
+          $scope.sendVote(messageID, message.votes);
+        }
+      })
+     
+    } else if (className === 'downVote') {
+      //Decrement vote count in the DOM
+      $scope.message.messages.forEach(function(message) {
+        if (message._id === messageID) {
+          //decrement count in DOM
+          message.votes--;
+          //send decremented count along with messageID to server
+          console.log('downVOTING and changing vote to: ' + message.votes);
+          $scope.sendVote(messageID, message.votes);
+        }
+      })
+    }
+};
+  
+
   $scope.submit = function() {
     $cordovaGeolocation
     .getCurrentPosition()
@@ -33,6 +77,7 @@ angular.module('thoughtdrop.messageController', [])
   };
 
   $scope.newMessage = function() {
+    console.log('hey');
     $scope.modalNewMessage.show();
   };
 
@@ -43,7 +88,9 @@ angular.module('thoughtdrop.messageController', [])
     data.long = long;
     data.lat = lat;
 
-    console.log('sending data! ' + data.message);
+
+    console.log('sending Geolocation data! ' + data.message);
+
     return $http({
       method: 'POST',
       url: '/api/messages',
@@ -61,7 +108,6 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.findNearby = function() {
     var sendPosition = function(data) {
-
       return $http({
         method: 'POST',
         url:  '/api/messages/nearby',
@@ -73,12 +119,18 @@ angular.module('thoughtdrop.messageController', [])
       });
     };
        
+        console.log('MESSAGE ARRAY', $scope.message.messages);
+      });
+    };
+    
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
+
+      //console.log(coordinates);
       sendPosition(coordinates);
     });
    
