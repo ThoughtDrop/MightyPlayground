@@ -115,5 +115,5 @@ angular.module('thoughtdrop.services', [])
     updatePhone: updatePhone,
     storeUser: storeUser,
     keepInfo: keepInfo
-
+  };
 });

@@ -7,8 +7,7 @@ angular.module('thoughtdrop.services', [])
   var getMessages = function() {
     return $http({
       method: 'GET',
-      url: 'https://mightyplayground.herokuapp.com' +
-      '/api/messages/'
+      url: base + '/api/messages/'
     })
     .then(function (resp) {
       return resp.data;

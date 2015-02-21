@@ -53,7 +53,8 @@ angular.module('thoughtdrop.messageController', [])
       })
     }
   }
-  
+
+
   $scope.submit = function() {
     $cordovaGeolocation
     .getCurrentPosition()
@@ -118,18 +119,19 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.messages = resp.data;
       });
     };
-        console.log('MESSAGE ARRAY', $scope.message.messages);
+    console.log('MESSAGE ARRAY', $scope.message.messages);
+    
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
+      //console.log(coordinates);
       sendPosition(coordinates);
     });
    
     console.log('invoke services/findnearby');
-
   };
 
   $scope.doRefresh = function() {

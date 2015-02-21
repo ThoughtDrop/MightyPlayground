@@ -18,12 +18,10 @@ angular.module('thoughtdrop.controllers', [])
       window.localStorage.token = result.access_token; //store token locally
       $scope.getProfile();  //gets profile data and stores profile data in factory
 
-
     }, function(error) {
       alert("There was a problem signing in!  See the console for logs");
       console.log(error);
     });
-
 
     $location.path("/phone"); // redirect to phone number input
   };
@@ -59,7 +57,6 @@ angular.module('thoughtdrop.controllers', [])
     window.localStorage.token = undefined;
     $location.path('/login');
   };
-  
 
   $scope.init = function() {
     console.log('init');
