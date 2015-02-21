@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var keys = require('../keys.js');
+// var keys = require('../keys.js');
 
 if (process.env.PORT) {
   mongoose.connect('mongodb://' + process.env.mongolabsuser + ':' + process.env.mongolabspassword + '@ds043991.mongolab.com:43991/mpmongolab');
