@@ -13,18 +13,18 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.sendVote = function(messageID, voteCount) {
     console.log('Sending vote of: ' + voteCount + ' to server!');
-    var data = {}
+    var data = {};
     data.messageID = messageID;
     data.voteCount = voteCount;
 
   return $http({
      method: 'POST',
-     url: '/api/messages/votes',
+     url: //base
+     '/api/messages/votes',
      data: JSON.stringify(data)
-   })
+   });
   };
 
-//for some reason, I'm adding the value of the count from the dom to the database
   $scope.vote = function(messageID, voteCount, className) {
     console.log('All Messages', $scope.message.messages);
     
@@ -38,7 +38,7 @@ angular.module('thoughtdrop.messageController', [])
           console.log('upVOTING and changing vote to: ' + message.votes);
           $scope.sendVote(messageID, message.votes);
         }
-      })
+      });
      
     } else if (className === 'downVote') {
       //Decrement vote count in the DOM
@@ -50,10 +50,9 @@ angular.module('thoughtdrop.messageController', [])
           console.log('downVOTING and changing vote to: ' + message.votes);
           $scope.sendVote(messageID, message.votes);
         }
-      })
+      });
     }
-  }
-
+  };
 
   $scope.submit = function() {
     $cordovaGeolocation
@@ -62,9 +61,11 @@ angular.module('thoughtdrop.messageController', [])
       var lat = position.coords.latitude;
       var long = position.coords.longitude;
       $scope.sendMessage($scope.message.text, long, lat);
+      $scope.message.text = '';
     })
     .then(function() {
       $scope.findNearby();
+
     });
   
     $timeout(function() {
@@ -138,7 +139,7 @@ angular.module('thoughtdrop.messageController', [])
     $scope.findNearby('scroll.refreshComplete');
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
-  }
+  };
 
   // TODO - take another look at this to modularize all http requests to services. for some reason getNearby worked
   // but the .then in Messages.findNearby() was causing errors.
