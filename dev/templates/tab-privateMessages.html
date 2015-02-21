@@ -1,0 +1,15 @@
+<ion-view view-title="Private Messages - MUST BE UPDATED...currently pulling in everything!">
+  <ion-content>
+    <div class="bar bar-header">
+      <button class="button icon ion-navicon"></button>
+      <button class="button" ng-click='newMessage()'>New</button>
+    </div>
+    <div class="card" ng-repeat="message in message.messages">
+      <div class="item item-text-wrap">
+
+      <b>Name:</b> {{message.message}}
+      <!-- <i class ='ion-heart'></i> -->
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

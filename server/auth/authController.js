@@ -1,8 +1,10 @@
-var Auth = require('../../db/models/user.js');
+var User = require('../../db/models/user.js');
 var Q = require('q');
 module.exports = {
 
   find: function(req, res) {
+    console.log('find!');
+    console.log('req.body' + req.body);
     var findUser = Q.nbind(User.findOne, User);
 
     findUser({facebookid: req.body.id})   //facebook ID for signin
@@ -12,9 +14,10 @@ module.exports = {
       }
       if (foundUser === null) {
         var newUser = {
-          facebookid: req.body.id
-          //add first name
-          //add last name
+          facebookid: req.body.id,
+          phoneNumber: req.body.phoneNumber,
+          name: req.body.name,
+          picture: req.body.picture
         };
         newUser.save();
         res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
