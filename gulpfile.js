@@ -114,11 +114,11 @@ gulp.task('ionic', shell.task([
 
 gulp.task('browser-sync', function() {
   bs({
-    server: 'www',
+    server: 'dev',
     notify: true
   });
   bs.reload();
-})
+});
 
 // start our node server using nodemon
 gulp.task('serve', function() {
@@ -147,7 +147,7 @@ gulp.task('build', function(){
     'inject2'],
     // 'ionic-build',
     'browser-sync'
-    )
+    );
 });
 
 gulp.task('help', $.taskListing);
