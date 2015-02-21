@@ -1,3 +1,5 @@
+var base = 'https://mightyplayground.heroku.com';
+
 angular.module('thoughtdrop.messageController', [])
 
 .controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal) {
@@ -46,7 +48,7 @@ angular.module('thoughtdrop.messageController', [])
     console.log('sending data! ' + data.message);
     return $http({
       method: 'POST',
-      url: '/api/messages',
+      url: base + '/api/messages',
       data: JSON.stringify(data)
     })
     .then(function(resp) {
@@ -64,7 +66,7 @@ angular.module('thoughtdrop.messageController', [])
 
       return $http({
         method: 'POST',
-        url:  '/api/messages/nearby',
+        url:  base + '/api/messages/nearby',
         data: JSON.stringify(data)
       })
       .then(function (resp) {
