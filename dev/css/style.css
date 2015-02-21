@@ -1,0 +1,41 @@
+/* Login Page Styling */
+.container {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.logo {
+ 	display: table;
+  margin: 0 auto 5%;
+}
+
+.logo img {
+	margin-top: 15%;
+}
+
+.fb-button {
+ 	display: table;
+  margin: 0 auto;
+}
+
+.title{
+ 	display: table;
+  margin: 0 auto;
+  font-size: 4em;
+  margin-bottom: 2%;
+  font-weight: 300px;
+  font-style: helvetica;
+
+}
+.slogan{
+ 	display: table;
+  margin: 0 auto;
+  font-size: 2em;
+}
+/* Phone number */
+.bar {
+  position: relative;
+}
+
+.button-positive{
+     right:70px !important;
+}

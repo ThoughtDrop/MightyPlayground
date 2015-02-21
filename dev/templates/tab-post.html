@@ -1,0 +1,14 @@
+<ion-modal-view style="height:15%">
+  <ion-view view-title="New Thought">
+    <ion-content class="padding">
+      <form ng-submit="submit()">
+        <label class="item item-input">
+          <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
+        </label>
+        <label class="item">
+          <button class="button button-block button-dark" type="submit">Submit!</button>
+        </label>
+      </form>
+    </ion-content>
+  </ion-view>
+</ion-modal-view>
