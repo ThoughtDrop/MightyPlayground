@@ -2,9 +2,6 @@ node_modules/
 bower_components/
 *.log
 
-build/
-dist/
-
 #mongodb --dbpath if inside folder
 local.0
 local.ns
@@ -16,4 +13,6 @@ plugins/
 
 #Platforms
 platforms
+
+www/
 

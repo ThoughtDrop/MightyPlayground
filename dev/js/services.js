@@ -5,7 +5,8 @@ angular.module('thoughtdrop.services', [])
   var getMessages = function() {
     return $http({
       method: 'GET',
-      url: '/api/messages/'
+      url: //base
+      '/api/messages/'
     })
     .then(function (resp) {
       return resp.data;
@@ -16,7 +17,8 @@ angular.module('thoughtdrop.services', [])
     var sendPosition = function(data) {
       return $http({
         method: 'POST',
-        url: '/api/messages/nearby',
+        url: //base
+        '/api/messages/nearby',
         data: JSON.stringify(data)
       })
       .then(function (resp) {
