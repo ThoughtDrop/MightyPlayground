@@ -73,6 +73,15 @@ gulp.task('buildindex', function(){
 
 //=================================
 
+gulp.task('copylib', function(){
+  return gulp.src('dev/lib/**/*.*')
+    .pipe(gulp.dest('www/lib/'));
+});
+
+gulp.task('copyimg', function(){
+  return gulp.src('dev/img/**/*.*')
+    .pipe(gulp.dest('www/img/'));
+});
 
 gulp.task('clean', function(){
   del(prodPathArray, function (err, deletedFiles){
@@ -128,6 +137,8 @@ gulp.task('build', function(){
     'buildtemplates',
     'buildcss',
     'buildindex',
+    'copylib',
+    'copyimg',
     'watchjs',
     'watchtemplates',
     'watchcss',
