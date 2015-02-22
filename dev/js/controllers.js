@@ -12,6 +12,8 @@ angular.module('thoughtdrop.controllers', [])
 
   $scope.login = function() {
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
+      console.log(result)
+
       $scope.data = result
 
       $localStorage.accessToken = result.access_token;
@@ -50,7 +52,7 @@ angular.module('thoughtdrop.controllers', [])
   $scope.storeUser = function() {
     console.log('phoneNumber: ' + $scope.data.phoneNumber);
     Facebook.storeUser($scope.data);
-    $location.path('/tab/messages');
+    // $location.path('/tab/messages');
   };
 
   $scope.logout = function() {
