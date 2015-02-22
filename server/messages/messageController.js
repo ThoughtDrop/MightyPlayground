@@ -9,6 +9,7 @@ module.exports = {
   },
 
   getNearby: function(req, res) {
+    console.log('getNearby!');
     var findAround = Q.nbind(Message.find, Message);
     console.log('get current location = ' + req.body.long, req.body.lat);
 

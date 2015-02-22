@@ -97,7 +97,7 @@ angular.module('thoughtdrop.services', [])
 
     return $http({
       method: 'POST',
-       url: //base
+       url: 'https://mightyplayground.herokuapp.com' + 
       '/api/auth',
       data: JSON.stringify(dataStorage.userData.data)
     })
