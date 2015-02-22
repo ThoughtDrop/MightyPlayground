@@ -14,6 +14,7 @@ angular.module('thoughtdrop.services', [])
     });
   };
 
+
   var findNearby = function() {
     var sendPosition = function(data) {
       return $http({
@@ -39,9 +40,34 @@ angular.module('thoughtdrop.services', [])
     });
   };
 
+  // var findNearby = function() {
+  //   var sendPosition = function(data) {
+  //     return $http({
+  //       method: 'POST',
+  //       url: //base
+  //       '/api/messages/nearby',
+  //       data: JSON.stringify(data)
+  //     })
+  //     .then(function (resp) {
+  //       console.log('Server resp to func call to findNearby', resp);  
+  //       return resp.data;
+  //     });
+  //   };
+    
+  //   $cordovaGeolocation
+  //   .getCurrentPosition()
+  //   .then(function(position) {
+  //     var coordinates = {};
+  //     coordinates.lat = position.coords.latitude;
+  //     coordinates.long = position.coords.longitude;
+  //     sendPosition(coordinates);
+  //   });
+  // };
+>>>>>>> (feat) adds main feed sorting functions and refactors message controller
+
   return {
     getMessages: getMessages,
-    findNearby: findNearby
+    //findNearby: findNearby
   };
 })
 
