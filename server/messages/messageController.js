@@ -35,7 +35,8 @@ module.exports = {
     var data = {
       _id: Math.floor(Math.random()*100000), //change to facebookID
       location: {coordinates: [req.body.long, req.body.lat] },
-      message: req.body.message
+      message: req.body.message,
+      created_at: new Date()
     };
 
     createMessage(data) 
