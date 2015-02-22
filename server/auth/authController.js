@@ -2,6 +2,7 @@ var User = require('../../db/models/user.js');
 var Q = require('q');
 module.exports = {
 
+  //TODO: maybe somehow modularize this so that it finds in one function, then calls another function when found
   find: function(req, res) {
     console.log('find!');
     console.log('req.body' + req.body);
