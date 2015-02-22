@@ -112,6 +112,19 @@ gulp.task('ionic', shell.task([
   'ionic emulate ios --consolelogs --serverlogs'
 ]));
 
+//change to route to your android sdk. 
+gulp.task('android', shell.task([
+  'export ANDROID_HOME="/Users/henrywong/Development/adt-bundle-mac-x86_64-20140702/sdk"',
+  'export ANDROID_TOOLS="/Users/<user_name>/Library/Android/sdk/tools/"',
+  'export ANDROID_PLATFORM_TOOLS="/Users/henrywong/Development/adt-bundle-mac-x86_64-20140702/sdk/platform-tools"',
+  'PATH=$PATH:$ANDROID_HOME:$ANDROID_TOOLS:$ANDROID_PLATFORM_TOOLS',
+  'ionic platform add android',
+  'ionic build android',
+  'ionic run android'
+  //'ionic emulate android'
+
+]));
+
 gulp.task('browser-sync', function() {
   bs({
     server: 'dev',
