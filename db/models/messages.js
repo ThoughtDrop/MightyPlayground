@@ -4,7 +4,7 @@ var User = require('./user');
 var messagesSchema = new mongoose.Schema({
   _id: Number,
   // _creator: [{type: Number, ref: 'User'}],
-  // created_at: { type: Date },
+  created_at: { type: Date },
   // recipient: [{type: Number, ref: 'User'}],
   location : {
     type: { 
@@ -21,7 +21,6 @@ var messagesSchema = new mongoose.Schema({
 messagesSchema.index({ location : '2dsphere' });
 
 var Message = mongoose.model('Message', messagesSchema);
-
 
 // Sample message data
 
@@ -45,10 +44,5 @@ var Message = mongoose.model('Message', messagesSchema);
 //       message: 'Africa'
 //       votes: 39
 //     });
-
-// message.pre('save', function(next) {
-//   this.created_at = new Date();
-//   next();
-// });
 
 module.exports = Message;
