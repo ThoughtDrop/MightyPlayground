@@ -9,6 +9,7 @@ angular.module('thoughtdrop.services', [])
       '/api/messages/'
     })
     .then(function (resp) {
+      console.log('Server resp to func call to getMessages: ', resp);  
       return resp.data;
     });
   };
@@ -22,7 +23,7 @@ angular.module('thoughtdrop.services', [])
         data: JSON.stringify(data)
       })
       .then(function (resp) {
-        console.log('Server resp to func call to findNearby', resp);  
+        console.log('Server resp to func call to findNearby: ', resp);  
         return resp.data;
       });
     };
@@ -34,6 +35,7 @@ angular.module('thoughtdrop.services', [])
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
       sendPosition(coordinates);
+      console.log('Messages factory sending coordinates to server: ', coordinates);
     });
   };
 
@@ -83,32 +85,31 @@ angular.module('thoughtdrop.services', [])
 
   var dataStorage = {};
 
-
   console.log(JSON.stringify(dataStorage));
 
   var keepInfo = function(data) {
     dataStorage.userData = data;
-    console.log('keptData: ' + JSON.stringify(dataStorage.userData.data));
-  }
-
-  var storeUser = function(data) {
-    console.log('stre data' + JSON.stringify(data));
-    dataStorage.userData.data.phoneNumber = data.phoneNumber; 
-    console.log('final data before db' + JSON.stringify(dataStorage.userData.data));
-
-    return $http({
-      method: 'POST',
-      url: '/api/auth/id',
-      data: dataStorage.userData.data
-    })
-    .then(function(resp) {
-      console.log('stored!');
-    })
+    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData.data));
   };
 
   var updatePhone = function(data) {
     dataStorage.userData.phoneNumber = data.phoneNumber;
-    console.log(JSON.stringify(dataStorage.userData));
+    console.log('FB factory updatePhone triggered : ', JSON.stringify(dataStorage.userData));
+  };
+
+  var storeUser = function(data) {
+    console.log('storeUser triggered: ', JSON.stringify(data));
+    dataStorage.userData.data.phoneNumber = data.phoneNumber; 
+    console.log('final data before sending to db: ', JSON.stringify(dataStorage.userData.data));
+
+    return $http({
+      method: 'POST',
+      url: '/api/auth/id',
+      data: JSON.stringify(dataStorage.userData.data)
+    })
+    .then(function(resp) {
+      console.log('Server resp to func call to storeUser: ', resp);
+    });
   };
 
   return {
