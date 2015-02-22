@@ -63,7 +63,6 @@ angular.module('thoughtdrop.services', [])
   //     sendPosition(coordinates);
   //   });
   // };
->>>>>>> (feat) adds main feed sorting functions and refactors message controller
 
   return {
     getMessages: getMessages,
