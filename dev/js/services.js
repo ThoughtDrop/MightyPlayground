@@ -92,13 +92,12 @@ angular.module('thoughtdrop.services', [])
   }
 
   var storeUser = function(data) {
-    console.log('stre data' + JSON.stringify(data));
     dataStorage.userData.data.phoneNumber = data.phoneNumber; 
     console.log('final data before db' + JSON.stringify(dataStorage.userData.data));
 
     return $http({
       method: 'POST',
-      url: '/api/auth/id',
+      url: '/api/auth',
       data: dataStorage.userData.data
     })
     .then(function(resp) {

@@ -4,7 +4,7 @@ module.exports = {
 
   find: function(req, res) {
     console.log('find!');
-    console.log('req.body' + req.body);
+    console.log('req.body' + JSON.stringify(req.body));
     var findUser = Q.nbind(User.findOne, User);
 
     findUser({facebookid: req.body.id})   //facebook ID for signin
