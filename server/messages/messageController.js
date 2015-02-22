@@ -10,21 +10,20 @@ module.exports = {
 
   getNearby: function(req, res) {
     var findAround = Q.nbind(Message.find, Message);
-    console.log('get current location = ' + req.body.long, req.body.lat);
 
     var query = {};
     query.location = {
       $near : {
         $geometry : {
           type : "Point",
-          coordinates : [req.body.long, req.body.lat] 
+          coordinates : [req.body[0].long, req.body[0].lat] 
         },
         $maxDistance : 100
       }
     };
     
     findAround(query, function(err, result){
-      console.log('DATABASE RESULT', result);
+      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
       res.send(result);
     });
   },
@@ -34,14 +33,14 @@ module.exports = {
 
     var data = {
       _id: Math.floor(Math.random()*100000), //change to facebookID
-      location: {coordinates: [req.body.long, req.body.lat] },
-      message: req.body.message,
-      created_at: new Date()
+
+      location: {coordinates: [req.body[1], req.body[2]] },
+      message: req.body[0]
     };
 
     createMessage(data) 
       .then(function (createdMessage) {
-        res.send('saved message!');
+        console.log('Message ' + data.message + ' was successfully saved to database');
       })
       .fail(function (error) {
         next(error);
