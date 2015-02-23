@@ -10,28 +10,47 @@ module.exports = {
     var findUser = Q.nbind(User.findOne, User);
 
     // findUser({facebookid: req.body.id})   //facebook ID for signin
-    User
-      .find({facebookid: req.body.id})
-      .then(function(foundUser) {
-      if (foundUser) {
-        console.log('foundUser!');
-        res.status(200).send('User found, redirecting to stream!');
-      }
-      if (!foundUser) {
-        console.log('User not found!');
-        var newUser = {
-          facebookid: req.body.id,
-          phoneNumber: req.body.phoneNumber,
-          name: req.body.name,
-          // picture: req.body.picture
+  //   User
+  //     .find({facebookid: req.body.id})
+  //     .then(function(foundUser) {
+  //     if (foundUser) {
+  //       console.log('foundUser!');
+  //       res.status(200).send('User found, redirecting to stream!');
+  //     }
+  //     if (!foundUser) {
+  //       console.log('User not found!');
+  //       var newUser = {
+  //         facebookid: req.body.id,
+  //         phoneNumber: req.body.phoneNumber,
+  //         name: req.body.name,
+  //         // picture: req.body.picture
+  //       };
+  //       newUser.save();
+  //       // res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
+  //     }
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   });
+  // },
+
+  findUser({ facbeookid: req.body.id}) {
+    .then(function(user) {
+      if(!user) {
+        create = Q.nbind(User.create, User);
+        newUser = {
+          facebookid = req.body.id,
+          phoneNumber = req.body.phoneNumber,
+          name = req.body.name,
+          picture = req.body.picture
         };
-        newUser.save();
-        // res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
+        return create(newUser);
       }
     })
-    .catch(function(err) {
-      console.log(err);
-    });
+    .fail(function (error) {
+      console.log('error: ' + error);
+      next(error);
+    })
   },
 
   savePhoneNumber: function(req, res) {
