@@ -12,12 +12,12 @@ module.exports = {
     findOne({facebookid: req.body.id})
       .then(function(user) {
         if(!user) {
-          create = Q.nbind(User.create, User);
+          var create = Q.nbind(User.create, User);
           newUser = {
             _id: req.body.id,
             phoneNumber: req.body.phoneNumber,
             name: req.body.name,
-            picture: req.body.picture
+            picture: req.body.picture.data.url
           };
           return create(newUser);
         }
@@ -30,7 +30,7 @@ module.exports = {
         next(error);
       })
   },
-  
+
   delete: function(req, res) {
     var findUser = Q.nbind(User.findOne, User);
     
