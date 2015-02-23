@@ -13,7 +13,7 @@ module.exports = {
       if (foundUser) {
         res.status(200).send('User found, redirecting to stream!');
       }
-      if (foundUser === null) {
+      if (!foundUser) {
         var newUser = {
           facebookid: req.body.id,
           phoneNumber: req.body.phoneNumber,
@@ -21,7 +21,7 @@ module.exports = {
           // picture: req.body.picture
         };
         newUser.save();
-        res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
+        // res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
       }
     })
     .catch(function(err) {
