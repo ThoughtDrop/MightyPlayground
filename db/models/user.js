@@ -4,7 +4,7 @@ var Message = require('./messages');
 var usersSchema = new mongoose.Schema({
   _id: Number,//phone number
   facebookid: Number,
-  phoneNumber: {type: Number, min: 10, max: 10},
+  phoneNumber: Number,
   name: String
   // messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
 });
