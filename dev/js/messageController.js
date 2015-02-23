@@ -4,6 +4,7 @@ angular.module('thoughtdrop.messageController', [])
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
+        //look into using socket.io to handle simultaneous upvote/downvote requests from clients
   $scope.message = {};
   $scope.message.text = '';
 
@@ -15,39 +16,25 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.sortFeed = function(action) {
     console.log('sorting feed by ' + "'" + action + "' messages");
-    return $http({
-       method: 'POST',
-       url: '/api/messages/filterfeed',
-       data: JSON.stringify(action)
-     })
+    if (action === 'new') {
+      $scope.findNearby('nearby', 'new');
+    } else if (action === 'top') {
+      $scope.findNearby('nearby', 'top');
+    }
   };
 
-  $scope.sendVote = function(messageID, voteCount) {
-    console.log('Sending vote of: ' + voteCount + ' to server!');
-    var data = {};
-    data.messageID = messageID;
-    data.voteCount = voteCount;
-
-  return $http({
-     method: 'POST',
-     url: //base
-     '/api/messages/votes',
-     data: JSON.stringify(data)
-   });
-  };
-
-  $scope.vote = function(messageID, voteCount, className) {
-    console.log('All Messages', $scope.message.messages);
-    
+  $scope.vote = function(messageID, voteCount, className) {    
     if (className === 'upVote') {
       //Increment vote count in the DOM
       $scope.message.messages.forEach(function(message) {
         if (message._id === messageID) {
-          //incrment count in DOM
+          //increment count in DOM
           message.votes++;
           //send incremented count along with messageID to server
           console.log('upVOTING and changing vote to: ' + message.votes);
-          $scope.sendVote(messageID, message.votes);
+          //$scope.sendVote(messageID, message.votes);
+          $scope.sendData('updatevote', messageID, message.votes);
+          console.log('Sending vote of: ' + message.votes + ' to server!');
         }
       });
      
@@ -59,51 +46,49 @@ angular.module('thoughtdrop.messageController', [])
           message.votes--;
           //send decremented count along with messageID to server
           console.log('downVOTING and changing vote to: ' + message.votes);
-          $scope.sendVote(messageID, message.votes);
+          //$scope.sendVote(messageID, message.votes);
+          $scope.sendData('updatevote', messageID, message.votes);
+          console.log('Sending vote of: ' + message.votes + ' to server!');
         }
       });
     }
   };
 
-  $scope.submit = function() {
-    $cordovaGeolocation
-    .getCurrentPosition()
-    .then(function(position) {
-      var lat = position.coords.latitude;
-      var long = position.coords.longitude;
-      $scope.sendMessage($scope.message.text, long, lat);
-      $scope.message.text = '';
-    })
-    .then(function() {
+  $scope.sendMessage = function(route) {
+    $scope.closeMessageBox();
 
-      $scope.findNearby('nearby');
-    });
-  
-    $timeout(function() {
-      $scope.closeMessageBox();
-    }, 500);
+    $scope.getPosition()
+      .then(function(position) {
+        var message = $scope.message.text;
+        var coordinates = {};
+        coordinates.lat = position.coords.latitude;
+        coordinates.long = position.coords.longitude;
+        $scope.message.text = '';
+
+        $scope.sendData('savemessage', coordinates, message)
+        .then(function(resp) {
+          console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
+          //return resp;
+        })
+        .catch(function(err) {
+          console.log('Error posting message: ',  err);
+        });
+      })
+      .then(function() {
+        $scope.findNearby('nearby');
+      })
   };
 
-  $scope.closeMessageBox = function() {
-    $scope.modalNewMessage.hide();
+  $scope.closeMessageBox = function(time) {
+    var time = time || 250;
+    $timeout(function() {
+      $scope.modalNewMessage.hide();
+    }, time);
   };
 
   $scope.newMessage = function() {
     $scope.modalNewMessage.show();
   };
-
-  $scope.sendMessage = function(message, long, lat) {
-    $scope.sendData(null, message, long, lat)
-
-      .then(function(resp) {
-        console.log('Message ' + "'" + message + "'" + ' was successfully posted to server');
-        return resp;
-      })
-      .catch(function(err) {
-        console.log('Error posting message: ',  err);
-      });
-  };
-
 
   $scope.sendData = function(route) {
     var data = Array.prototype.slice.call(arguments, 1);
@@ -117,8 +102,8 @@ angular.module('thoughtdrop.messageController', [])
     })
   };
 
-  $scope.displayMessages = function(route, coordinates) {
-    $scope.sendData(route, coordinates)
+  $scope.displayMessages = function(route, coordinates, sortMessagesBy) {
+    $scope.sendData(route, coordinates, sortMessagesBy)
       .then(function (resp) {
         //populate scope with all messages within 100m of user
         console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
@@ -127,28 +112,31 @@ angular.module('thoughtdrop.messageController', [])
   };
 
   $scope.getPosition = function() {
+    //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation
               .getCurrentPosition()    
   };
 
-  $scope.findNearby = function(route) {
+  $scope.findNearby = function(route, sortMessagesBy) {
     $scope.getPosition()
     .then(function(position) {
       //TODO: Just send the position and access the coordinates server side
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
-      $scope.displayMessages(route, coordinates);
+      $scope.displayMessages(route, coordinates, sortMessagesBy);
     });   
   };
 
   $scope.doRefresh = function() {
+    //TODO: Refresh needs to pass in 'top' or 'new' depending on the last feed sort button 
+    //that was pressed. If you pressed 
     $scope.findNearby('scroll.refreshComplete');
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
 
 
-  //Invokes findNearby on page load of /tabs/messages
+  //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
 });
