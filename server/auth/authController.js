@@ -19,11 +19,11 @@ module.exports = {
             name: req.body.name,
             picture: req.body.picture.data.url
           };
-          create(newUser);
-          res.sendStatus(200);
+          res.send(200);
+          return create(newUser);
         }
         if(user) {
-          res.sendStatus(200);
+          res.send(200);
         }
       })
       .catch(function (error) {
