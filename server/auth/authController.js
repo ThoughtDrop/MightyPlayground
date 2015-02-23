@@ -1,11 +1,12 @@
 var User = require('../../db/models/user.js');
 var Q = require('q');
+
 module.exports = {
 
   //TODO: maybe somehow modularize this so that it finds in one function, then calls another function when found
   find: function(req, res) {
     console.log('find!');
-    console.log('req.body' + req.body);
+    console.log('req.body' + JSON.stringify(req.body));
     var findUser = Q.nbind(User.findOne, User);
 
     findUser({facebookid: req.body.id})   //facebook ID for signin
@@ -13,15 +14,15 @@ module.exports = {
       if (foundUser) {
         res.status(200).send('User found, redirecting to stream!');
       }
-      if (foundUser === null) {
+      if (!foundUser) {
         var newUser = {
           facebookid: req.body.id,
           phoneNumber: req.body.phoneNumber,
           name: req.body.name,
-          picture: req.body.picture
+          // picture: req.body.picture
         };
         newUser.save();
-        res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
+        // res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
       }
     })
     .catch(function(err) {
