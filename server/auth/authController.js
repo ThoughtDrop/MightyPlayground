@@ -39,8 +39,8 @@ module.exports = {
       if(!user) {
         create = Q.nbind(User.create, User);
         newUser = {
+          _id: req.body.phoneNumber,
           facebookid: req.body.id,
-          phoneNumber: req.body.phoneNumber,
           name: req.body.name,
           picture: req.body.picture
         };
