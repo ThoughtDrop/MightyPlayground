@@ -16,7 +16,7 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   // if(window.localStorage.token === undefined) {
   //   $location.path('/login');
   // } else {
-  //   $state.go('tab.messages');
+  //   //$state.go('tab.messages');
   // }
 
 })
@@ -39,7 +39,7 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     controller: 'AuthCtrl'
   })
 
-  .state('messageDetail', {
+  .state('messagedetail', {
     url: '/messagedetail',
     templateUrl: 'templates/messagedetail.html',
     controller: 'messageController'
@@ -94,5 +94,5 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   });
 
   // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/messages');
+  $urlRouterProvider.otherwise('/messages');
 });

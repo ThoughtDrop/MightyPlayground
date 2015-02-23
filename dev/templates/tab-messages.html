@@ -11,7 +11,8 @@
 
     <div class="card" ng-repeat="message in message.messages">
       <div class="item item-text-wrap">
-      <b>Name:</b> {{message.message}}
+      <b>Name:</b> 
+      <a href="#{message.id}">{{message.message}}</a>
       <!-- <i class ='ion-heart'></i> -->
           <b>{{message.votes}}</b>
           <i class ='ion-plus-round' ng-click="vote(message._id, message.votes, 'upVote')"></i> 
