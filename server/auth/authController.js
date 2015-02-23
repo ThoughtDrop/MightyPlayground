@@ -20,10 +20,10 @@ module.exports = {
             picture: req.body.picture.data.url
           };
           create(newUser);
-          res.send(200);
+          res.status(200).send('New user!');
         }
         if(user) {
-          res.send(200);
+          res.status(200).send('Returning User');
         }
       })
       .catch(function (error) {
