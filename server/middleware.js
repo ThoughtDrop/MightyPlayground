@@ -16,7 +16,6 @@ module.exports = function (app, express) {
 
 
   app.use('/api/auth', authRouter); // use user router for all auth request
-  // app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/messages', messageRouter); // use message router for all message requests
   app.use('/api/clients', clientRouter); // use client router for all client request
   

@@ -1,5 +1,6 @@
 var User = require('../../db/models/user.js');
 var Q = require('q');
+
 module.exports = {
 
   find: function(req, res) {
@@ -17,7 +18,7 @@ module.exports = {
           facebookid: req.body.id,
           phoneNumber: req.body.phoneNumber,
           name: req.body.name,
-          picture: req.body.picture
+          // picture: req.body.picture
         };
         newUser.save();
         res.status(404).send('Facebookid not found. User saved, now redirect to phone number');

@@ -25,7 +25,7 @@ module.exports = {
     };
     
     findAround(query, function(err, result){
-      console.log('DATABASE RESULT', result);
+      // console.log('DATABASE RESULT', result);
       res.send(result);
     });
   },
