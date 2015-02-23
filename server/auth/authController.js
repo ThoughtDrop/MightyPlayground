@@ -19,14 +19,12 @@ module.exports = {
             name: req.body.name,
             picture: req.body.picture.data.url
           };
-          return create(newUser);
+          create(newUser);
+          res.send(200);
         }
         if(user) {
-          res.status(200).send('User Found, redirecting to stream!');
+          res.send(200);
         }
-      })
-      .then(function(user) {
-        res.status(200).send('New User Saved');
       })
       .catch(function (error) {
         console.log('error: ' + error);
