@@ -11,7 +11,7 @@ angular.module('thoughtdrop.messageController', [])
   $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
   }).then(function(modal) {
-    $scope.modalNewMessage = modal;
+  $scope.modalNewMessage = modal;
   });
 
   $scope.sortFeed = function(action) {
