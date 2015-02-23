@@ -19,17 +19,16 @@ module.exports = {
             name: req.body.name,
             picture: req.body.picture.data.url
           };
-          res.send(200);
           return create(newUser);
         }
-        if(user) {
-          res.send(200);
-        }
+      })
+      .then(function(user) {
+        res.send(200);
       })
       .fail(function (error) {
         console.log('error: ' + error);
         next(error);
-      });
+      })
   },
 
   delete: function(req, res) {
