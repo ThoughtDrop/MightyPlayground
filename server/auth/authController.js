@@ -9,66 +9,29 @@ module.exports = {
     console.log('req.body' + JSON.stringify(req.body));
     var findOne = Q.nbind(User.findOne, User);
 
-    // findUser({facebookid: req.body.id})   //facebook ID for signin
-  //   User
-  //     .find({facebookid: req.body.id})
-  //     .then(function(foundUser) {
-  //     if (foundUser) {
-  //       console.log('foundUser!');
-  //       res.status(200).send('User found, redirecting to stream!');
-  //     }
-  //     if (!foundUser) {
-  //       console.log('User not found!');
-  //       var newUser = {
-  //         facebookid: req.body.id,
-  //         phoneNumber: req.body.phoneNumber,
-  //         name: req.body.name,
-  //         // picture: req.body.picture
-  //       };
-  //       newUser.save();
-  //       // res.status(404).send('Facebookid not found. User saved, now redirect to phone number');
-  //     }
-  //   })
-  //   .catch(function(err) {
-  //     console.log(err);
-  //   });
-  // },
-
-  findOne({facebookid: req.body.id})
-    .then(function(user) {
-      if(!user) {
-        create = Q.nbind(User.create, User);
-        newUser = {
-          _id: req.body.id,
-          phoneNumber: req.body.phoneNumber,
-          name: req.body.name,
-          picture: req.body.picture
-        };
-        return create(newUser);
-      }
-    })
-    .then(function(user) {
-      res.send(200);
-    })
-    .fail(function (error) {
-      console.log('error: ' + error);
-      next(error);
-    })
-  },
-
-  savePhoneNumber: function(req, res) {
-    var updateUser = Q.nbind(User.update, User);
-
-    updateUser({facebookid: req.body.id})
-    .then(function(foundUser) {
-      if (foundUser) {
-        foundUser._id = req.body.phoneNumber;
-        foundUser.save();
-      }
-    })
-    .then(function() {
-      res.status(200).send('User found, redirecting to phone number');  
-    });
+    findOne({facebookid: req.body.id})
+      .then(function(user) {
+        if(!user) {
+          create = Q.nbind(User.create, User);
+          newUser = {
+            _id: req.body.id,
+            phoneNumber: req.body.phoneNumber,
+            name: req.body.name,
+            picture: req.body.picture.data.url
+          };
+          return create(newUser);
+        }
+        if(user) {
+          res.status(200).send('User Found, redirecting to stream!');
+        }
+      })
+      .then(function(user) {
+        res.status(200).send('New User Saved');
+      })
+      .catch(function (error) {
+        console.log('error: ' + error);
+        next(error);
+      });
   },
 
   delete: function(req, res) {
