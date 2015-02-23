@@ -12,9 +12,11 @@ module.exports = {
     findUser({facebookid: req.body.id})   //facebook ID for signin
     .then(function(foundUser) {
       if (foundUser) {
+        console.log('foundUser!');
         res.status(200).send('User found, redirecting to stream!');
       }
       if (!foundUser) {
+        console.log('User not found!');
         var newUser = {
           facebookid: req.body.id,
           phoneNumber: req.body.phoneNumber,
