@@ -129,7 +129,8 @@ angular.module('thoughtdrop.services', [])
 
     return $http({
       method: 'POST',
-      url: '/api/auth/id',
+      url: //base  
+      '/api/auth/id',
       data: JSON.stringify(dataStorage.userData.data)
     })
     .then(function(resp) {
