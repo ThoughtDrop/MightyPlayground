@@ -39,6 +39,12 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     controller: 'AuthCtrl'
   })
 
+  .state('messagedetail', {
+    url: '/messagedetail',
+    templateUrl: 'templates/messagedetail.html',
+    controller: 'messageController'
+  })
+
   // setup an abstract state for the tabs directive
   .state('tab', {
     url: "/tab",
