@@ -13,11 +13,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     }
   });
 
-  // if(window.localStorage.token === undefined) {
-  //   $location.path('/login');
-  // } else {
-  //   //$state.go('tab.messages');
-  // }
+  if(window.localStorage.token === undefined) {
+    $location.path('/login');
+  } else {
+    //$state.go('tab.messages');
+  }
 
 })
 
