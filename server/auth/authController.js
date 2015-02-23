@@ -7,7 +7,7 @@ module.exports = {
   find: function(req, res) {
     console.log('find!');
     console.log('req.body' + JSON.stringify(req.body));
-    var findUser = Q.nbind(User.findOne, User);
+    var findOne = Q.nbind(User.findOne, User);
 
     // findUser({facebookid: req.body.id})   //facebook ID for signin
   //   User
@@ -34,7 +34,7 @@ module.exports = {
   //   });
   // },
 
-  findUser({ facbeookid: req.body.id}) {
+  findOne({facebookid: req.body.id})
     .then(function(user) {
       if(!user) {
         create = Q.nbind(User.create, User);
