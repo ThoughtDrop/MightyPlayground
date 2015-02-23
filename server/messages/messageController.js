@@ -2,60 +2,70 @@ var Message = require('../../db/models/messages.js');
 var Q = require('q');
 
 module.exports = {
+
   updateVote: function(req, res) {
-    console.log('Received updated voteCount from client, where votes = ', req.body.voteCount);
+    var voteCount = req.body[1];
+    var messageID = req.body[0];
+    console.log('Received updated voteCount from client, where votes = ', voteCount);
     var updateVote = Q.nbind(Message.findByIdAndUpdate, Message);
-    updateVote(req.body.messageID, { votes : req.body.voteCount } );
+    updateVote(messageID, { votes : voteCount} );
   },
 
-  getNearby: function(req, res) {
-    var findAround = Q.nbind(Message.find, Message);
-
+  queryByLocation: function(lat, long, radius) {
     var query = {};
     query.location = {
       $near : {
         $geometry : {
           type : "Point",
-          coordinates : [req.body[0].long, req.body[0].lat] 
+          coordinates : [long, lat] 
         },
-        $maxDistance : 100
+        $maxDistance : radius
       }
     };
-    
-    findAround(query, function(err, result){
-      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
-      res.send(result);
-    });
+    return query;
   },
 
-  create: function (req, res) {
+  computeSortString: function(sortType) {
+    sortType = sortType || '-created_at';
+    if (sortType === 'new') {
+      sortType = '-created_at'
+    } else if (sortType === 'top') {
+      sortType = '-votes'
+    }
+    return sortType;
+  },
+
+  getNearbyMessages: function(req, res) {
+    var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
+    var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
+
+    Message
+      .find(locationQuery)
+      .limit(50) 
+      .sort(sortString)
+      .exec(function (err, messages) {
+        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        res.send(messages);
+    })
+  },
+
+  saveMessage: function (req, res) {
     var createMessage = Q.nbind(Message.create, Message);
 
     var data = {
-      _id: Math.floor(Math.random()*100000), //change to facebookID
-
-      location: {coordinates: [req.body[1], req.body[2]] },
-      message: req.body[0]
+      _id: Math.floor(Math.random()*100000), //TODO: change to facebookID
+      location: {coordinates: [req.body[0].long, req.body[0].lat]},
+      message: req.body[1],
+      created_at: new Date()
     };
 
     createMessage(data) 
       .then(function (createdMessage) {
-        console.log('Message ' + data.message + ' was successfully saved to database');
+        console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
       })
-      .fail(function (error) {
-        next(error);
-      });
-  },
-    // - probably replaced by findAround
-  fetch: function(req, res) {
-    var findAll = Q.nbind(Message.find, Message);
-
-    findAll({})
-      .then(function (messages) {
-        res.json(messages);
-      })
-      .fail(function (error) {
-        next(error);
+      .catch(function (error) {
+        console.log(error);
       });
   }
+ 
 };

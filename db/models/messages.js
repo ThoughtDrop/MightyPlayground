@@ -21,28 +21,6 @@ var messagesSchema = new mongoose.Schema({
 messagesSchema.index({ location : '2dsphere' });
 
 var Message = mongoose.model('Message', messagesSchema);
-
-// Sample message data
-
-// Message.create({
-//       _id: Math.floor(Math.random()*100000),
-//       location: {coordinates: [-122.408995, 37.783624] },
-//       message: 'hr2',
-//       votes: 99
-//     });
-
-// Message.create({
-//       _id: Math.floor(Math.random()*100000),
-//       location: {coordinates: [-122.408996, 37.783624] },
-//       message: 'hr3'
-//       votes: 39
-//     });
-
-// Message.create({
-//       _id: Math.floor(Math.random()*100000),
-//       location: {coordinates: [0, 0] },
-//       message: 'Africa'
-//       votes: 39
-//     });
+  
 
 module.exports = Message;
