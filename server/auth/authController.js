@@ -8,8 +8,10 @@ module.exports = {
     console.log('req.body' + JSON.stringify(req.body));
     var findUser = Q.nbind(User.findOne, User);
 
-    findUser({facebookid: req.body.id})   //facebook ID for signin
-    .then(function(foundUser) {
+    // findUser({facebookid: req.body.id})   //facebook ID for signin
+    User
+      .find({facebookid: req.body.id})
+      .then(function(foundUser) {
       if (foundUser) {
         console.log('foundUser!');
         res.status(200).send('User found, redirecting to stream!');
