@@ -12,7 +12,7 @@ module.exports = {
     findOne({facebookid: req.body.id})
       .then(function(user) {
         if(!user) {
-          var create = Q.nbind(User.create, User);
+          create = Q.nbind(User.create, User);
           newUser = {
             _id: req.body.id,
             phoneNumber: req.body.phoneNumber,
