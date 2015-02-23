@@ -13,11 +13,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     }
   });
 
-  if(window.localStorage.token === undefined) {
-    $location.path('/login');
-  } else {
-    $state.go('tab.messages');
-  }
+  // if(window.localStorage.token === undefined) {
+  //   $location.path('/login');
+  // } else {
+  //   $state.go('tab.messages');
+  // }
 
 })
 
@@ -37,6 +37,12 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     url: '/phone',
     templateUrl: 'templates/phonenumber.html',
     controller: 'AuthCtrl'
+  })
+
+  .state('messageDetail', {
+    url: '/messagedetail',
+    templateUrl: 'templates/messagedetail.html',
+    controller: 'messageController'
   })
 
   // setup an abstract state for the tabs directive
@@ -88,5 +94,5 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/messages');
+  //$urlRouterProvider.otherwise('/messages');
 });
