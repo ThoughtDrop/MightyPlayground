@@ -1,10 +1,9 @@
-
 <ion-view view-title="Public Messages">
   <ion-content>
     <div class="bar bar-header">
       <button class="button" ng-click="sortFeed('top')">Top</button>
       <button class="button" ng-click="sortFeed('new')">New</button>
-      <i class ='ion-compose' ng-click='newMessage()'></i>
+      <button class="button" ng-click='newMessage()'>Compose</button>
     </div>
     <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
         </ion-refresher>
