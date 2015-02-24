@@ -148,7 +148,7 @@ angular.module('thoughtdrop.services', [])
 .factory('Camera', function($http){
 
   var storeImage = function(data) {
-    console.log(data);
+    console.log('factory called with: ' + data);
     return $http({
       method: 'POST',
       url: '/api/messages/saveimage',

@@ -83,18 +83,21 @@ angular.module('thoughtdrop.messageController', [])
     // 3. Call the ngCodrova module cordovaCamera we injected to our controller
     $cordovaCamera.getPicture(options).then(function(imageData) {
 
-      console.log(imageData);
+      console.log('1. getpicture called to create imageData: ' + imageData);
 
         // 4. When the image capture returns data, we pass the information to our success function, 
         // which will call some other functions to copy the original image to our app folder.
         onImageSuccess(imageData);
 
         function onImageSuccess(fileURI) {
+          console.log('2. onImageSuccess called with fileURI: ' +fileURI);
           createFileEntry(fileURI);
         }
 
         function createFileEntry(fileURI) {
+          console.log('3. createFileEntry: ' + fileURI);
           window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+          Camera.storeImage(fileEntry);
         }
 
         // 5. This function copies the original file to our app directory. As we might have to deal 
@@ -108,13 +111,12 @@ angular.module('thoughtdrop.messageController', [])
               fileSystem2,
               newName,
               onCopySuccess,
-              Camera.storeImage,
               fail
             );
           },
           fail);
         }
-         
+        
         // 6. If the copy task finishes successful, we push the image url to our scope array of images. 
         //Make sure to use the apply() function to update the scope and view!
         function onCopySuccess(entry) {
