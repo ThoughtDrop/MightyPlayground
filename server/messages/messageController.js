@@ -1,5 +1,7 @@
 var Message = require('../../db/models/messages.js');
 var Q = require('q');
+var AWS = require('aws-sdk');
+AWS.config.region = 'us-west-1';
 
 module.exports = {
 
@@ -32,9 +34,9 @@ module.exports = {
   computeSortString: function(sortType) {
     sortType = sortType || '-created_at';
     if (sortType === 'new') {
-      sortType = '-created_at'
+      sortType = '-created_at';
     } else if (sortType === 'top') {
-      sortType = '-votes'
+      sortType = '-votes';
     }
     return sortType;
   },
@@ -74,6 +76,21 @@ module.exports = {
 
   displayReplies: function (req, res) {
     //stuff
-  }
+  },
 
+  saveImage: function(req, res) {
+    
+
+    var s3bucket = new AWS.S3({params: {Bucket: 'mpbucket-hr23'}});
+    s3bucket.createBucket(function() {
+      var params = {Key: 'req',};
+      s3bucket.upload(params, function(err, data) {
+        if (err) {
+          console.log("Error uploading data: ", err);
+        } else {
+          console.log("Successfully uploaded data to myBucket/myKey");
+        }
+      });
+    });
+  }
 };
