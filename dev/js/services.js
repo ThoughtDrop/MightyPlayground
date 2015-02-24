@@ -72,6 +72,42 @@ angular.module('thoughtdrop.services', [])
 
 .factory('Facebook', function($http){
 
+  // var storeId = function(data) {
+  //   console.log(data);
+  //   return $http({
+  //     method: 'POST',
+  //     url: '/api/auth/id',
+  //     data: data
+  //   })
+  //   .then(function(resp) {
+  //     console.log("user id stored", resp);
+  //   });
+  // };
+
+  // var updatePhone = function(data) {
+  //   console.log('servcies data: ' + JSON.stringify(data));
+  //   return $http({
+  //     method: 'POST',
+  //     url: '/api/auth/id',
+  //     data: data
+  //   })
+  //   .then (function(resp) {
+  //     console.log('userPhone is stored', resp);
+  //   });
+  // };
+
+  // var userPhone = function(data) {
+  //   console.log('server data: ' + (JSON.stringify(data)));
+  //   return $http({
+  //     method: 'POST',
+  //     url: '/api/auth/id',
+  //     data: data
+  //   })
+  //   .then(function(resp) {
+  //     console.log("user id stored", resp);
+  //   });
+  // };
+
   var dataStorage = {};
 
   console.log(JSON.stringify(dataStorage));
@@ -93,7 +129,8 @@ angular.module('thoughtdrop.services', [])
 
     return $http({
       method: 'POST',
-      url: '/api/auth/id',
+      url: //base
+      '/api/auth/id',
       data: JSON.stringify(dataStorage.userData.data)
     })
     .then(function(resp) {
