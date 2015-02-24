@@ -4,7 +4,7 @@ angular.module('ngCordova', [
 ]);
 
 angular.module('ngCordova.plugins', [
-	 // 'camera',
+	 'camera',
 	 // 'capture',
 	 // 'contact',
 	 // 'splashscreen',
