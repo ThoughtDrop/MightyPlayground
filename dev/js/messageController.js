@@ -125,5 +125,4 @@ angular.module('thoughtdrop.messageController', [])
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
-
 });
