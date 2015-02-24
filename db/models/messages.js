@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
+
 var User = require('./user');
 
 var messagesSchema = new mongoose.Schema({
+  //TODO: make _id autoIncrement using autoIncrement
   _id: Number,
   // _creator: [{type: Number, ref: 'User'}],
   created_at: { type: Date },
@@ -15,7 +18,8 @@ var messagesSchema = new mongoose.Schema({
   },
   // public: boolean, //for private or public messages (non MVP)
   message: String,
-  votes: { type: Number, default: 0 }
+  votes: { type: Number, default: 0 },
+  messageDetail: []
 });
 
 messagesSchema.index({ location : '2dsphere' });

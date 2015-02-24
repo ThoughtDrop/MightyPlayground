@@ -72,8 +72,8 @@ module.exports = {
       });
   },
 
-  displayReplies: function (req, res) {
-    //stuff
+  addMessageDetail: function (req, res) {
+    console.log(req.body);
   }
 
 };

@@ -1,7 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, Vote) {
+.controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -11,6 +10,7 @@ angular.module('thoughtdrop.messageController', [])
   //Keeps track of what 'feed sort' the user is currently on to inform what data to fetch on a 'pull refresh'
   $scope.page = 'new';
   $scope.images = [];
+  $scope.particular = MessageDetail.getCurrentMessage();
 
   $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
@@ -203,6 +203,20 @@ angular.module('thoughtdrop.messageController', [])
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
+
+  $scope.getReplies= function(message_obj) {
+    MessageDetail.passOver(message_obj);
+    $state.go('messagedetail');//need to ask pass along message_obj
+    //$scope.particular = 'MessageDetail.getCurrentMessage()';
+    //console.log($scope.particular);
+    //$scope.sendData('addMessageDetail', message_obj);
+  }
+
+  $scope.alert = function() {
+    var thing = $scope.particular;
+    alert(thing);
+    console.dir(thing);
+  }
 
 
   //Invokes findNearby on page load for /tabs/messages

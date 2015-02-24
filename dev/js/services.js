@@ -80,44 +80,28 @@ angular.module('thoughtdrop.services', [])
 
 })
 
+.factory('MessageDetail', function(){
+  var particularMessage;
+  
+  var passOver = function(data) {
+    particularMessage = data;
+    // return location.path('/messagedetail')
+  }
 
+  var destroyCurrent = function() {
+    particularMessage = null;
+  }
+
+  var getCurrentMessage = function() {
+    return particularMessage || 'Please select go back & select a message!';
+  }
+  return {
+    passOver: passOver,
+    destroyCurrent: destroyCurrent,
+    getCurrentMessage: getCurrentMessage
+  };
+})
 .factory('Facebook', function($http){
-
-  // var storeId = function(data) {
-  //   console.log(data);
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/auth/id',
-  //     data: data
-  //   })
-  //   .then(function(resp) {
-  //     console.log("user id stored", resp);
-  //   });
-  // };
-
-  // var updatePhone = function(data) {
-  //   console.log('servcies data: ' + JSON.stringify(data));
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/auth/id',
-  //     data: data
-  //   })
-  //   .then (function(resp) {
-  //     console.log('userPhone is stored', resp);
-  //   });
-  // };
-
-  // var userPhone = function(data) {
-  //   console.log('server data: ' + (JSON.stringify(data)));
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/auth/id',
-  //     data: data
-  //   })
-  //   .then(function(resp) {
-  //     console.log("user id stored", resp);
-  //   });
-  // };
 
   var dataStorage = {};
 
@@ -148,7 +132,6 @@ angular.module('thoughtdrop.services', [])
       console.log('Server resp to func call to storeUser: ', resp);
     });
   };
-
 
   return {
     updatePhone: updatePhone,
