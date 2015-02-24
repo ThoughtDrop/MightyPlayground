@@ -126,7 +126,6 @@ angular.module('thoughtdrop.messageController', [])
   $scope.findNearby = function(route, sortMessagesBy) {
     $scope.getPosition()
     .then(function(position) {
-      //TODO: Just send the position and access the coordinates server side
       var coordinates = {};
       coordinates.lat = position.coords.latitude;
       coordinates.long = position.coords.longitude;
@@ -135,9 +134,6 @@ angular.module('thoughtdrop.messageController', [])
   };
 
   $scope.doRefresh = function() {
-    console.log($scope.page); 
-    //TODO: Refresh needs to pass in 'top' or 'new' depending on the last feed sort button 
-    //that was pressed. If you pressed 
     if ($scope.page === 'new') {
       $scope.findNearby('nearby', 'new', 'scroll.refreshComplete');
     } else if ($scope.page === 'top') {
