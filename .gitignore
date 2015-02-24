@@ -15,4 +15,6 @@ db/mightyPlayground.*
 platforms
 
 www/
+.DS_Store
+
 
