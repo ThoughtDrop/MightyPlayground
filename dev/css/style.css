@@ -31,11 +31,16 @@
   margin: 0 auto;
   font-size: 2em;
 }
-/* Phone number */
+/* Phone number Page Styling */
 .bar {
   position: relative;
 }
 
 .button-positive{
      right:70px !important;
+}
+
+/* Message Detail Page Styling */
+.message-detail-header {
+  display:block;
 }

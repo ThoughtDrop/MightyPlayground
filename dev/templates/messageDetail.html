@@ -1,17 +1,38 @@
 <ion-view view-title="Message Detail">
+ <!--HEADER BAR -->
   <ion-content>
-    <div class="bar bar-header bar-dark">
-      <h1>Message Detail</h1>
+    <ion-nav-bar class = "message-detail-header"class="bar-dark">
+      <i class ='ion-close-round'></i> 
+    </ion-nav-bar>
+
+  <!--Main Message -->
+    <div class = 'parent'>
+      Main Message
+    <div>  
+
+  <!--Reply Messages -->
+    <div class="card" ng-repeat="message in message.messages">
+      <div class="item item-text-wrap">
+          {{message._id}}
+          <i class ='ion-plus-round'></i> 
+          <i class ='ion-cash'></i> 
+          <i class ='ion-minus-round'></i> 
+        </div>
+      </div>
     </div>
+
+  <!--FOOTER Reply Message Box -->
+    <ion-footer-bar align-title="left" class="bar-assertive">
+     <label class="item item-input">
+       <input type="text" ng-model="message.text" placeholder="Reply back here" maxlength="144" autofocus>
+     </label>
+
+      <div class="buttons">
+        <button class="button">Send</button>
+      </div>
+    </ion-footer-bar>
+
+
   </ion-content>
 </ion-view>
 
-<!-- <ion-view view-title="Log In!">
-  <ion-content class="padding">
-    <form ng-click="login()">
-      <label class="item">
-        <button class="button button-block button-dark" type="submit">Log in with Facebook!</button>
-      </label>
-    </form>
-  </ion-content>
-</ion-view> -->

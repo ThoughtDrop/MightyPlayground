@@ -3,6 +3,10 @@ var Q = require('q');
 
 module.exports = {
 
+  displayReplies: function(req, res) {
+
+  },
+
   updateVote: function(req, res) {
     var voteCount = req.body[1];
     var messageID = req.body[0];

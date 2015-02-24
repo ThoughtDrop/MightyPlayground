@@ -1,6 +1,7 @@
 <ion-modal-view style="height:15%">
   <ion-view view-title="New Thought">
     <ion-content class="padding">
+    <i class ='ion-close-round' ng-click="closeMessageBox(0)"></i> 
       <form ng-submit="sendMessage()">
         <label class="item item-input">
           <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
@@ -12,3 +13,6 @@
     </ion-content>
   </ion-view>
 </ion-modal-view>
+
+
+
