@@ -4,7 +4,7 @@ var Q = require('q');
 module.exports = {
 
   //TODO: maybe somehow modularize this so that it finds in one function, then calls another function when found
-  find: function(req, res, next) {
+  find: function(req, res) {
     console.log('find!');
     console.log('req.body' + JSON.stringify(req.body));
     var findOne = Q.nbind(User.findOne, User);
@@ -12,23 +12,24 @@ module.exports = {
     findOne({facebookid: req.body.id})
       .then(function(user) {
         if(!user) {
-          var create = Q.nbind(User.create, User);
+          create = Q.nbind(User.create, User);
           newUser = {
             _id: req.body.id,
             phoneNumber: req.body.phoneNumber,
             name: req.body.name,
             picture: req.body.picture.data.url
           };
+          res.send(200);
           return create(newUser);
         }
+        if(user) {
+          res.send(200);
+        }
       })
-      .then(function(user) {
-        res.send(200);
-      })
-      .fail(function (error) {
+      .catch(function (error) {
         console.log('error: ' + error);
         next(error);
-      })
+      });
   },
 
   delete: function(req, res) {
