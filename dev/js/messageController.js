@@ -7,6 +7,7 @@ angular.module('thoughtdrop.messageController', [])
         //look into using socket.io to handle simultaneous upvote/downvote requests from clients
   $scope.message = {};
   $scope.message.text = '';
+  $scope.page = 'new';
 
   $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
@@ -14,7 +15,12 @@ angular.module('thoughtdrop.messageController', [])
   $scope.modalNewMessage = modal;
   });
 
+  $scope.setPage = function(page) {
+    $scope.page = page;
+  };
+
   $scope.sortFeed = function(action) {
+    $scope.setPage(action);
     console.log('sorting feed by ' + "'" + action + "' messages");
     if (action === 'new') {
       $scope.findNearby('nearby', 'new');
@@ -129,9 +135,15 @@ angular.module('thoughtdrop.messageController', [])
   };
 
   $scope.doRefresh = function() {
+    console.log($scope.page); 
     //TODO: Refresh needs to pass in 'top' or 'new' depending on the last feed sort button 
     //that was pressed. If you pressed 
-    $scope.findNearby('scroll.refreshComplete');
+    if ($scope.page === 'new') {
+      $scope.findNearby('nearby', 'new', 'scroll.refreshComplete');
+    } else if ($scope.page === 'top') {
+      $scope.findNearby('nearby', 'top', 'scroll.refreshComplete');
+    }
+
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
