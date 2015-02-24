@@ -77,7 +77,8 @@ angular.module('thoughtdrop.messageController', [])
       allowEdit : true,
       encodingType: Camera.EncodingType.JPEG,
       popoverOptions: CameraPopoverOptions,
-      correctOrientation: true
+      correctOrientation: true,
+      quality: 25
     };
      
     // 3. Call the ngCodrova module cordovaCamera we injected to our controller
@@ -145,6 +146,48 @@ angular.module('thoughtdrop.messageController', [])
   };
 
 // ==========END OF CAMERA CODE
+
+
+// =======UPLOAD TO S3
+  $scope.creds = {
+    bucket: 'mpbucket-hr23',
+    access_key: 'AKIAJOCFMQLT2OTUDEJQ',
+    secret_key: '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'
+  };
+   
+  $scope.upload = function() {
+    // Configure The S3 Object 
+    AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
+    AWS.config.region = 'us-west-1';
+    var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
+   
+    if($scope.file) {
+      var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
+   
+      bucket.putObject(params, function(err, data) {
+        if(err) {
+          // There Was An Error With Your S3 Config
+          alert(err.message);
+          return false;
+        }
+        else {
+          // Success!
+          alert('Upload Done');
+        }
+      })
+      .on('httpUploadProgress',function(progress) {
+            // Log Progress Information
+            console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
+          });
+    }
+    else {
+      // No File Selected
+      alert('No File Selected');
+    }
+  };
+
+
+// ================
 
 
   $scope.sendMessage = function(route) {
