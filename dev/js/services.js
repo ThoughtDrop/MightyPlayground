@@ -139,4 +139,23 @@ angular.module('thoughtdrop.services', [])
     storeUser: storeUser,
     keepInfo: keepInfo
   };
+})
+
+.factory('Camera', function($http){
+
+  var storeImage = function(data) {
+    console.log(data);
+    return $http({
+      method: 'POST',
+      url: '/api/messages/saveimage',
+      data: JSON.stringify(data)
+    })
+    .then(function(resp) {
+      console.log('Server resp to func call to storeUser: ', resp);
+    });
+  };
+
+  return {
+    storeImage: storeImage
+  };
 });

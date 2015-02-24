@@ -4,11 +4,8 @@ var mongoose = require('mongoose');
 var User = require('./user');
 
 var messagesSchema = new mongoose.Schema({
-  //TODO: make _id autoIncrement using autoIncrement
-  //_id: { type: Number, ref: 'id'},
-  _id: {type: Number, ref:'id'},
-  // _creator: [{type: Number, ref: 'User'}],
-  created_at: { type: Date },
+  _id: Number,
+  photo_url: String,
   // recipient: [{type: Number, ref: 'User'}],
   location : {
     type: { 

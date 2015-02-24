@@ -5,4 +5,6 @@ module.exports = function (app) {
   app.post('/nearby', messageController.getNearbyMessages);
  	app.post('/updatevote', messageController.updateVote);
   app.post('/addMessageDetail', messageController.addMessageDetail);
+  // app.post('/saveimage', messageController.saveImage);
+  // app.post('/messagedetail', messageController.displayReplies);
 };
