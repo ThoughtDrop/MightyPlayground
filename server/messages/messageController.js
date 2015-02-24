@@ -66,6 +66,10 @@ module.exports = {
       .catch(function (error) {
         console.log(error);
       });
+  },
+
+  displayReplies: function (req, res) {
+    //stuff
   }
- 
+
 };
