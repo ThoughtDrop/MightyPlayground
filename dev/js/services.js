@@ -144,8 +144,7 @@ angular.module('thoughtdrop.services', [])
   };
 
   var storeUser = function(data) {
-    console.log('final data before sending to db: ', JSON.stringify(data));
-
+    console.log('store data: ' + JSON.stringify(data));
     var userInfo = {
       _id: data.phoneNumber,
       name: data.name,
@@ -153,6 +152,7 @@ angular.module('thoughtdrop.services', [])
       picture: data.picture
     }
 
+    console.log('final data before sending to db: ', JSON.stringify(userInfo));
     return $http({
       method: 'POST',
       url: //base  
