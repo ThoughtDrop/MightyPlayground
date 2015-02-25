@@ -10,7 +10,7 @@ angular.module('thoughtdrop.messageController', [])
   $scope.page = 'new';
   $scope.images = [];
 
-  $ionicModal.fromTemplateUrl('templates/tab-post.html', {
+  $ionicModal.fromTemplateUrl('templates/tab-privatePost.html', {
     scope: $scope
   }).then(function(modal) {
   $scope.modalNewMessage = modal;
@@ -183,6 +183,7 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.sendData = function(route) {
     var data = Array.prototype.slice.call(arguments, 1);
+    console.log('sendData : ' + JSON.stringify(data));
     var route = route || "";
     //returns a promise that will be used to resolve/ do work on the data returned by the server
     return $http({
