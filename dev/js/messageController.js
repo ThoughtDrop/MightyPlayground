@@ -1,7 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, Vote) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -44,7 +43,7 @@ angular.module('thoughtdrop.messageController', [])
     };
  
     $scope.addImage = function() {
-        // 2. The options array is passed to the cordovaCamera with specific options. 
+        // 2. The options array is passed to the cordova Camera with specific options. 
         // For more options see the official docs for cordova camera.
         var options = {
             destinationType : Camera.DestinationType.FILE_URI,
@@ -204,6 +203,10 @@ angular.module('thoughtdrop.messageController', [])
     // $scope.apply();
   };
 
+  $scope.getReplies = function(message_obj) {
+    MessageDetail.passOver(message_obj);
+    $state.go('messagedetail');//need to ask pass along message_obj
+  }
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');

@@ -45,3 +45,8 @@
   display:block;
   text-align: center;
 }
+
+.parent {
+  margin:50px; 
+  text-align:center;
+}
