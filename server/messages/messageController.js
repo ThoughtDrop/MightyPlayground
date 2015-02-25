@@ -39,6 +39,11 @@ module.exports = {
       }
     };
     return query;
+    
+    findAround(query, function(err, result){
+      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
+      res.sendStatus(result);
+    });
   },
 
   computeSortString: function(sortType) {
