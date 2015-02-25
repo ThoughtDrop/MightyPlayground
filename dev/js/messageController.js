@@ -1,12 +1,14 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal, $cordovaCamera) {
+
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, Vote) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
         //look into using socket.io to handle simultaneous upvote/downvote requests from clients
   $scope.message = {};
   $scope.message.text = '';
+  //Keeps track of what 'feed sort' the user is currently on to inform what data to fetch on a 'pull refresh'
   $scope.page = 'new';
   $scope.images = [];
 
@@ -30,35 +32,8 @@ angular.module('thoughtdrop.messageController', [])
     }
   };
 
-  $scope.vote = function(messageID, voteCount, className) {    
-    if (className === 'upVote') {
-      //Increment vote count in the DOM
-      $scope.message.messages.forEach(function(message) {
-        if (message._id === messageID) {
-          //increment count in DOM
-          message.votes++;
-          //send incremented count along with messageID to server
-          console.log('upVOTING and changing vote to: ' + message.votes);
-          //$scope.sendVote(messageID, message.votes);
-          $scope.sendData('updatevote', messageID, message.votes);
-          console.log('Sending vote of: ' + message.votes + ' to server!');
-        }
-      });
-     
-    } else if (className === 'downVote') {
-      //Decrement vote count in the DOM
-      $scope.message.messages.forEach(function(message) {
-        if (message._id === messageID) {
-          //decrement count in DOM
-          message.votes--;
-          //send decremented count along with messageID to server
-          console.log('downVOTING and changing vote to: ' + message.votes);
-          //$scope.sendVote(messageID, message.votes);
-          $scope.sendData('updatevote', messageID, message.votes);
-          console.log('Sending vote of: ' + message.votes + ' to server!');
-        }
-      });
-    }
+  $scope.handleVote = function(message, className) {
+    Vote.handleVote(message, className);
   };
 
 //camera code

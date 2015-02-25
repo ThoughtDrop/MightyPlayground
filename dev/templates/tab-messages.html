@@ -14,9 +14,9 @@
       <a href="/messagedetail}">{{message.message}}</a>
       <!-- <i class ='ion-heart'></i> -->
           <b>{{message.votes}}</b>
-          <i class ='ion-plus-round' ng-click="vote(message._id, message.votes, 'upVote')"></i> 
+          <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
           <i class ='ion-cash'></i> 
-          <i class ='ion-minus-round' ng-click="vote(message._id, message.votes, 'downVote')"></i> 
+          <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
         </div>
       </div>
     </div>
