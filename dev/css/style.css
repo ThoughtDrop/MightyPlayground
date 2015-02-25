@@ -32,6 +32,7 @@
   position: relative;
 }
 
+
 /*.button-positive{
      right:70px !important;
 }*/
@@ -68,6 +69,48 @@
   font-size: 3.5em;
   text-align: center;
   margin-top: 6%
+
+.button-positive{
+  right:70px !important;
+}
+
+/* Main Public Message Feed Page Styling */
+
+.sort-buttons {
+  text-align: left;
+  width: 25%;
+  margin: 0% auto 3% 0%;
+}
+
+.compose-button {
+  text-align:center;
+  width: 15%;
+  margin: 0% 8% 0% auto;
+}
+
+.message-block {
+  vertical-align: middle;
+}
+
+.message-text {
+  /*Horizontal Centering*/
+  width:75%;
+  text-align: left;
+  float:left;
+  /*Vertical Centering*/
+  margin-top: auto;
+  margin-bottom: auto;
+  /*Message Text Styling*/
+  color: green;
+  font-size: 1em;
+  font-family: helvetica;
+
+}
+.votes-container {
+  width:20%;
+  text-align: right;
+  float:right;
+
 }
 
 /* Message Detail Page Styling */

@@ -1,26 +1,32 @@
 <ion-view view-title="Public Messages">
-  <ion-content>
-    <div class="bar bar-header">
-      <button class="button" ng-click="sortFeed('top')">Top</button>
-      <button class="button" ng-click="sortFeed('new')">New</button>
-      <button class="button" ng-click='newMessage()'>Compose</button>
-    </div>
-    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
-        </ion-refresher>
+<!-- HEADER -->
+ <ion-header-bar align-title="center" class="bar-dark">
+   <div class="buttons">
+    <button class="sort-button" ng-click="sortFeed('top')">Top</button>
+   <button class="sort-button" ng-click="sortFeed('new')">New</button>
+   </div>
+   <div class="compose-button">
+       <button ng-click='newMessage()'>Drop</button>
+   </div>
+ </ion-header-bar>
 
-    <div class="card" ng-repeat="message in message.messages">
-      <div class="item item-text-wrap">
-      <b>Name:</b>{{message.message}}
-      <!-- <i class ='ion-heart'></i> -->
-          <b>{{message.votes}}</b>
-          <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
-          <i class ='ion-cash'></i> 
-          <i class ='ion-minus-round' ng-click="vote(message._id, message.votes, 'downVote')"></i> 
-          <button ng-click="getReplies(message)">Message Detail</button>
-        </div>
+ <ion-content>
+<!-- PULL REFRESH -->
+   <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
+   </ion-refresher>
+<!-- Public Messages -->
+   <div class="card" ng-repeat="message in message.messages">
+     <div class="item item-text-wrap message-block">
+       <div class = "message-text" ng-click="getReplies(message)" >{{message.message}}</div>
+         <div class = "votes-container">
+           <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
+           <b>{{message.votes}}</b>
+           <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
+         </div>
       </div>
     </div>
-  </ion-content>
+    
+ </ion-content>
 </ion-view>
 
 
