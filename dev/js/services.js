@@ -81,21 +81,21 @@ angular.module('thoughtdrop.services', [])
     console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData.data));
   };
 
-  var updatePhone = function(data) {
-    dataStorage.userData.phoneNumber = data.phoneNumber;
-    console.log('FB factory updatePhone triggered : ', JSON.stringify(dataStorage.userData));
-  };
-
   var storeUser = function(data) {
-    console.log('storeUser triggered: ', JSON.stringify(data));
-    dataStorage.userData.data.phoneNumber = data.phoneNumber; 
-    console.log('final data before sending to db: ', JSON.stringify(dataStorage.userData.data));
+    console.log('final data before sending to db: ', JSON.stringify(data));
+
+    var userInfo = {
+      _id: data.phoneNumber,
+      name: data.name,
+      fbID: data.id,
+      picture: data.picture
+    }
 
     return $http({
       method: 'POST',
       url: //base
       '/api/auth/id',
-      data: JSON.stringify(dataStorage.userData.data)
+      data: JSON.stringify(userInfo)
     })
     .then(function(resp) {
       console.log('Server resp to func call to storeUser: ', resp);

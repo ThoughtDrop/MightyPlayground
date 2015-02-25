@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateServices', [])
 
-.factory('Private', function($http, $cordovaGeolocation) {
+.factory('Private', function($http) {
 
   var sendData = function(route, data) {
     console.log('servceis sendData!');

@@ -34,6 +34,7 @@ angular.module('thoughtdrop.controllers', [])
       //doesn't seem very promise-y, or use a .catch? - Rob
       .then(function(result) {
         $scope.data = result;
+        window.localStorage.userInfo = result;
         Facebook.keepInfo($scope.data); //saves userData in factory
       }, function(error) {
           alert("There was a problem getting your profile.  Check the logs for details.");
@@ -46,15 +47,15 @@ angular.module('thoughtdrop.controllers', [])
   };
 
   $scope.storeUser = function() {
-    window.localStorage.phoneNumber = $scope.data.phoneNumber;
+    window.localStorage.userInfo.phoneNumber = $scope.data.phoneNumber;
     console.log('storeUser triggered - phoneNumber: ', $scope.data.phoneNumber);
-    Facebook.storeUser($scope.data);
+    Facebook.storeUser(window.localStorage.userInfo);
     $location.path('/tab/messages');
   };
 
   $scope.logout = function() {
     window.localStorage.token = undefined; 
-    window.localStorage.phoneNumber = undefined;
+    window.localStorage.userInfo = undefined;
     $location.path('/login');
   };
 
