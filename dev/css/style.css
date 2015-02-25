@@ -12,13 +12,9 @@
 	margin-top: 15%;
 }
 
-.fb-button {
- 	display: table;
-  margin: 0 auto;
-}
 
 .title{
- 	display: table;
+  display: table;
   margin: 0 auto;
   font-size: 4em;
   margin-bottom: 2%;
@@ -27,7 +23,7 @@
 
 }
 .slogan{
- 	display: table;
+  display: table;
   margin: 0 auto;
   font-size: 2em;
 }
@@ -36,8 +32,42 @@
   position: relative;
 }
 
-.button-positive{
+/*.button-positive{
      right:70px !important;
+}*/
+
+.button.button-positive.fb-button {
+  margin-top: 15%;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 10px;
+  width: 300px;
+}
+
+/*Add map image to login background*/
+.scroll-content.loginPage {
+  position: absolute;
+  background-image: url('../img/map.png');
+  background-repeat: no-repeat;
+}
+
+/*Create the overlay on the front page*/
+.overLay {
+  z-index: 1;
+  padding: 2em 0 3em 0;
+  background:rgba(0,0,10,0.55);
+}
+
+.overLay .logo {
+  margin-top: 15%;
+}
+
+.overLay h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 3.5em;
+  text-align: center;
+  margin-top: 6%
 }
 
 /* Message Detail Page Styling */
