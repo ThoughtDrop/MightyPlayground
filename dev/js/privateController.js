@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -8,8 +8,8 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.message.isPrivate = true;
-
+  $scope.recipients = []; //store phoneNumbers of recipients
+  $scope.privateMessages = {};
 
   $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
@@ -29,16 +29,18 @@ angular.module('thoughtdrop.privateController', [])
       .then(function(position) {
 
         var data = {
-          long: position.coords.longitude, 
-          lat: position.coords.latitude,
+          _id: Math.floor(Math.random()*100000),
+          location: {coordinates: [position.coords.longitude, position.coords.latitude]},
           message: $scope.message.text,
+          creator: window.localStorage.userInfo,
+          recipients: $scope.recipients
         };
 
         // var data = [{lat: position.coords.latitude, long: position.coords.longitude}, $scope.message.text, isPrivate: true];
 
         $scope.message.text = '';
 
-        Private.sendData('private', data)
+        Private.saveMessage(data)
         .then(function(resp) {
           console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
           //return resp;
@@ -62,5 +64,33 @@ angular.module('thoughtdrop.privateController', [])
   $scope.newMessage = function() {
     $scope.modalNewMessage.show();
   };
+
+  $scope.getRecipients = function() {
+    //store all the recipeints from contacts list into the $scope.recipients array
+  };
+
+
+  //send coordinates & users's phone number
+  $scope.findPrivateMessages = function () {
+    var userPhone = window.localStorage.userInfo.phoneNumber;
+    Geolocation.getPosition()
+      .then(function(position) {
+        var data = {  //send user phoneNumber & coordinates
+          userPhone: userPhone,
+          coordinates: coordinate = {
+            lat: position.coords.latitude,
+            long: position.coords.longitude
+          }
+        };
+        Private.getMessages(data)
+        .then(function(resp) {
+          $scope.privateMessages = resp.data;
+          console.log('resp.data: ' + resp.data);
+          console.log('$scope.privateMessages: ' + $scope.privateMessages);
+        });
+      })
+  };
+
+  $scope.findPrivateMessages();
 
 });

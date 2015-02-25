@@ -3,7 +3,7 @@ var User = require('./user');
 
 var messagesSchema = new mongoose.Schema({
   _id: Number,
-  // _creator: [{type: Number, ref: 'User'}],
+  _creator: [{type: Number, ref: 'User'}],
   created_at: { type: Date },
   // recipient: [{type: Number, ref: 'User'}],
   location : {
@@ -13,10 +13,10 @@ var messagesSchema = new mongoose.Schema({
     },
     coordinates: [Number]
   },
-  // public: boolean, //for private or public messages (non MVP)
   message: String,
   votes: { type: Number, default: 0 },
-  isPrivate: Boolean
+  isPrivate: Boolean,
+  recipients: []
 });
 
 messagesSchema.index({ location : '2dsphere' });

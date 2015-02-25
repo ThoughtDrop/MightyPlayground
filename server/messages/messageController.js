@@ -79,14 +79,16 @@ module.exports = {
 
   savePrivate: function(req, res) {
     var createMessage = Q.nbind(Message.create, Message);
-    console.log('private message: ' + JSON.stringify(req.body));
-    var data = { //TODO: add a facebookID field
-      _id: Math.floor(Math.random()*100000), 
-      location: {coordinates: [req.body.long, req.body.lat]},
-      message: req.body.message,
-      created_at: new Date(),
-      isPrivate: true
-    };
+    console.log('private message data: ' + JSON.stringify(req.body));
+
+    // var data = {
+    //   _id: Math.floor(Math.random()*100000), 
+    //   location: {coordinates: [req.body.long, req.body.lat]},
+    //   message: req.body.message,
+    //   created_at: new Date(),
+    //   isPrivate: true,
+    //   recipients: req.body.recipients
+    // };
 
     createMessage(data) 
       .then(function (createdMessage) {
@@ -95,6 +97,22 @@ module.exports = {
       .catch(function (error) {
         console.log(error);
       });
+  },
+
+  getPrivate: function(req, res) {
+    console.log('server req.body: ' + JSON.stringify(req.body));
+    var locationQuery = module.exports.queryByLocation(req.body.coordinates.lat, req.body.coordinates.long, 100);
+    // { location: { '$near': { '$geometry': [Object], '$maxDistance': 100 } } }
+    Message
+      .find(locationQuery)
+      .where(isPrivate).equals(true)
+      .where(req.body.upserPhone)
+      .in(recipients)
+      // .sort()
+      .exec(function(err, messages) {
+        res.send(messages);
+    });
+
   }
 
 };

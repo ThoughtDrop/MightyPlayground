@@ -40,30 +40,6 @@ angular.module('thoughtdrop.services', [])
     });
   };
 
-  // var findNearby = function() {
-  //   var sendPosition = function(data) {
-  //     return $http({
-  //       method: 'POST',
-  //       url: //base
-  //       '/api/messages/nearby',
-  //       data: JSON.stringify(data)
-  //     })
-  //     .then(function (resp) {
-  //       console.log('Server resp to func call to findNearby', resp);  
-  //       return resp.data;
-  //     });
-  //   };
-    
-  //   $cordovaGeolocation
-  //   .getCurrentPosition()
-  //   .then(function(position) {
-  //     var coordinates = {};
-  //     coordinates.lat = position.coords.latitude;
-  //     coordinates.long = position.coords.longitude;
-  //     sendPosition(coordinates);
-  //   });
-  // };
-
   return {
     getMessages: getMessages,
     //findNearby: findNearby
@@ -71,7 +47,6 @@ angular.module('thoughtdrop.services', [])
 })
 
 .factory('Facebook', function($http){
-
 
   var storeUser = function(data) {
     console.log('final data before sending to db: ', JSON.stringify(data));

@@ -2,23 +2,29 @@ angular.module('thoughtdrop.privateServices', [])
 
 .factory('Private', function($http) {
 
-  var sendData = function(route, data) {
-    console.log('servceis sendData!');
-    // var data = Array.prototype.slice.call(arguments, 1);
+  var saveMessage = function(data) {
     console.log('private data: ' + JSON.stringify(data));
-    var route = route || "";
-    console.log(route);
-    //returns a promise that will be used to resolve/ do work on the data returned by the server
+
     return $http({
       method: 'POST',
       url:  //base
-      '/api/messages/' + route,
+      '/api/messages/',
       data: JSON.stringify(data)
     })
   };
 
+  var getMessages = function(data) {
+
+    return $http({
+      method: 'POST',
+      url: //base
+      '/api/private/nearby'
+    })
+    
+  };
+
   return {
-    sendData: sendData
+    saveMessage: saveMessage,
+    getMessages: getMessages
   };
 })
-
