@@ -7,6 +7,18 @@ module.exports = {
 
   },
 
+  addMessageDetail: function (req, res) {
+    var toAdd = req.body[0];
+    var messageID = req.body[1];
+    var addMessage = Q.nbind(Message.findByIdAndUpdate, Message);
+    addMessage(messageID, { $push : { messageDetail: toAdd }}, {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    });
+    //console.log(toAdd);//log out the array
+    //console.log($push);
+  },
+
   updateVote: function(req, res) {
     var voteCount = req.body[1];
     var messageID = req.body[0];
@@ -27,6 +39,11 @@ module.exports = {
       }
     };
     return query;
+    
+    findAround(query, function(err, result){
+      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
+      res.sendStatus(result);
+    });
   },
 
   computeSortString: function(sortType) {
@@ -58,7 +75,7 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
 
     var data = { //TODO: add a facebookID field
-      _id: Math.floor(Math.random()*100000), 
+      _id: Math.floor(Math.random()*100000), //message IDs use {} 
       location: {coordinates: [req.body[0].long, req.body[0].lat]},
       message: req.body[1],
       created_at: new Date()
@@ -114,5 +131,4 @@ module.exports = {
     });
 
   }
-
 };

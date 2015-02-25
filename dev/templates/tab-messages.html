@@ -10,13 +10,13 @@
 
     <div class="card" ng-repeat="message in message.messages">
       <div class="item item-text-wrap">
-      <b>Name:</b> 
-      <a href="/messagedetail}">{{message.message}}</a>
+      <b>Name:</b>{{message.message}}
       <!-- <i class ='ion-heart'></i> -->
           <b>{{message.votes}}</b>
-          <i class ='ion-plus-round' ng-click="vote(message._id, message.votes, 'upVote')"></i> 
+          <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
           <i class ='ion-cash'></i> 
           <i class ='ion-minus-round' ng-click="vote(message._id, message.votes, 'downVote')"></i> 
+          <button ng-click="getReplies(message)">Message Detail</button>
         </div>
       </div>
     </div>

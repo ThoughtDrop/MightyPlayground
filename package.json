@@ -48,6 +48,7 @@
     "gulp-util": "^2.2.14",
     "gulp-watch": "^4.1.1",
     "karma": "^0.12.31",
+    "mongoose-auto-increment": "^3.2.0",
     "run-sequence": "^1.0.2",
     "shelljs": "^0.3.0"
   },
