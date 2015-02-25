@@ -109,8 +109,9 @@ gulp.task('inject2', function(){
 gulp.task('ionic', shell.task([
   'ionic platform rm ios',
   'ionic platform add ios',
-  'ionic build ios',
-  'ionic emulate ios --consolelogs --serverlogs'
+  // 'gulp build'
+  'ionic build ios'
+  // 'ionic emulate ios --consolelogs --serverlogs'
 ]));
 
 //change to route to your android sdk. 
@@ -157,10 +158,10 @@ gulp.task('build', function(){
     'watchcss',
     'watchindex',
     ['inject1',
-    'inject2'],
+    'inject2']
     // 'ionic-build',
     // 'browser-sync'
-    'serve'
+    // 'serve'
     );
 });
 

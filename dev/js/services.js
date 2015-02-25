@@ -127,44 +127,45 @@ angular.module('thoughtdrop.services', [])
   };
 })
 
-.factory('Facebook', function($http){
+.factory('Facebook', function($http, $localStorage, $window){
 
   var dataStorage = {};
 
-  console.log(JSON.stringify(dataStorage));
-
-  var keepInfo = function(data) {
-    dataStorage.userData = data;
-    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData.data));
-  };
-
-  var updatePhone = function(data) {
-    dataStorage.userData.phoneNumber = data.phoneNumber;
-    console.log('FB factory updatePhone triggered : ', JSON.stringify(dataStorage.userData));
+  var keepInfo = function(userData) {
+    dataStorage.userData = userData;
+    console.log('Keeping INfo: ' + JSON.stringify(dataStorage.userData));
   };
 
   var storeUser = function(data) {
-    console.log('store data: ' + JSON.stringify(data));
+    console.log('phonenumer: ' + JSON.stringify(data)); //should be fb data
+    // // console.log(JSON.stringify($localStorage.userInfo))
+    dataStorage.userData.phoneNumber = data.phoneNumber;  //add phone# to fb data
+    console.log(JSON.stringify('DATA STORAGE: ' + dataStorage.userData.data));
+
     var userInfo = {
       _id: data.phoneNumber,
-      name: data.name,
-      fbID: data.id,
-      picture: data.picture
-    }
+      name: dataStorage.userData.name,
+      fbID: dataStorage.userData.id,
+      picture: dataStorage.userData.picture
+    };
 
-    console.log('final data before sending to db: ', JSON.stringify(userInfo));
+    $localStorage.userInfo = userInfo;
+    console.log(JSON.stringify($localStorage.userInfo));
+    window.localStorage.userInfo = userInfo;
+    console.log('dataStorage before server: ' + JSON.stringify(userInfo));    
     return $http({
       method: 'POST',
       url: //base  
       '/api/auth/id',
-      data: JSON.stringify(userInfo)
+      data: JSON.stringify(userInfo) 
     })
     .then(function(resp) {
-      console.log('Server resp to func call to storeUser: ', resp);
+      console.log('Server resp to func call to storeUser: ', JSON.stringify(resp));
     });
   };
 
   return {
-    storeUser: storeUser
+    storeUser: storeUser,
+    keepInfo: keepInfo
   };
 });
