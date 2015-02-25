@@ -97,16 +97,17 @@ gulp.task('clean', function(){
 
 gulp.task('inject1', function(){
   gulp.src('www/js/messageController.js')
-    .pipe(replace('//base', "'https://mightyplayground.herokuapp-test.com' +"))
+    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 gulp.task('inject2', function(){
   gulp.src('www/js/services.js')
-    .pipe(replace('//base', "'https://mightyplayground.herokuapp.com-test' +"))
+    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 
 gulp.task('ionic', shell.task([
+  'ionic platform rm ios',
   'ionic platform add ios',
   'ionic build ios',
   'ionic emulate ios --consolelogs --serverlogs'

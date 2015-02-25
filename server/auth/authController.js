@@ -9,7 +9,7 @@ module.exports = {
     console.log('req.body' + JSON.stringify(req.body));
     var findOne = Q.nbind(User.findOne, User);
 
-    findOne({facebookid: req.body.id})
+    findOne({_id: req.body.id})
       .then(function(user) {
         if(!user) {
           var create = Q.nbind(User.create, User);
