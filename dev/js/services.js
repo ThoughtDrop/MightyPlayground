@@ -72,14 +72,6 @@ angular.module('thoughtdrop.services', [])
 
 .factory('Facebook', function($http){
 
-  var dataStorage = {};
-
-  console.log(JSON.stringify(dataStorage));
-
-  var keepInfo = function(data) {
-    dataStorage.userData = data;
-    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData.data));
-  };
 
   var storeUser = function(data) {
     console.log('final data before sending to db: ', JSON.stringify(data));
@@ -103,8 +95,6 @@ angular.module('thoughtdrop.services', [])
   };
 
   return {
-    updatePhone: updatePhone,
-    storeUser: storeUser,
-    keepInfo: keepInfo
+    storeUser: storeUser
   };
 });
