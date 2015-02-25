@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
+// var autoIncrement = require('mongoose-auto-increment');
 
 var User = require('./user');
 
