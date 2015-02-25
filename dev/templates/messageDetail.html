@@ -1,4 +1,4 @@
-<ion-view view-title="Message Detail">
+<ion-view view-title="Message Detail" cache-view="false">
  <!--HEADER BAR -->
   <ion-content has-header="true" padding="true">
     <ion-nav-bar class = "message-detail-header" class="bar-dark">
@@ -7,20 +7,20 @@
 
   <!--Main Message -->
     <div class = 'parent'>
-      Main Message
+      <h1>{{particular.message}}</h1>
     <div>  
 
   <!--Reply Messages -->
-    <div class="card" ng-repeat="message in message.messages">
+    <div class="card" ng-repeat="comments in particular.messageDetail track by $index">
       <div class="item item-text-wrap">
-          {{message._id}}
+          {{comments}}
           <i class ='ion-plus-round'></i> 
           <i class ='ion-cash'></i> 
           <i class ='ion-minus-round'></i> 
         </div>
       </div>
     </div>
-    
+
   <!--FOOTER Reply Message Box -->
     <ion-footer-bar align-title="left" class="bar-assertive">
      <label class="item item-input">
@@ -28,17 +28,9 @@
      </label>
 
       <div class="buttons">
-        <button class="button">Send</button>
+        <button class="button" ng-click="addReply(message.text, {{particular._id}})">Send</button>
       </div>
     </ion-footer-bar>
 
-
   </ion-content>
 </ion-view>
-
-<!--     <br></br>
-    <button ng-click=alert()>button</button>
-    {{particular}}
-  </ion-content>
-</ion-view>
->>>>>>> (feat) build out message detail -->

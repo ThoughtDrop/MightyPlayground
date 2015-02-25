@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 // var keys = require('../keys.js');
 
 if (process.env.PORT) {
@@ -8,8 +9,8 @@ if (process.env.PORT) {
   mongoose.connect('mongodb://localhost/mightyPlayground');
 }
 
+//autoIncrement.initialize(mongoose.connection);
 var message = require('./models/messages');
 var user = require('./models/user');
 var db = mongoose.connection;
-
 module.exports = db;

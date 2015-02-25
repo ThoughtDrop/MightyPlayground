@@ -10,7 +10,6 @@ angular.module('thoughtdrop.messageController', [])
   //Keeps track of what 'feed sort' the user is currently on to inform what data to fetch on a 'pull refresh'
   $scope.page = 'new';
   $scope.images = [];
-  $scope.particular = MessageDetail.getCurrentMessage();
 
   $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
@@ -44,7 +43,7 @@ angular.module('thoughtdrop.messageController', [])
     };
  
     $scope.addImage = function() {
-        // 2. The options array is passed to the cordovaCamera with specific options. 
+        // 2. The options array is passed to the cordova Camera with specific options. 
         // For more options see the official docs for cordova camera.
         var options = {
             destinationType : Camera.DestinationType.FILE_URI,
@@ -204,21 +203,17 @@ angular.module('thoughtdrop.messageController', [])
     // $scope.apply();
   };
 
-  $scope.getReplies= function(message_obj) {
+  $scope.getReplies = function(message_obj) {
     MessageDetail.passOver(message_obj);
     $state.go('messagedetail');//need to ask pass along message_obj
-    //$scope.particular = 'MessageDetail.getCurrentMessage()';
-    //console.log($scope.particular);
-    //$scope.sendData('addMessageDetail', message_obj);
   }
 
-  $scope.alert = function() {
-    var thing = $scope.particular;
-    alert(thing);
-    console.dir(thing);
-  }
-
-
+  // Saves memory by destroying unused controller
+  $scope.$on("$destroy", function() {
+    if (timer) {
+      $timeout.cancel(timer);
+    }
+  })
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
 });

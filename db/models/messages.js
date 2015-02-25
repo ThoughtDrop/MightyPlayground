@@ -5,7 +5,8 @@ var User = require('./user');
 
 var messagesSchema = new mongoose.Schema({
   //TODO: make _id autoIncrement using autoIncrement
-  _id: Number,
+  //_id: { type: Number, ref: 'id'},
+  _id: {type: Number, ref:'id'},
   // _creator: [{type: Number, ref: 'User'}],
   created_at: { type: Date },
   // recipient: [{type: Number, ref: 'User'}],
@@ -22,6 +23,7 @@ var messagesSchema = new mongoose.Schema({
   messageDetail: []
 });
 
+//messagesSchema.plugin(autoIncrement.plugin, 'id')
 messagesSchema.index({ location : '2dsphere' });
 
 var Message = mongoose.model('Message', messagesSchema);
