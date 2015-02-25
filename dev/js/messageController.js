@@ -208,12 +208,6 @@ angular.module('thoughtdrop.messageController', [])
     $state.go('messagedetail');//need to ask pass along message_obj
   }
 
-  // Saves memory by destroying unused controller
-  $scope.$on("$destroy", function() {
-    if (timer) {
-      $timeout.cancel(timer);
-    }
-  })
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
 });
