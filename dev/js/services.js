@@ -1,74 +1,85 @@
 angular.module('thoughtdrop.services', [])
 
-.factory('Messages', function($http, $cordovaGeolocation) {
 
-  var getMessages = function() {
+.factory('Vote', function($http){
+
+  //Keeps track of which buttons should be locked
+  var upVoteButtonLock = {};
+  var downVoteButtonLock = {};
+
+  var handleVote = function(message, className) {
+    //If upvoting
+    if (className === 'upVote') {
+        //If this message is not an upVoteButtonLock property or the button is not locked
+        if (!upVoteButtonLock[message._id] ) {
+        //Lock upvote button by setting upVoteButtonLock[message._id] to True
+        upVoteButtonLock[message._id] = true;
+        //Increment vote in DOM and send incremented vote to server
+        incrementVote(message);
+        //Unlock downvote button by setting downVoteButtonLock[message._id] to False  
+        downVoteButtonLock[message._id] = false;
+
+        } else if (upVoteButtonLock[message._id] === true) { //Otherwise, if upVoteButtonLock[message._id] is True
+        //Unlock downvote button by setting downVoteButtonLock[message._id] to False
+        downVoteButtonLock[message._id] = false;
+        } 
+    //If downvoting
+    } else if (className === 'downVote') {
+        //If downVoteButtonLock[message._id] exists OR is False
+        if (!downVoteButtonLock[message._id] ) {
+        //Lock downvote button by setting downVoteButtonLock[message._id] to True
+        downVoteButtonLock[message._id] = true;
+        //Decrement vote in DOM and send decremented vote to server
+        decrementVote(message);
+        //Unlock upvote button by setting upVoteButtonLock[message._id] to False  
+        upVoteButtonLock[message._id] = false;
+
+        } else if (upVoteButtonLock[message._id] === true) { //Otherwise, if upVoteButtonLock[message._id] is True
+        //Unlock downvote button by setting downVoteButtonLock[message._id] to False
+        downVoteButtonLock[message._id] = false;
+        } 
+    }
+  }; 
+
+  var incrementVote = function(message) {    
+      //Increment vote count in the DOM
+      message.votes++;
+      console.log('upVOTING and changing vote to: ' + message.votes);
+      //send incremented count along with messageID to server
+      sendData('updatevote', message._id, message.votes);
+      console.log('Sending vote of: ' + message.votes + ' to server!');
+  }; 
+
+  var decrementVote = function(message) {
+      //Decrement vote count in the DOM
+      message.votes--;
+      console.log('downVOTING and changing vote to: ' + message.votes);
+      //send decremented count along with messageID to server
+      sendData('updatevote', message._id, message.votes);
+      console.log('Sending vote of: ' + message.votes + ' to server!');
+  };
+
+  var sendData = function(route) {
+    var data = Array.prototype.slice.call(arguments, 1);
+    var route = route || "";
+    //returns a promise that will be used to resolve/ do work on the data returned by the server
     return $http({
-      method: 'GET',
-      url: //base
-      '/api/messages/'
+      method: 'POST',
+      url:  //base
+      '/api/messages/' + route,
+      data: JSON.stringify(data)
     })
-    .then(function (resp) {
-      console.log('Server resp to func call to getMessages: ', resp);  
-      return resp.data;
-    });
   };
-
-
-  var findNearby = function() {
-    var sendPosition = function(data) {
-      return $http({
-        method: 'POST',
-        url: //base
-        '/api/messages/nearby',
-        data: JSON.stringify(data)
-      })
-      .then(function (resp) {
-        console.log('Server resp to func call to findNearby: ', resp);  
-        return resp.data;
-      });
-    };
-    
-    $cordovaGeolocation
-    .getCurrentPosition()
-    .then(function(position) {
-      var coordinates = {};
-      coordinates.lat = position.coords.latitude;
-      coordinates.long = position.coords.longitude;
-      sendPosition(coordinates);
-      console.log('Messages factory sending coordinates to server: ', coordinates);
-    });
-  };
-
-  // var findNearby = function() {
-  //   var sendPosition = function(data) {
-  //     return $http({
-  //       method: 'POST',
-  //       url: //base
-  //       '/api/messages/nearby',
-  //       data: JSON.stringify(data)
-  //     })
-  //     .then(function (resp) {
-  //       console.log('Server resp to func call to findNearby', resp);  
-  //       return resp.data;
-  //     });
-  //   };
-    
-  //   $cordovaGeolocation
-  //   .getCurrentPosition()
-  //   .then(function(position) {
-  //     var coordinates = {};
-  //     coordinates.lat = position.coords.latitude;
-  //     coordinates.long = position.coords.longitude;
-  //     sendPosition(coordinates);
-  //   });
-  // };
 
   return {
-    getMessages: getMessages,
-    //findNearby: findNearby
-  };
+    upVoteButtonLock: upVoteButtonLock,
+    downVoteButtonLock: downVoteButtonLock,
+    handleVote: handleVote,
+    sendData: sendData
+  }
+
 })
+
 
 .factory('Facebook', function($http){
 
@@ -137,6 +148,7 @@ angular.module('thoughtdrop.services', [])
       console.log('Server resp to func call to storeUser: ', resp);
     });
   };
+
 
   return {
     updatePhone: updatePhone,

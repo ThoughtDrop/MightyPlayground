@@ -43,4 +43,5 @@
 /* Message Detail Page Styling */
 .message-detail-header {
   display:block;
+  text-align: center;
 }
