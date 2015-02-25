@@ -97,12 +97,12 @@ gulp.task('clean', function(){
 
 gulp.task('inject1', function(){
   gulp.src('www/js/messageController.js')
-    .pipe(replace('//base', "'https://mightyplayground.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mightyplayground.herokuapp-test.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 gulp.task('inject2', function(){
   gulp.src('www/js/services.js')
-    .pipe(replace('//base', "'https://mightyplayground.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mightyplayground.herokuapp.com-test' +"))
     .pipe(gulp.dest('www/js'));
 });
 

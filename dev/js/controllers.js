@@ -48,6 +48,7 @@ angular.module('thoughtdrop.controllers', [])
 
   $scope.storeUser = function() {
     window.localStorage.userInfo.phoneNumber = $scope.data.phoneNumber;
+
     console.log('storeUser triggered - phoneNumber: ', $scope.data.phoneNumber);
     Facebook.storeUser(window.localStorage.userInfo);
     $location.path('/tab/messages');
