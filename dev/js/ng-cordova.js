@@ -6,7 +6,7 @@ angular.module('ngCordova', [
 angular.module('ngCordova.plugins', [
 	 'camera',
 	 // 'capture',
-	 // 'contact',
+	 'contact',
 	 // 'splashscreen',
 	 'geolocation'
 	 // 'spinnerDialog',

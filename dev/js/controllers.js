@@ -8,7 +8,7 @@ angular.module('thoughtdrop.controllers', [])
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
       $scope.data = result;
 
-      $localStorage.accessToken = result.access_token;
+      // $localStorage.accessToken = result.access_token;
       window.localStorage.token = result.access_token; //store token locally
       $scope.getProfile();  //gets profile data and stores profile data in factory
 
@@ -34,6 +34,7 @@ angular.module('thoughtdrop.controllers', [])
       //doesn't seem very promise-y, or use a .catch? - Rob
       .then(function(result) {
         $scope.data = result;
+        window.localStorage.userInfo = result;
         Facebook.keepInfo($scope.data); //saves userData in factory
       }, function(error) {
           alert("There was a problem getting your profile.  Check the logs for details.");
@@ -46,47 +47,17 @@ angular.module('thoughtdrop.controllers', [])
   };
 
   $scope.storeUser = function() {
+    window.localStorage.userInfo.phoneNumber = $scope.data.phoneNumber;
+
     console.log('storeUser triggered - phoneNumber: ', $scope.data.phoneNumber);
-    Facebook.storeUser($scope.data);
+    Facebook.storeUser(window.localStorage.userInfo);
     $location.path('/tab/messages');
   };
 
   $scope.logout = function() {
-    window.localStorage.token = undefined; //TODO is it a better practice for this to be null? - Rob
+    window.localStorage.token = undefined; 
+    window.localStorage.userInfo = undefined;
     $location.path('/login');
   };
 
-  //TODO: What is the difference between init and getProfile?  Is this legacy code? - Rob
-  $scope.init = function() {
-    console.log('init triggered');
-      if($localStorage.hasOwnProperty("accessToken") === true) {
-        $http.get("https://graph.facebook.com/v2.2/me", {
-          params: {
-            access_token: $localStorage.accessToken,
-            fields: "id,name,gender,location,website,picture,relationship_status",
-            format: "json"
-          }
-        })
-        .then(function(result) {
-          $scope.profileData = result.data;
-          console.log('init!');
-          console.log(JSON.stringify(result.data.id));
-          $scope.data.id = result.data.id;
-          return result.data.id;
-        }, function(error) {
-          alert("There was a problem getting your profile.  Check the logs for details.");
-          console.log(error);
-        });
-    } else {
-      alert("Not signed in");
-      $location.path("/login");
-    }
-  };
-
-  $scope.updatePhone = function() {
-    Facebook.updatePhone($scope.data);
-      //check if id & # matches for returning users in db
-        //otherwise redirect to /login
-    $location.path('/tab/messages');
-  };
 });

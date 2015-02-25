@@ -78,6 +78,31 @@ angular.module('thoughtdrop.services', [])
     sendData: sendData
   }
 
+  var findNearby = function() {
+    var sendPosition = function(data) {
+      return $http({
+        method: 'POST',
+        url: //base
+        '/api/messages/nearby',
+        data: JSON.stringify(data)
+      })
+      .then(function (resp) {
+        console.log('Server resp to func call to findNearby: ', resp);  
+        return resp.data;
+      });
+    };
+    
+    $cordovaGeolocation
+    .getCurrentPosition()
+    .then(function(position) {
+      var coordinates = {};
+      coordinates.lat = position.coords.latitude;
+      coordinates.long = position.coords.longitude;
+      sendPosition(coordinates);
+      console.log('Messages factory sending coordinates to server: ', coordinates);
+    });
+  };
+
 })
 
 .factory('MessageDetail', function(){
@@ -119,15 +144,20 @@ angular.module('thoughtdrop.services', [])
   };
 
   var storeUser = function(data) {
-    console.log('storeUser triggered: ', JSON.stringify(data));
-    dataStorage.userData.data.phoneNumber = data.phoneNumber; 
-    console.log('final data before sending to db: ', JSON.stringify(dataStorage.userData.data));
+    console.log('final data before sending to db: ', JSON.stringify(data));
+
+    var userInfo = {
+      _id: data.phoneNumber,
+      name: data.name,
+      fbID: data.id,
+      picture: data.picture
+    }
 
     return $http({
       method: 'POST',
       url: //base  
       '/api/auth/id',
-      data: JSON.stringify(dataStorage.userData.data)
+      data: JSON.stringify(userInfo)
     })
     .then(function(resp) {
       console.log('Server resp to func call to storeUser: ', resp);
@@ -135,8 +165,6 @@ angular.module('thoughtdrop.services', [])
   };
 
   return {
-    updatePhone: updatePhone,
-    storeUser: storeUser,
-    keepInfo: keepInfo
+    storeUser: storeUser
   };
 });

@@ -78,7 +78,7 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     views: {
       'tab-privateMessages': {
         templateUrl: 'templates/tab-privateMessages.html',
-        controller: 'messageController'
+        controller: 'privateController'
       }
     }
   })
