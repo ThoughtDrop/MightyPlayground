@@ -8,10 +8,9 @@ angular.module('thoughtdrop.controllers', [])
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
       $scope.data = result;
 
-      // $localStorage.accessToken = result.access_token;
+      $localStorage.accessToken = result.access_token;
       window.localStorage.token = result.access_token; //store token locally
       $scope.getProfile();  //gets profile data and stores profile data in factory
-
     }, function(error) {
       alert("There was a problem signing in!  See the console for logs");
       console.log(error);
@@ -20,37 +19,39 @@ angular.module('thoughtdrop.controllers', [])
     $location.path("/phone"); // redirect to phone number input
   };
 
-  $scope.getProfile = function() {
+ $scope.getProfile = function() {
 
-    if($localStorage.hasOwnProperty("accessToken") === true) {
-      $http.get("https://graph.facebook.com/v2.2/me", {
-        params: {
-          access_token: $localStorage.accessToken,
-          fields: "id,name,picture",
-          format: "json"
-        }
-      })
-      //TODO can we do function(result, error) or is function(result), then function(error) required?
-      //doesn't seem very promise-y, or use a .catch? - Rob
-      .then(function(result) {
-        $scope.data = result;
-        window.localStorage.userInfo = result;
-        Facebook.keepInfo($scope.data); //saves userData in factory
-      }, function(error) {
-          alert("There was a problem getting your profile.  Check the logs for details.");
-          console.log(error);
-      });
-    } else {
-      alert("Not signed in");
-      $location.path("/login");
-    }
-  };
+     // if($localStorage.hasOwnProperty("accessToken") === true) {
+       $http.get("https://graph.facebook.com/v2.2/me", {
+         params: {
+           access_token: $localStorage.accessToken,
+           fields: "id,name,picture",
+           format: "json"
+         }
+       })
+       .then(function(result) {
+        console.log('KEEP INFO 1');
+        console.log('fb data: ' + JSON.stringify(result.data));
+        Facebook.keepInfo(result.data) //saves userData in factory
+        })
 
-  $scope.storeUser = function() {
-    window.localStorage.userInfo.phoneNumber = $scope.data.phoneNumber;
+      .catch(function(error) {
+          console.log('error!: ' + error);
+        })
+   //     }, function(error) {
+   //         alert("There was a problem getting your profile.  Check the logs for details.");
+   //         console.log(error);
+   //     });
+   //   else {
+   //     alert("Not signed in");
+   //     $location.path("/login");
+   //   }
+   // };
+ };
 
+   $scope.storeUser = function() {
     console.log('storeUser triggered - phoneNumber: ', $scope.data.phoneNumber);
-    Facebook.storeUser(window.localStorage.userInfo);
+    Facebook.storeUser($scope.data);
     $location.path('/tab/messages');
   };
 
