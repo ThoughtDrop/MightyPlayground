@@ -101,6 +101,7 @@ angular.module('thoughtdrop.services', [])
     getCurrentMessage: getCurrentMessage
   };
 })
+
 .factory('Facebook', function($http){
 
   var dataStorage = {};
