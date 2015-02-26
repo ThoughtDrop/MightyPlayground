@@ -65,10 +65,6 @@ angular.module('thoughtdrop.messageController', [])
     }, time);
   };
 
-  $scope.newMessage = function() {
-    $scope.modalNewMessage.show();
-  };
-
   $scope.sendData = function(route) {
     var data = Array.prototype.slice.call(arguments, 1);
     var route = route || "";

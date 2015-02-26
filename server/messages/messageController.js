@@ -99,7 +99,6 @@ module.exports = {
     //   secret_key: 'rdhVXSvzQlBu0mgpj2Pdu4aKt+hNAfuvDzeTdfCz'
     // };
 
-
     // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
     // AWS.config.region = 'us-west-1';
     // var bucket = new AWS.S3({ params: {Bucket: creds.bucket } });
