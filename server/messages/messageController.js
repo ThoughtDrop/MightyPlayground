@@ -98,7 +98,7 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
 
-    createMessage(data) 
+    createMessage(req.body) 
       .then(function (createdMessage) {
         console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
       })
