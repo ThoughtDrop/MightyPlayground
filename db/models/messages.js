@@ -21,6 +21,5 @@ var messagesSchema = new mongoose.Schema({
 messagesSchema.index({ location : '2dsphere' });
 
 var Message = mongoose.model('Message', messagesSchema);
-  
 
 module.exports = Message;

@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal, $cordovaCamera) {
+.controller('messageController', function($scope, $timeout, $http, Messages, $cordovaGeolocation, $ionicModal, $cordovaCamera, SaveMessage) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -61,158 +61,40 @@ angular.module('thoughtdrop.messageController', [])
     }
   };
 
-//camera code
-  $scope.urlForImage = function(imageName) {
-    var name = imageName.substr(imageName.lastIndexOf('/') + 1);
-    var trueOrigin = cordova.file.dataDirectory + name;
-    return trueOrigin;
+  $scope.clickHidden = function() {
+    console.log('you clicked me!');
+    angular.element(document.querySelector( '#imageInput' ))[0].click();
   };
 
-  $scope.addImage = function() {
-    // 2. The options array is passed to the cordovaCamera with specific options. 
-    // For more options see the official docs for cordova camera.
-    var options = {
-      destinationType : Camera.DestinationType.FILE_URI,
-      sourceType : Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY  .CAMERA    .SAVEDPHOTOALBUM
-      allowEdit : true,
-      encodingType: Camera.EncodingType.JPEG,
-      popoverOptions: CameraPopoverOptions,
-      correctOrientation: true,
-      quality: 25
-    };
-     
-    // 3. Call the ngCodrova module cordovaCamera we injected to our controller
-    $cordovaCamera.getPicture(options).then(function(imageData) {
-
-      console.log('1. getpicture called to create imageData: ' + imageData);
-
-        // 4. When the image capture returns data, we pass the information to our success function, 
-        // which will call some other functions to copy the original image to our app folder.
-        onImageSuccess(imageData);
-
-        function onImageSuccess(fileURI) {
-          console.log('2. onImageSuccess called with fileURI: ' +fileURI);
-          createFileEntry(fileURI);
-        }
-
-        function createFileEntry(fileURI) {
-          console.log('3. createFileEntry: ' + fileURI);
-          window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-          Camera.storeImage(fileEntry);
-        }
-
-        // 5. This function copies the original file to our app directory. As we might have to deal 
-        // with duplicate images, we give a new name to the file consisting of a random string and the original name of the image.
-        function copyFile(fileEntry) {
-          var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-          var newName = makeid() + name;
-
-          window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
-            fileEntry.copyTo(
-              fileSystem2,
-              newName,
-              onCopySuccess,
-              fail
-            );
-          },
-          fail);
-        }
-        
-        // 6. If the copy task finishes successful, we push the image url to our scope array of images. 
-        //Make sure to use the apply() function to update the scope and view!
-        function onCopySuccess(entry) {
-          $scope.$apply(function () {
-              $scope.images.push(entry.nativeURL);
-          });
-        }
-
-        function fail(error) {
-          console.log("fail: " + error.code);
-        }
-
-        function makeid() {
-          var text = "";
-          var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-          for (var i=0; i < 5; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-          }
-          return text;
-        }
-
-    }, function(err) {
-      console.log(err);
-    });
-  };
-
-// ==========END OF CAMERA CODE
-
-
-// =======UPLOAD TO S3
-  $scope.creds = {
-    bucket: 'mpbucket-hr23',
-    access_key: 'AKIAJOCFMQLT2OTUDEJQ',
-    secret_key: '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'
-  };
-   
-  $scope.upload = function() {
-    // Configure The S3 Object 
-    AWS.config.update({ accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key });
-    AWS.config.region = 'us-west-1';
-    var bucket = new AWS.S3({ params: { Bucket: $scope.creds.bucket } });
-   
-    if($scope.file) {
-      var params = { Key: $scope.file.name, ContentType: $scope.file.type, Body: $scope.file, ServerSideEncryption: 'AES256' };
-   
-      bucket.putObject(params, function(err, data) {
-        if(err) {
-          // There Was An Error With Your S3 Config
-          alert(err.message);
-          return false;
-        }
-        else {
-          // Success!
-          alert('Upload Done');
-        }
-      })
-      .on('httpUploadProgress',function(progress) {
-            // Log Progress Information
-            console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
-          });
-    }
-    else {
-      // No File Selected
-      alert('No File Selected');
-    }
-  };
-
-
-// ================
-
-
-  $scope.sendMessage = function(route) {
+  $scope.sendMessage = function() {
+    
     $scope.closeMessageBox();
-
+    
     $scope.getPosition()
       .then(function(position) {
-        var message = $scope.message.text;
-        var coordinates = {};
-        coordinates.lat = position.coords.latitude;
-        coordinates.long = position.coords.longitude;
+        var message = {};
+        message.id = JSON.stringify(Math.floor(Math.random()*100000));
+        message.text = $scope.message.text;
+        message.coordinates = {};
+        message.coordinates.lat = position.coords.latitude;
+        message.coordinates.long = position.coords.longitude;
         $scope.message.text = '';
-
-        $scope.sendData('savemessage', coordinates, message)
-        .then(function(resp) {
-          console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-          //return resp;
-        })
-        .catch(function(err) {
-          console.log('Error posting message: ',  err);
+        SaveMessage.sendMessage(message, function() {
+          $scope.findNearby('nearby');  
         });
-      })
-      .then(function() {
-        $scope.findNearby('nearby');
-      })
+      });
+  };
+
+  $scope.sendData = function(route) {
+    var data = Array.prototype.slice.call(arguments, 1);
+    var route = route || "";
+    //returns a promise that will be used to resolve/ do work on the data returned by the server
+    return $http({
+      method: 'POST',
+      url:  //base
+      '/api/messages/' + route,
+      data: JSON.stringify(data)
+    });
   };
 
   $scope.closeMessageBox = function(time) {
@@ -226,18 +108,6 @@ angular.module('thoughtdrop.messageController', [])
     $scope.modalNewMessage.show();
   };
 
-  $scope.sendData = function(route) {
-    var data = Array.prototype.slice.call(arguments, 1);
-    var route = route || "";
-    //returns a promise that will be used to resolve/ do work on the data returned by the server
-    return $http({
-      method: 'POST',
-      url:  //base
-      '/api/messages/' + route,
-      data: JSON.stringify(data)
-    })
-  };
-
   $scope.displayMessages = function(route, coordinates, sortMessagesBy) {
     $scope.sendData(route, coordinates, sortMessagesBy)
       .then(function (resp) {
@@ -249,8 +119,7 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.getPosition = function() {
     //returns a promise that will be used to resolve/ do work on the user's GPS position
-    return $cordovaGeolocation
-              .getCurrentPosition()    
+    return $cordovaGeolocation.getCurrentPosition();
   };
 
   $scope.findNearby = function(route, sortMessagesBy) {

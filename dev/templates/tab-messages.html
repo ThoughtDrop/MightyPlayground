@@ -2,10 +2,10 @@
   <ion-content>
     <div class="bar bar-header">
       <button class="button" ng-click="sortFeed('top')">Top</button>
-      <button class="button" ng-click="sortFeed('new')">New</button>
       <button class="button" ng-click='newMessage()'>Compose</button>
-      <input name="file" type="file" file />
-       <button class="button" ng-click='upload()'>Upload</button>
+      <button class="button" ng-click="sortFeed('new')">New</button>
+      <!-- <input name="file" type="file" file /> -->
+      <!-- <button class="button" ng-click='upload()'>Upload</button> -->
     </div>
     <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
         </ion-refresher>

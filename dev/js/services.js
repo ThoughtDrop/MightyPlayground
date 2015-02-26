@@ -14,7 +14,6 @@ angular.module('thoughtdrop.services', [])
     });
   };
 
-
   var findNearby = function() {
     var sendPosition = function(data) {
       return $http({
@@ -40,73 +39,13 @@ angular.module('thoughtdrop.services', [])
     });
   };
 
-  // var findNearby = function() {
-  //   var sendPosition = function(data) {
-  //     return $http({
-  //       method: 'POST',
-  //       url: //base
-  //       '/api/messages/nearby',
-  //       data: JSON.stringify(data)
-  //     })
-  //     .then(function (resp) {
-  //       console.log('Server resp to func call to findNearby', resp);  
-  //       return resp.data;
-  //     });
-  //   };
-    
-  //   $cordovaGeolocation
-  //   .getCurrentPosition()
-  //   .then(function(position) {
-  //     var coordinates = {};
-  //     coordinates.lat = position.coords.latitude;
-  //     coordinates.long = position.coords.longitude;
-  //     sendPosition(coordinates);
-  //   });
-  // };
-
   return {
     getMessages: getMessages,
-    //findNearby: findNearby
+    findNearby: findNearby
   };
 })
 
 .factory('Facebook', function($http){
-
-  // var storeId = function(data) {
-  //   console.log(data);
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/auth/id',
-  //     data: data
-  //   })
-  //   .then(function(resp) {
-  //     console.log("user id stored", resp);
-  //   });
-  // };
-
-  // var updatePhone = function(data) {
-  //   console.log('servcies data: ' + JSON.stringify(data));
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/auth/id',
-  //     data: data
-  //   })
-  //   .then (function(resp) {
-  //     console.log('userPhone is stored', resp);
-  //   });
-  // };
-
-  // var userPhone = function(data) {
-  //   console.log('server data: ' + (JSON.stringify(data)));
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/auth/id',
-  //     data: data
-  //   })
-  //   .then(function(resp) {
-  //     console.log("user id stored", resp);
-  //   });
-  // };
 
   var dataStorage = {};
 
@@ -119,7 +58,7 @@ angular.module('thoughtdrop.services', [])
 
   var updatePhone = function(data) {
     dataStorage.userData.phoneNumber = data.phoneNumber;
-    console.log('FB factory updatePhone triggered : ', JSON.stringify(dataStorage.userData));
+    console.log('FB factory xdatePhone triggered : ', JSON.stringify(dataStorage.userData));
   };
 
   var storeUser = function(data) {
@@ -145,21 +84,65 @@ angular.module('thoughtdrop.services', [])
   };
 })
 
-.factory('Camera', function($http){
 
-  var storeImage = function(data) {
-    console.log('factory called with: ' + data);
-    return $http({
-      method: 'POST',
-      url: '/api/messages/saveimage',
-      data: JSON.stringify(data)
-    })
-    .then(function(resp) {
-      console.log('Server resp to func call to storeUser: ', resp);
-    });
+.factory('SaveMessage', function($http){ 
+  var image = {};
+
+  var saveImage = function(data) {
+    console.log('image saved!');
+    image.data = data;
+  };
+
+  var creds = {
+    bucket: 'mpbucket-hr23',
+    access_key: 'AKIAJOCFMQLT2OTUDEJQ',
+    secret_key: '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'
+  };
+
+  var sendMessage = function(message) {
+    console.log('image about to be uploaded');
+    AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+    AWS.config.region = 'us-west-1';
+    var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
+
+    if(image.data) {
+     var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
+      bucket.putObject(params, function(err, data) {
+        if(err) {
+          console.log(err.message);
+          return false;
+        } else {
+          console.log('Upload Done');
+          return $http({
+            method: 'POST',
+            url:  //base
+            '/api/messages/' + 'savemessage',
+            data: JSON.stringify(message)
+          });
+          }
+        }
+      // .on('httpUploadProgress',function(progress) {
+      //   console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
+      //   })
+      );
+    } else {
+      // No File Selected
+      alert('No File Selected');
+    }
   };
 
   return {
-    storeImage: storeImage
+    saveImage: saveImage,
+    sendMessage: sendMessage
   };
+  //TODO refactor camera portion to be server side and also 
+  // return $http({
+  //     method: 'POST',
+  //     url: '/api/messages/saveimage',
+  //     data: JSON.stringify(image.data)
+  //   })
+  //   .then(function(resp) {
+  //     console.log('Server resp to func call to storeUser: ', resp);
+  //   });
+  // };
 });
