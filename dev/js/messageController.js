@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote, SaveMessage) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -35,28 +35,26 @@ angular.module('thoughtdrop.messageController', [])
     Vote.handleVote(message, className);
   };
 
-  $scope.sendMessage = function(route) {
-    $scope.closeMessageBox();
+  $scope.clickHidden = function() {
+    console.log('you clicked me!');
+    angular.element(document.querySelector( '#imageInput' ))[0].click();
+  };
 
+  $scope.sendMessage = function() {
+    $scope.closeMessageBox();
+    
     $scope.getPosition()
       .then(function(position) {
-        var message = $scope.message.text;
-        var coordinates = {};
-        coordinates.lat = position.coords.latitude;
-        coordinates.long = position.coords.longitude;
+        var message = {};
+        message.id = JSON.stringify(Math.floor(Math.random()*100000));
+        message.text = $scope.message.text;
+        message.coordinates = {};
+        message.coordinates.lat = position.coords.latitude;
+        message.coordinates.long = position.coords.longitude;
         $scope.message.text = '';
-
-        $scope.sendData('savemessage', coordinates, message)
-        .then(function(resp) {
-          console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-          //return resp;
-        })
-        .catch(function(err) {
-          console.log('Error posting message: ',  err);
+        SaveMessage.sendMessage(message, function() {
+          $scope.findNearby('nearby');  
         });
-      })
-      .then(function() {
-        $scope.findNearby('nearby');
       });
   };
 
@@ -81,6 +79,17 @@ angular.module('thoughtdrop.messageController', [])
       '/api/messages/' + route,
       data: JSON.stringify(data)
     });
+  };
+
+  $scope.closeMessageBox = function(time) {
+    var time = time || 250;
+    $timeout(function() {
+      $scope.modalNewMessage.hide();
+    }, time);
+  };
+
+  $scope.newMessage = function() {
+    $scope.modalNewMessage.show();
   };
 
   $scope.displayMessages = function(route, coordinates, sortMessagesBy) {

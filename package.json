@@ -61,6 +61,7 @@
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.geolocation",
     "https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git",
-    "org.apache.cordova.camera"
+    "org.apache.cordova.camera",
+    "org.apache.cordova.file-transfer"
   ]
 }
