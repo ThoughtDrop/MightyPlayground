@@ -182,41 +182,41 @@ angular.module('thoughtdrop.services', [])
   };
 
   var creds = {
-    bucket: 'mpbucket-hr23',
-    access_key: 'AKIAJOCFMQLT2OTUDEJQ',
-    secret_key: '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'
+    // bucket: 'mpbucket-hr23',
+    // access_key: 'AKIAJOCFMQLT2OTUDEJQ',
+    // secret_key: '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'
   };
 
   var sendMessage = function(message) {
-    console.log('image about to be uploaded');
-    AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
-    AWS.config.region = 'us-west-1';
-    var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
+    // console.log('image about to be uploaded');
+    // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+    // AWS.config.region = 'us-west-1';
+    // var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
 
-    if(image.data) {
-     var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
-      bucket.putObject(params, function(err, data) {
-        if(err) {
-          console.log(err.message);
-          return false;
-        } else {
-          console.log('Upload Done');
+    // if(image.data) {
+    //  var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
+    //   bucket.putObject(params, function(err, data) {
+    //     if(err) {
+    //       console.log(err.message);
+    //       return false;
+    //     } else {
+    //       console.log('Upload Done');
           return $http({
             method: 'POST',
             url:  //base
             '/api/messages/' + 'savemessage',
             data: JSON.stringify(message)
           });
-          }
-        }
+          // }
+        // }
       // .on('httpUploadProgress',function(progress) {
       //   console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
       //   })
-      );
-    } else {
+      // );
+    // } else {
       // No File Selected
-      alert('No File Selected');
-    }
+      // alert('No File Selected');
+    // }
   };
 
   return {
