@@ -53,7 +53,7 @@ angular.module('thoughtdrop.messageController', [])
         message.coordinates.long = position.coords.longitude;
         $scope.message.text = '';
         SaveMessage.sendMessage(message, function() {
-          $scope.findNearby('nearby');  
+          $scope.findNearby('nearby');
         });
       });
   };
