@@ -144,9 +144,10 @@
 }
 
 /* Message Detail Page Styling */
-.message-detail-header {
-  display:block;
+
+.message-detail-header-container.header-title {
   text-align: center;
+  margin:0 auto 0 auto;
 }
 
 .parent {
