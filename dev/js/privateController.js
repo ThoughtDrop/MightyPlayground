@@ -10,6 +10,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.page = 'new';
   $scope.recipients = []; //store phoneNumbers of recipients
   $scope.privateMessages = {};
+  $scope.data = {selectedContacts: []};
 
   $ionicModal.fromTemplateUrl('templates/tab-privatePost.html', {
     scope: $scope
@@ -67,14 +68,20 @@ angular.module('thoughtdrop.privateController', [])
     //store all the recipeints from contacts list into the $scope.recipients array
   };
 
-  $scope.getContactList = function() {
-      $cordovaContacts.find({filter: '', multiple:true}).then(function(result) {
-        console.log(result);
-          $scope.contacts = result;
-          console.log('$scope recipients: ' + $scope.recipients);
-      }, function(error) {
-          console.log('ERROR: ' + error);
-      });
+  $scope.pickContact = function() {
+    console.log('pick contact!');
+
+    Private.pickContact()
+      .then(function(contact) {
+          $scope.data.selectedContacts.push(contact);
+          console.log("Selected contacts=");
+          console.log($scope.data.selectedContacts);
+
+        },
+        function(failure) {
+            console.log("Bummer.  Failed to pick a contact");
+        });
+
   };
 
   //send coordinates & users's phone number

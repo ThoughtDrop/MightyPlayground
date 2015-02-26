@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateServices', [])
 
-.factory('Private', function($http) {
+.factory('Private', function($http, $q) {
 
   var saveMessage = function(data) {
     console.log('private data: ' + JSON.stringify(data));
@@ -23,8 +23,40 @@ angular.module('thoughtdrop.privateServices', [])
     
   };
 
+
+  var formatContact = function(contact) {
+
+    return {
+      "displayName"   : contact.name.formatted || contact.name.givenName + " " + contact.name.familyName || "Mystery Person",
+      "emails"        : contact.emails || [],
+      "phones"        : contact.phoneNumbers || [],
+      "photos"        : contact.photos || []
+    };
+
+  };
+
+  var pickContact = function() {
+
+    var deferred = $q.defer();
+
+    if(navigator && navigator.contacts) {
+
+      navigator.contacts.pickContact(function(contact){
+
+          deferred.resolve( formatContact(contact) );
+      });
+
+    } else {
+        deferred.reject("Bummer.  No contacts in desktop browser");
+    }
+
+    return deferred.promise;
+  };
+
+
   return {
     saveMessage: saveMessage,
-    getMessages: getMessages
+    getMessages: getMessages,
+    pickContact: pickContact
   };
 })
