@@ -70,10 +70,6 @@
   text-align: center;
   margin-top: 6%
 }
-/*
-.button-positive {
-  right:70px !important;
-}*/
 
 /* Main Public Message Feed Page Styling */
 
@@ -185,4 +181,9 @@
   bottom: 0 !important;
   width: 100% !important;
 
+}
+
+.map {
+  width: 100%;
+  height: 100%;
 }

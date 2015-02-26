@@ -1,6 +1,8 @@
-angular.module('thoughtdrop.messageController', [])
+angular.module('thoughtdrop.mapController', [])
 
-  .controller('mapController', function($scope, $compile){
+  .controller('mapController', function($scope, $ionicLoading, $compile ){
+      angular.module('ionic.example', ['ionic'])
+
       function initialize() {
         var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
         
@@ -32,8 +34,12 @@ angular.module('thoughtdrop.messageController', [])
 
         $scope.map = map;
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
 
+
+      console.log("getting here");
+      google.maps.event.addDomListener(window, 'load', initialize);
+      console.log(initialize);
+      
       $scope.centerOnMe = function() {
         if(!$scope.map) {
           return;
