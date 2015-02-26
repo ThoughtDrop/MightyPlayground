@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote, $window) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote, $window, $localStorage) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -11,7 +11,7 @@ angular.module('thoughtdrop.messageController', [])
   $scope.page = 'new';
   $scope.images = [];
 
-  $ionicModal.fromTemplateUrl('templates/tab-privatePost.html', {
+  $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
   }).then(function(modal) {
   $scope.modalNewMessage = modal;

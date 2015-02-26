@@ -98,15 +98,6 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
 
-    // var data = {
-    //   _id: Math.floor(Math.random()*100000), 
-    //   location: {coordinates: [req.body.long, req.body.lat]},
-    //   message: req.body.message,
-    //   created_at: new Date(),
-    //   isPrivate: true,
-    //   recipients: req.body.recipients
-    // };
-
     createMessage(data) 
       .then(function (createdMessage) {
         console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
