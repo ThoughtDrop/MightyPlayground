@@ -71,18 +71,11 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log(req.body);
     var data = { //TODO: add a facebookID field
-<<<<<<< HEAD
-      _id: Math.floor(Math.random()*100000), //message IDs use {} 
-      location: {coordinates: [req.body[0].long, req.body[0].lat]},
-      message: req.body[1],
-      created_at: new Date()
-=======
       _id: Number(req.body.id), 
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
       photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
->>>>>>> (feat) Implement camera, show message details
     };
     console.log('typeof data id ' + typeof data._id);
     console.log('data id value ' + data._id);
@@ -96,8 +89,6 @@ module.exports = {
         console.log(error);
       });
   },
-<<<<<<< HEAD
-=======
 
   // saveImage: function(req, res) {}
     //TODO: figure out how to send photo from server
@@ -108,21 +99,7 @@ module.exports = {
     //   secret_key: 'rdhVXSvzQlBu0mgpj2Pdu4aKt+hNAfuvDzeTdfCz'
     // };
 
-<<<<<<< HEAD
-    var s3bucket = new AWS.S3({params: {Bucket: 'mpbucket-hr23'}});
-    s3bucket.createBucket(function() {
-      var params = {Key: 'req',};
-      s3bucket.upload(params, function(err, data) {
-        if (err) {
-          console.log("Error uploading data: ", err);
-        } else {
-          console.log("Successfully uploaded data to myBucket/myKey");
-        }
-      });
-    });
-  }
->>>>>>> (feat) Add S3 for image upload
-=======
+
     // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
     // AWS.config.region = 'us-west-1';
     // var bucket = new AWS.S3({ params: {Bucket: creds.bucket } });
@@ -134,5 +111,4 @@ module.exports = {
     //       console.log('Upload Done');
     //     }
     //   });
->>>>>>> (feat) Implement camera, show message details
 };
