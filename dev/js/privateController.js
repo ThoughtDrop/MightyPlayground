@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -11,7 +11,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.recipients = []; //store phoneNumbers of recipients
   $scope.privateMessages = {};
 
-  $ionicModal.fromTemplateUrl('templates/tab-post.html', {
+  $ionicModal.fromTemplateUrl('templates/tab-privatePost.html', {
     scope: $scope
   }).then(function(modal) {
   $scope.modalNewMessage = modal;
@@ -32,7 +32,7 @@ angular.module('thoughtdrop.privateController', [])
           _id: Math.floor(Math.random()*100000),
           location: {coordinates: [position.coords.longitude, position.coords.latitude]},
           message: $scope.message.text,
-          creator: window.localStorage.userInfo,
+          // creator: window.localStorage.userInfo,
           recipients: $scope.recipients
         };
 
@@ -70,12 +70,13 @@ angular.module('thoughtdrop.privateController', [])
   $scope.getContactList = function() {
       $cordovaContacts.find({filter: '', multiple:true}).then(function(result) {
         console.log(result);
-          $scope.recipients = result;
+          $scope.contacts = result;
           console.log('$scope recipients: ' + $scope.recipients);
       }, function(error) {
           console.log('ERROR: ' + error);
       });
   };
+
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
     var userPhone = window.localStorage.userInfo.phoneNumber;

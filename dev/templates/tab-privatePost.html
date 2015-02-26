@@ -6,7 +6,7 @@
         <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
       </label>
       <label class="item">
-        <button class="button button-block button-dark" ng-click="addImage()">Take a Picture!</button>
+        <button class="button button-block button-dark" ng-click="addImage()">Take a Picture!!!!</button>
       </label>
       <label class="item">
         <button class="button button-block button-dark" ng-click="getContactList()">Contacts</button>
@@ -17,6 +17,13 @@
       <label class="item">
         <button class="button button-block button-dark" ng-click="sendMessage()">Submit!</button>
       </label>
+
+      <ion-list>
+                  <ion-item ng-repeat="contact in contacts">
+                      {{contact.name.formatted}}
+                  </ion-item>
+      </ion-list>
+
     </ion-content>
   </ion-view>
 </ion-modal-view>

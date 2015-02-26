@@ -11,7 +11,7 @@ angular.module('thoughtdrop.messageController', [])
   $scope.page = 'new';
   $scope.images = [];
 
-  $ionicModal.fromTemplateUrl('templates/tab-privatePost.html', {
+  $ionicModal.fromTemplateUrl('templates/tab-post.html', {
     scope: $scope
   }).then(function(modal) {
   $scope.modalNewMessage = modal;

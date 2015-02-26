@@ -1,4 +1,4 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController','thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices','thoughtdrop.geolocation', 'ionic.utils'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController','thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices','thoughtdrop.geolocation', 'ionic.utils', 'ngCordova.plugins.contacts'])
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location) {
   $ionicPlatform.ready(function() {
@@ -13,11 +13,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     }
   });
 
-  // if(window.localStorage.token === undefined) {
-  //   $location.path('/login');
-  // } else {
-    $state.go('tab.account');
-  // }
+  if(window.localStorage.token === undefined) {
+    $location.path('/login');
+  } else {
+    $state.go('tab.messages');
+  }
 
 })
 
@@ -78,6 +78,16 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     views: {
       'tab-privateMessages': {
         templateUrl: 'templates/tab-privateMessages.html',
+        controller: 'privateController'
+      }
+    }
+  })
+
+  .state('tab.privatePost', {
+    url: '/privatePost',
+    views: {
+      'tab-privatePost': {
+        templateUrl: 'templates/tab-privatePost.html',
         controller: 'privateController'
       }
     }
