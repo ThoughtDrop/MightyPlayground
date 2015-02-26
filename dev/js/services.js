@@ -137,10 +137,7 @@ angular.module('thoughtdrop.services', [])
   };
 
   var storeUser = function(data) {
-    console.log('phonenumer: ' + JSON.stringify(data)); //should be fb data
-    // // console.log(JSON.stringify($localStorage.userInfo))
     dataStorage.userData.phoneNumber = data.phoneNumber;  //add phone# to fb data
-    console.log(JSON.stringify('DATA STORAGE: ' + dataStorage.userData.data));
 
     var userInfo = {
       _id: data.phoneNumber,
@@ -149,10 +146,11 @@ angular.module('thoughtdrop.services', [])
       picture: dataStorage.userData.picture
     };
 
-    $localStorage.userInfo = userInfo;
-    console.log(JSON.stringify($localStorage.userInfo));
-    window.localStorage.userInfo = userInfo;
     console.log('dataStorage before server: ' + JSON.stringify(userInfo));    
+
+    $localStorage.userInfo = userInfo;
+    console.log('WINDOW STORAGE: ' + JSON.stringify($localStorage.userInfo));
+
     return $http({
       method: 'POST',
       url: //base  

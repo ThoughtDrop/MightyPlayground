@@ -1,4 +1,4 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController','thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices','thoughtdrop.geolocation'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController','thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices','thoughtdrop.geolocation', 'ionic.utils'])
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location) {
   $ionicPlatform.ready(function() {

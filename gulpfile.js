@@ -158,7 +158,8 @@ gulp.task('build', function(){
     'watchcss',
     'watchindex',
     ['inject1',
-    'inject2']
+    'inject2'],
+    'ionic'
     // 'ionic-build',
     // 'browser-sync'
     // 'serve'
