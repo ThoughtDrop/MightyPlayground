@@ -1,9 +1,14 @@
 <ion-view view-title="Message Detail" cache-view="false">
  <!--HEADER BAR -->
+
+ <ion-header-bar align-title="center" class="bar-calm" class = "message-detail-header container">
+   <i ng-click= "go()" class ='ion-close-round'></i> 
+ </ion-header-bar>
+
   <ion-content has-header="true" padding="true">
-    <ion-nav-bar class = "message-detail-header" class="bar-dark">
+<!--     <ion-nav-bar class = "message-detail-header" align-title = "center" class="bar-dark">
       <i class ='ion-close-round'></i> 
-    </ion-nav-bar>
+    </ion-nav-bar> -->
 
   <!--Main Message -->
     <div class = 'parent'>
@@ -14,13 +19,11 @@
     <div class="card" ng-repeat="comments in particular.messageDetail track by $index">
       <div class="item item-text-wrap">
         {{comments}}
-        <i class ='ion-plus-round'></i> 
-        <i class ='ion-minus-round'></i> 
       </div>
     </div>
 
   <!--FOOTER Reply Message Box -->
-    <ion-footer-bar align-title="left" class="bar-assertive">
+    <ion-footer-bar align-title="left" class="bar-calm">
       <label class="item item-input">
         <input type="text" ng-model="message.text" placeholder="Reply back here" maxlength="144" autofocus>
     </label>
