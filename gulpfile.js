@@ -200,7 +200,7 @@ gulp.task('build', function(){
 
     'serve',
     'ionic'
-  );
+    );
 });
 
 gulp.task('default', ['build']);
