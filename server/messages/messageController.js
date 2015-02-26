@@ -80,7 +80,7 @@ module.exports = {
       message: req.body[1],
       created_at: new Date()
     };
-
+    console.log(JSON.stringify(data));
     createMessage(data) 
       .then(function (createdMessage) {
         console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
@@ -98,9 +98,20 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
 
+    // var data = {
+    //   _id: req.body._id,
+    //   location: coordinates: { [req.body.location.coordinates[0], req.body.location.coordinates[1]],
+    //     type: 'Point' },
+    //   message: req.body.message,
+    //   _creator: req.body._creator,
+    //   recipients: req.body.recipients  
+    // }
+
+    // console.log(JSON.stringify(req.body));
+
     createMessage(req.body) 
       .then(function (createdMessage) {
-        console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
+        console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {
         console.log(error);
@@ -108,18 +119,18 @@ module.exports = {
   },
 
   getPrivate: function(req, res) {
-    console.log('server req.body: ' + JSON.stringify(req.body));
-    var locationQuery = module.exports.queryByLocation(req.body.coordinates.latitude, req.body.coordinates.long, 100);
-    // { location: { '$near': { '$geometry': [Object], '$maxDistance': 100 } } }
-    Message
-      .find(locationQuery)
-      .where(isPrivate).equals(true)
-      .where(req.body.upserPhone)
-      .in(recipients)
-      // .sort()
-      .exec(function(err, messages) {
-        res.send(messages);
-    });
+    // console.log('server req.body: ' + JSON.stringify(req.body));
+    // var locationQuery = module.exports.queryByLocation(req.body.coordinates.latitude, req.body.coordinates.long, 100);
+    // // { location: { '$near': { '$geometry': [Object], '$maxDistance': 100 } } }
+    // Message
+    //   .find(locationQuery)
+    //   .where(isPrivate).equals(true)
+    //   .where(req.body.upserPhone)
+    //   .in(recipients)
+    //   // .sort()
+    //   .exec(function(err, messages) {
+    //     res.send(messages);
+    // });
 
   }
 };

@@ -3,7 +3,7 @@ angular.module('thoughtdrop.privateServices', [])
 .factory('Private', function($http, $q) {
 
   var saveMessage = function(data) {
-    console.log('private message to save: ' + JSON.stringify(data));
+    console.log('SERVICES private message to save before server: ' + JSON.stringify(data));
 
     return $http({
       method: 'POST',
