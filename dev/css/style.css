@@ -69,27 +69,58 @@
   font-size: 3.5em;
   text-align: center;
   margin-top: 6%
+}
 
-.button-positive{
+.button-positive {
   right:70px !important;
 }
 
 /* Main Public Message Feed Page Styling */
 
+.header-container {
+  width:100%;
+}
 .sort-buttons {
   text-align: left;
-  width: 25%;
-  margin: 0% auto 3% 0%;
+  display:inline;
 }
 
-.compose-button {
-  text-align:center;
+.sort-buttons button {
+  border:1.5px solid transparent;
+  border-color: white;
+  background-color: Transparent;
+  color: white;
+}
+
+.drop-button {
+  /*Alignment*/
+  text-align: right;
   width: 15%;
-  margin: 0% 8% 0% auto;
+  float:right;
+}
+.drop-button button {
+  /*Button Styling*/
+  border:1.5px solid transparent;
+  border-color: white;
+  background-color: Transparent;
+  color: white;
 }
 
-.message-block {
-  vertical-align: middle;
+.card {
+  position: relative;
+/*  z-index: -100;*/
+}
+
+.ion-plus-round {
+  z-index: 10;
+  padding: 3% 6% 3% 3%;
+  position: relative;
+}
+
+.ion-minus-round {
+  z-index: 10;
+  padding: 3% 3% 3% 6%;
+  position: relative;
 }
 
 .message-text {
@@ -97,15 +128,18 @@
   width:75%;
   text-align: left;
   float:left;
-  /*Vertical Centering*/
+  /*Vertical Centering- NOT WORKING!*/
   margin-top: auto;
   margin-bottom: auto;
+  vertical-align: middle;
+
   /*Message Text Styling*/
-  color: green;
   font-size: 1em;
   font-family: helvetica;
-
+  font-weight: 500;
+  height:100%;
 }
+
 .votes-container {
   width:20%;
   text-align: right;

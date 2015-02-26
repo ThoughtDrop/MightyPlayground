@@ -1,29 +1,38 @@
 <ion-view view-title="Public Messages">
 <!-- HEADER -->
- <ion-header-bar align-title="center" class="bar-dark">
-   <div class="buttons">
-    <button class="sort-button" ng-click="sortFeed('top')">Top</button>
-   <button class="sort-button" ng-click="sortFeed('new')">New</button>
+<ion-header-bar align-title="center" class="bar-calm">
+
+ <div class="header-container">
+
+   <div class="sort-buttons">
+    <button  ng-click="sortFeed('top')">Top</button>
+    <button  ng-click="sortFeed('new')">New</button>
    </div>
-   <div class="compose-button">
+
+   <div class="drop-button">
        <button ng-click='newMessage()'>Drop</button>
    </div>
+
+ </div> 
  </ion-header-bar>
 
- <ion-content>
+
+<ion-content>
 <!-- PULL REFRESH -->
    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
    </ion-refresher>
 <!-- Public Messages -->
    <div class="card" ng-repeat="message in message.messages">
+
      <div class="item item-text-wrap message-block">
-       <div class = "message-text" ng-click="getReplies(message)" >{{message.message}}</div>
+       <div class = "message-text" ng-click="getReplies(message)">{{message.message}}</div>
          <div class = "votes-container">
            <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
            <b>{{message.votes}}</b>
            <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
          </div>
       </div>
+
     </div>
     
  </ion-content>
