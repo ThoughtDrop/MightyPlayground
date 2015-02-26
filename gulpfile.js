@@ -110,7 +110,8 @@ gulp.task('ionic', shell.task([
   'ionic platform rm ios',
   'ionic platform add ios',
   // 'gulp build'
-  'ionic build ios'
+  'ionic build ios',
+  'open platforms/ios/myApp.xcodeproj'
   // 'ionic emulate ios --consolelogs --serverlogs'
 ]));
 

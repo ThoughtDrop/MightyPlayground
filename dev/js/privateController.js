@@ -64,24 +64,37 @@ angular.module('thoughtdrop.privateController', [])
     $scope.modalNewMessage.show();
   };
 
-  $scope.getRecipients = function() {
-    //store all the recipeints from contacts list into the $scope.recipients array
-  };
-
   $scope.pickContact = function() {
-    console.log('pick contact!');
 
     Private.pickContact()
       .then(function(contact) {
           $scope.data.selectedContacts.push(contact);
-          console.log("Selected contacts=");
-          console.log($scope.data.selectedContacts);
+          // console.log(JSON.stringify(contact.phones[0].value));
+          var number = contact.phones[0].value.replace(/\W+/g, "");
+          console.log(' # before regex & slice' + number);
+          var phoneNumber;
+
+          if (number.length > 10) {  
+            phoneNumber = number.slice(1);
+            $scope.recipients.push(parseInt(phoneNumber));
+          } else {
+            $scope.recipients.push(parseInt(number));
+          }
+
+          // $scope.recipients.push(contact.phones[0].value));
+
+          console.log('RECIPIENT!: ' + $scope.recipients);
 
         },
         function(failure) {
             console.log("Bummer.  Failed to pick a contact");
         });
 
+      // for (var i = 0; i < $scope.data.selectedContacts.length; i++) {
+      //   $scope.recipients.push($scope.data.selectedContacts[i].phones[0].value);
+      // }
+
+      // console.log('Recipients: ' + $scope.recipients);
   };
 
   //send coordinates & users's phone number
