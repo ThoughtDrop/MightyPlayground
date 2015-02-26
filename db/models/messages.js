@@ -3,7 +3,8 @@ var User = require('./user');
 
 var messagesSchema = new mongoose.Schema({
   _id: Number,
-  _creator: [{type: Number, ref: 'User'}],
+  // _creator: [{type: Number, ref: 'User'}],
+  _creator: String,
   created_at: { type: Date },
   // recipient: [{type: Number, ref: 'User'}],
   location : {

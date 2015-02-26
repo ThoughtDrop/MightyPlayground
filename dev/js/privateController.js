@@ -22,22 +22,31 @@ angular.module('thoughtdrop.privateController', [])
     $scope.page = page;
   };
 
-  $scope.sendMessage = function(route) {
+  $scope.sendMessage = function() {
     console.log('sendMessage!');
-    $scope.closeMessageBox();
+    console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
 
     Geolocation.getPosition()
       .then(function(position) {
+        console.log('located!: ' + JSON.stringify(position));
+        console.log('Message is: ' + $scope.message.text);
+        console.log('recipients are: ' + $scope.recipients);
+        var creator = $localStorage.userInfo.name;
+        console.log($localStorage.userInfo.name);
 
         var data = {
           _id: Math.floor(Math.random()*100000),
           location: {coordinates: [position.coords.longitude, position.coords.latitude]},
           message: $scope.message.text,
-          // creator: window.localStorage.userInfo,
+          _creator: creator,
           recipients: $scope.recipients
         };
 
-        $scope.message.text = '';
+        console.log('message data: ' + JSON.stringfy(data));
+
+        $scope.message.text = ''; //clear the message  for next message
+        $scope.recipients = []; //clear the recipients array for next message
+        $scope.closeMessageBox();
 
         Private.saveMessage(data)
         .then(function(resp) {
@@ -50,6 +59,7 @@ angular.module('thoughtdrop.privateController', [])
       })
       .then(function() {
         // $scope.findNearby('nearby');
+        $scope.closeMessageBox();
       })
   };
 
@@ -90,17 +100,12 @@ angular.module('thoughtdrop.privateController', [])
             console.log("Bummer.  Failed to pick a contact");
         });
 
-      // for (var i = 0; i < $scope.data.selectedContacts.length; i++) {
-      //   $scope.recipients.push($scope.data.selectedContacts[i].phones[0].value);
-      // }
-
-      // console.log('Recipients: ' + $scope.recipients);
   };
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    var userPhone = window.localStorage.userInfo.phoneNumber;
-    console.log(userPhone);
+    // var userPhone = $localStorage.userInfo.phoneNumber;
+    // console.log('userPhone: ' + userPhone);
     Geolocation.getPosition()
       .then(function(position) {
         var data = {  //send user phoneNumber & coordinates
