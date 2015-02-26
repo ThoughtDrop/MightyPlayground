@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $state, MessageDetail, Vote, SaveMessage) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, SaveMessage) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -125,8 +125,9 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.getReplies = function(message_obj) {
     MessageDetail.passOver(message_obj);
-    $state.go('messagedetail');//need to ask pass along message_obj
-  };
+    // $state.go('messagedetail');
+    $location.path('/messagedetail');
+  }
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
