@@ -98,7 +98,7 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
 
-    createMessage(data) 
+    createMessage(req.body) 
       .then(function (createdMessage) {
         console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
       })
@@ -109,7 +109,7 @@ module.exports = {
 
   getPrivate: function(req, res) {
     console.log('server req.body: ' + JSON.stringify(req.body));
-    var locationQuery = module.exports.queryByLocation(req.body.coordinates.lat, req.body.coordinates.long, 100);
+    var locationQuery = module.exports.queryByLocation(req.body.coordinates.latitude, req.body.coordinates.long, 100);
     // { location: { '$near': { '$geometry': [Object], '$maxDistance': 100 } } }
     Message
       .find(locationQuery)
