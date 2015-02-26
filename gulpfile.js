@@ -199,7 +199,7 @@ gulp.task('build', function(){
     // 'browser-sync'
     'serve',
     'ionic'
-  );
+    );
 });
 
 gulp.task('default', ['build']);
