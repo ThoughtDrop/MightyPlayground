@@ -70,10 +70,10 @@
   text-align: center;
   margin-top: 6%
 }
-
+/*
 .button-positive {
   right:70px !important;
-}
+}*/
 
 /* Main Public Message Feed Page Styling */
 
@@ -156,4 +156,32 @@
 .parent {
   margin:50px; 
   text-align:center;
+}
+
+.hidden { 
+  display: none !important;
+}
+
+.fileContainer [type=file] {   
+  opacity: 0 !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+}
+
+.hidden { 
+  display: none !important;
+}
+
+.fileContainer [type=file] {   
+  opacity: 0 !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
 }

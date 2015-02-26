@@ -1,5 +1,7 @@
 var Message = require('../../db/models/messages.js');
 var Q = require('q');
+var AWS = require('aws-sdk');
+AWS.config.region = 'us-west-1';
 
 module.exports = {
 
@@ -44,9 +46,9 @@ module.exports = {
   computeSortString: function(sortType) {
     sortType = sortType || '-created_at';
     if (sortType === 'new') {
-      sortType = '-created_at'
+      sortType = '-created_at';
     } else if (sortType === 'top') {
-      sortType = '-votes'
+      sortType = '-votes';
     }
     return sortType;
   },
@@ -62,25 +64,50 @@ module.exports = {
       .exec(function (err, messages) {
         console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
-    })
+    });
   },
 
   saveMessage: function (req, res) {
     var createMessage = Q.nbind(Message.create, Message);
-
+    console.log(req.body);
     var data = { //TODO: add a facebookID field
-      _id: Math.floor(Math.random()*100000), //message IDs use {} 
-      location: {coordinates: [req.body[0].long, req.body[0].lat]},
-      message: req.body[1],
-      created_at: new Date()
+      _id: Number(req.body.id), 
+      location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
+      message: req.body.text,
+      created_at: new Date(),
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
     };
+    console.log('typeof data id ' + typeof data._id);
+    console.log('data id value ' + data._id);
 
     createMessage(data) 
       .then(function (createdMessage) {
+        res.status(200).send('great work!');
         console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {
         console.log(error);
       });
   },
+
+  // saveImage: function(req, res) {}
+    //TODO: figure out how to send photo from server
+    
+    // var creds = {
+    //   bucket: 'mpbucket-hr23',
+    //   access_key: 'AKIAJOCFMQLT2OTUDEJQ',
+    //   secret_key: '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'
+    // };
+
+    // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+    // AWS.config.region = 'us-west-1';
+    // var bucket = new AWS.S3({ params: {Bucket: creds.bucket } });
+    // var params = { Key: req.body.name, ContentType: req.body.type, Body: JSON.stringify(req.body), ServerSideEncryption: 'AES256' };
+    //   bucket.putObject(params, function(err, data) {
+    //     if (err) {
+    //       console.log('error uploading data: ', err.message);
+    //     } else {
+    //       console.log('Upload Done');
+    //     }
+    //   });
 };

@@ -107,9 +107,9 @@ gulp.task('inject2', function(){
 });
 
 gulp.task('ionic', shell.task([
+  'ionic platform remove ios',
   'ionic platform add ios',
   'ionic build ios',
-  'ionic emulate ios --consolelogs --serverlogs'
 ]));
 
 //change to route to your android sdk. 
