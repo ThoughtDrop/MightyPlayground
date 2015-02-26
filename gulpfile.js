@@ -197,8 +197,8 @@ gulp.task('build', function(){
     'inject7',],
     // 'ionic-build',
     // 'browser-sync'
-    'serve'
-    // 'ionic'
+    // 'serve'
+    'ionic'
     );
 });
 
