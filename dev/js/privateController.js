@@ -28,33 +28,38 @@ angular.module('thoughtdrop.privateController', [])
 
     Geolocation.getPosition()
       .then(function(position) {
-        console.log('located!: ' + JSON.stringify(position));
-        console.log('Message is: ' + $scope.message.text);
-        console.log('recipients are: ' + $scope.recipients);
+        // console.log('located!: ' + JSON.stringify(position));
+        // console.log([position.coords.longitude, position.coords.latitude]);
+        // console.log(typeof position);
         var creator = $localStorage.userInfo.name;
-        console.log($localStorage.userInfo.name);
+        // console.log(creator);
+        // console.log(typeof creator);
+        // console.log('Message is: ' + $scope.message.text);
+        // console.log('recipients are: ' + $scope.recipients);
 
-        var data = {
+        var messageData = {
           _id: Math.floor(Math.random()*100000),
-          location: {coordinates: [position.coords.longitude, position.coords.latitude]},
+          location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
           _creator: creator,
           recipients: $scope.recipients
         };
 
-        console.log('message data: ' + JSON.stringfy(data));
+        // console.log('message data: ' + JSON.stringify(messageData));
 
         $scope.message.text = ''; //clear the message  for next message
+        console.log($scope.message);
         $scope.recipients = []; //clear the recipients array for next message
         $scope.closeMessageBox();
+        $scope.data = {selectedContacts: []}; //clear contacts for next message
 
-        Private.saveMessage(data)
+        Private.saveMessage(messageData)
         .then(function(resp) {
           console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
           //return resp;
         })
         .catch(function(err) {
-          console.log('Error posting message: ',  err);
+          console.log('Error posting private message: ',  JSON.stringify(err));
         });
       })
       .then(function() {
@@ -120,6 +125,9 @@ angular.module('thoughtdrop.privateController', [])
           $scope.privateMessages = resp.data;
           console.log('resp.data: ' + resp.data);
           console.log('$scope.privateMessages: ' + $scope.privateMessages);
+        })
+        .catch(function(err) {
+          console.log('Error posting message: ' +  JSON.stringify(err));
         });
       })
   };

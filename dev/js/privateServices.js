@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateServices', [])
     return $http({
       method: 'POST',
       url:  //base
-      '/api/messages/',
+      '/api/messages/private',
       data: JSON.stringify(data)
     })
   };
@@ -18,7 +18,7 @@ angular.module('thoughtdrop.privateServices', [])
     return $http({
       method: 'POST',
       url: //base
-      '/api/private/nearby'
+      '/api/messages/private/nearby'
     })
     
   };
