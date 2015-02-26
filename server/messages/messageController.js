@@ -109,7 +109,7 @@ module.exports = {
 
   getPrivate: function(req, res) {
     console.log('server req.body: ' + JSON.stringify(req.body));
-    var locationQuery = module.exports.queryByLocation(req.body.coordinates.lat, req.body.coordinates.long, 100);
+    var locationQuery = module.exports.queryByLocation(req.body.coordinates.latitude, req.body.coordinates.long, 100);
     // { location: { '$near': { '$geometry': [Object], '$maxDistance': 100 } } }
     Message
       .find(locationQuery)
