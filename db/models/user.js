@@ -3,8 +3,9 @@ var Message = require('./messages');
 
 var usersSchema = new mongoose.Schema({
   _id: Number,//phone number
-  phoneNumber: Number,
-  name: String
+  fbID: Number,
+  name: String,
+  picture: String
   // messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
 });
 

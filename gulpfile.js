@@ -106,10 +106,18 @@ gulp.task('inject2', function(){
     .pipe(gulp.dest('www/js'));
 });
 
+gulp.task('inject3', function(){
+  gulp.src('www/js/privateServices.js')
+    .pipe(replace('//base', "'https://mightyplayground.herokuapp.com' +"))
+    .pipe(gulp.dest('www/js'));
+});
+
 gulp.task('ionic', shell.task([
   'ionic platform remove ios',
   'ionic platform add ios',
   'ionic build ios',
+  // 'open platforms/ios/myApp.xcodeproj'
+
 ]));
 
 //change to route to your android sdk. 
@@ -156,10 +164,12 @@ gulp.task('build', function(){
     'watchcss',
     'watchindex',
     ['inject1',
-    'inject2'],
+    'inject2',
+    'inject3'],
     // 'ionic-build',
     // 'browser-sync'
-    'serve'
+    // 'serve'
+    'ionic'
     );
 });
 

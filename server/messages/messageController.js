@@ -41,6 +41,11 @@ module.exports = {
       }
     };
     return query;
+    
+    findAround(query, function(err, result){
+      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
+      res.sendStatus(result);
+    });
   },
 
   computeSortString: function(sortType) {
@@ -56,18 +61,21 @@ module.exports = {
   getNearbyMessages: function(req, res) {
     var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
     var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
+    console.log('public query!: ' + JSON.stringify(locationQuery));
 
     Message
       .find(locationQuery)
+      .where('isPrivate').equals(false)
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
-        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
     });
   },
 
   saveMessage: function (req, res) {
+    // console.log('saveMesage! req.body: ' + JSON.stringify(req.body));
     var createMessage = Q.nbind(Message.create, Message);
     console.log(req.body);
     var data = { //TODO: add a facebookID field
@@ -75,11 +83,11 @@ module.exports = {
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
+      isPrivate: false
     };
-    console.log('typeof data id ' + typeof data._id);
-    console.log('data id value ' + data._id);
-
+    console.log(JSON.stringify(data));
+    
     createMessage(data) 
       .then(function (createdMessage) {
         res.status(200).send('great work!');
@@ -90,24 +98,48 @@ module.exports = {
       });
   },
 
-  // saveImage: function(req, res) {}
-    //TODO: figure out how to send photo from server
-    
-    // var creds = {
-    //   bucket: 'mpbucket-hr23',
-    //   access_key: 'AKIAJOCFMQLT2OTUDEJQ',
-    //   secret_key: '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'
-    // };
+  displayReplies: function (req, res) {
+    //stuff
+  },
 
-    // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
-    // AWS.config.region = 'us-west-1';
-    // var bucket = new AWS.S3({ params: {Bucket: creds.bucket } });
-    // var params = { Key: req.body.name, ContentType: req.body.type, Body: JSON.stringify(req.body), ServerSideEncryption: 'AES256' };
-    //   bucket.putObject(params, function(err, data) {
-    //     if (err) {
-    //       console.log('error uploading data: ', err.message);
-    //     } else {
-    //       console.log('Upload Done');
-    //     }
-    //   });
+  savePrivate: function(req, res) {
+    var createMessage = Q.nbind(Message.create, Message);
+    console.log('private message data: ' + JSON.stringify(req.body));
+
+    createMessage(req.body) 
+      .then(function (createdMessage) {
+        console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+
+  getPrivate: function(req, res) {
+    console.log('user info!!!: ' + JSON.stringify(req.body));
+    var userPhone = req.body.userPhone;
+    console.log('userphone String: ' + userPhone);
+    var recipients = 'recipients';
+    console.log(typeof userPhone);
+    
+    var locationQuery = module.exports.queryByLocation(req.body.longitude, req.body.latitude, 100);
+
+    Message
+      .find(locationQuery)
+      .where('isPrivate').equals(true)
+      // .where('5106047443')           // not working!!!!!, looping through on server to find matches
+      // .in(['recipients'])
+      // // // .sort()
+      .exec(function(err, messages) {
+        console.log('private message found!: ' + JSON.stringify(messages));
+        var result = [];
+        for (var i = 0; i < messages.length; i++){
+          if (messages[i].recipients.indexOf(userPhone) !== -1){
+            result.push(messages[i]);
+          }
+        }
+        res.send(result);
+    });
+  }
 };
+

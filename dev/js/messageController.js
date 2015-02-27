@@ -1,6 +1,7 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state, MessageDetail, Vote, SaveMessage) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, SaveMessage, $window, $localStorage) {
+
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -67,6 +68,7 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.sendData = function(route) {
     var data = Array.prototype.slice.call(arguments, 1);
+    console.log('sendData : ' + JSON.stringify(data));
     var route = route || "";
     //returns a promise that will be used to resolve/ do work on the data returned by the server
     return $http({
