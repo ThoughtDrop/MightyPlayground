@@ -81,8 +81,24 @@ angular.module('thoughtdrop.services', [])
 })
 
 .factory('MessageDetail', function(){
-  var particularMessage;
+  var allMessages;
+
+  var storeMessages = function(messages) {
+    allMessages = messages;
+    console.log('messages stored on factory: ', allMessages);
+  };
+
+  // var particularMessage;
   
+  var get = function(messageid) {
+    for (var i = 0; i < allMessages.length; i++) {
+      if (allMessages[i]._id === parseInt(messageid)) {
+        return allMessages[i];
+      }
+    }
+    return null;
+  };
+
   var passOver = function(data) {
     particularMessage = data;
     // return location.path('/messagedetail')
@@ -99,7 +115,9 @@ angular.module('thoughtdrop.services', [])
   return {
     passOver: passOver,
     destroyCurrent: destroyCurrent,
-    getCurrentMessage: getCurrentMessage
+    getCurrentMessage: getCurrentMessage,
+    get: get,
+    storeMessages: storeMessages
   };
 
   var findNearby = function() {

@@ -15,17 +15,29 @@
     <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
     </ion-refresher>
 <!-- Public Messages -->
-    <div class="card" ng-repeat="message in message.messages">
+    <ion-item class="card" ng-repeat="message in message.messages" type="item-text-wrap" href="#/tab/messages/{{message._id}}">
       <div class="item item-text-wrap message-block">
-        <div class = "message-text" ng-click="getReplies(message)">
-          {{message.message}}
-        </div>
-        <div class = "votes-container">
+        {{ message.message }}
+      </div>
+      <div class = "votes-container">
+        <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
+        <b>{{message.votes}}</b>
+        <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
+      </div>
+    </ion-item>
+
+
+    <!-- <div class="card" ng-repeat="message in message.messages"> -->
+      <!-- <div class="item item-text-wrap message-block"> -->
+        <!-- <div class = "message-text" ng-click="getReplies(message)"> -->
+          <!-- {{message.message}} -->
+        <!-- </div> -->
+        <!-- <div class = "votes-container">
           <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
           <b>{{message.votes}}</b>
           <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
-        </div>
-      </div>
-    </div>
+        </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
   </ion-content>
 </ion-view>

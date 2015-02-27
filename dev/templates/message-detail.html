@@ -7,11 +7,11 @@
 
   <!--Main Message -->
     <div class = 'parent'>
-      <h1>{{particular.message}}</h1>
+      <h1>{{message.message}}</h1>
       <img ng-src="{{photo_url}}" isImage />
     </div>  
   <!--Reply Messages -->
-    <div class="card" ng-repeat="comments in particular.messageDetail track by $index">
+    <div class="card" ng-repeat="comments in message.messageDetail track by $index">
       <div class="item item-text-wrap">
         {{comments}}
         <i class ='ion-plus-round'></i> 
@@ -25,7 +25,7 @@
         <input type="text" ng-model="message.text" placeholder="Reply back here" maxlength="144" autofocus>
     </label>
     <div class="buttons">
-      <button class="button" ng-click="addReply(message.text, {{particular._id}})">Send</button>
+      <button class="button" ng-click="addReply(message.text, {{message._id}})">Send</button>
     </div>
     </ion-footer-bar>
   </ion-content>
