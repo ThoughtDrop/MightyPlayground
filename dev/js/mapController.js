@@ -9,17 +9,24 @@ angular.module('thoughtdrop.mapController', [])
           });
 
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          console.log(pos);
-          map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          var myLocation = new google.maps.Marker({
-              position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-              icon: 'img/logo_pin.png',
-              map: map,
-              title: "My Location"
-          });
-          map.fitBounds(new google.maps.LatLngBounds(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)));
-        });
+        // navigator.geolocation.getCurrentPosition(function(pos) {
+        //   console.log(pos);
+        //   map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        //   var myLocation = new google.maps.Marker({
+        //       position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+        //       icon: 'img/logo_pin.png',
+        //       map: map,
+        //       title: "My Location"
+        //   });
+        //   map.fitBounds(new google.maps.LatLngBounds(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)));
+        // });
+        
+       var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
           // Create the search box and link it to the UI element.
           var input = /** @type {HTMLInputElement} */(
               document.getElementById('pac-input'));
@@ -45,13 +52,13 @@ angular.module('thoughtdrop.mapController', [])
             markers = [];
             var bounds = new google.maps.LatLngBounds();
             for (var i = 0, place; place = places[i]; i++) {
-              var image = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-              };
+              // var image = {
+              //   url: place.icon,
+              //   size: new google.maps.Size(71, 71),
+              //   origin: new google.maps.Point(0, 0),
+              //   anchor: new google.maps.Point(17, 34),
+              //   scaledSize: new google.maps.Size(70, 70)
+              // };
 
               // Create a marker for each place.
               var marker = new google.maps.Marker({
