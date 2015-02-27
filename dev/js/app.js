@@ -13,11 +13,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     }
   });
 
-  if(window.localStorage.token === undefined) {
-    $location.path('/login');
-  } else {
-     $state.go('tab.messages');
-  }
+  // if(window.localStorage.token === undefined) {
+  //   $location.path('/login');
+  // } else {
+  //    $state.go('tab.messages');
+  // }
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -40,11 +40,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
 
 
 
-  // .state('map', {
-  //   url: '/map',
-  //   templateUrl: 'templates/map.html',
-  //   controller: 'mapController'
-  // })
+  .state('map', {
+    url: '/map',
+    templateUrl: 'templates/map.html',
+    controller: 'mapController'
+  })
 
   // setup an abstract state for the tabs directive
   .state('tab', {

@@ -1,43 +1,8 @@
-<!-- <ion-view view-title="Map">
-  <ion-content class="Gmap">
-  <h1>MAP PAGE</h1>
-    <div class="map-canvas"></div>
-  </ion-content>
-</ion-view>  -->
-
-
-<!-- <body ng-controller="mapController">
-    <ion-header-bar class="bar-dark" >
-      <h1 class="title">Map</h1>
-    </ion-header-bar>
-    <ion-content>
+<ion-pane>
+  <ion-content ng-controller="mapController">
+    <div class='containerMap'>
+      <input id="pac-input" class="controls" type="text" placeholder="Enter Location">
       <div id="map" data-tap-disabled="true"></div>
-    </ion-content>
-    <ion-footer-bar class="bar-dark">
-      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
-    </ion-footer-bar>
-</body> -->
-<!-- <html ng-app="ionic.example">
- --><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    
-    <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
-
-    <!-- google maps javascript -->
-  
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-
-  </head>
-  <body ng-controller="mapController">
-    <ion-header-bar class="bar-dark" >
-      <h1 class="title">Map</h1>
-    </ion-header-bar>
-    <ion-content>
-      <div class="map" data-tap-disabled="true"></div>
-    </ion-content>
-    <ion-footer-bar class="bar-dark">
-      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
-    </ion-footer-bar>
-  </body>
-<!-- </html> -->
+    </div>
+  </ion-content>
+</ion-pane>
