@@ -1,10 +1,14 @@
 angular.module('thoughtdrop.messageDetailController', [])
-.controller('messageDetailController', function($scope, $state, $http, $location, MessageDetail){
+.controller('messageDetailController', function($scope, $state, $http, MessageDetail, $stateParams){
   
-  $scope.particular = MessageDetail.getCurrentMessage();
+  $scope.message = MessageDetail.get($stateParams._id);
+  console.log('Object in here is: ' + $scope.message);
 
-  $scope.sendData = function(route) {
-    var data = Array.prototype.slice.call(arguments, 1);
+  // $scope.particular = MessageDetail.getCurrentMessage();
+
+  $scope.sendData = function(route, data) {
+    console.log(typeof data);
+    console.log(data);
     var route = route || "";
     //returns a promise that will be used to resolve/ do work on the data returned by the server
     return $http({
@@ -12,16 +16,16 @@ angular.module('thoughtdrop.messageDetailController', [])
       url:  //base
       '/api/messages/' + route,
       data: JSON.stringify(data)
-    })
+    });
   };
 
-  $scope.addReply = function(reply, id) {
-    $scope.sendData('addMessageDetail', reply, id);
-    $scope.particular.messageDetail.push(reply);
-  }
+  $scope.addReply = function(replyText, messageid) {
+    var reply = {};
+    reply.text = replyText;
+    reply.messageid = messageid;
 
-  $scope.go = function() {
-    $location.path('/tab/messages')
-  }
-
+    $scope.sendData('addreply', reply);
+    $scope.message.replies.push(reply.text);
+    $scope.message.text = ''; 
+  };
 });
