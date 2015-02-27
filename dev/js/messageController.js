@@ -120,6 +120,17 @@ angular.module('thoughtdrop.messageController', [])
   };
   
 
+  $scope.doRefresh = function() {
+    if ($scope.page === 'new') {
+      $scope.findNearby('nearby', 'new', 'scroll.refreshComplete');
+    } else if ($scope.page === 'top') {
+      $scope.findNearby('nearby', 'top', 'scroll.refreshComplete');
+    }
+
+    $scope.$broadcast('scroll.refreshComplete');
+    // $scope.apply();
+  };
+  
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
 
