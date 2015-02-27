@@ -1,7 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
 .controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, SaveMessage, $window, $localStorage) {
-
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -22,39 +21,6 @@ angular.module('thoughtdrop.messageController', [])
   $scope.formatDate = function(date) {
      return moment(date).fromNow();
   };
-
-
-  // $scope.formatDate = function(date) {
-  //   var formattedDate = null ;
-
-  //   var now = moment();//current date
-  //   var then = moment(date);//date message was created
-  //   var miliseconds = now.diff(then);//time elapsed betwen now and then in miliseconds
-
-  //   var time = {
-  //     seconds: Math.round(miliseconds/1000%60),
-  //     minutes: Math.round(time.seconds%60),
-  //     hours: Math.round(time.minutes%24),
-  //     days: Math.round(time.hours%24) //???? 
-  //   };
-
-  //   if (time.seconds && time.minutes === 0 && time.hours === 0 && time.days === 0 ) {
-  //     formattedDate = time.seconds + 's'
-  //     return formattedDate;
-  //   }
-  //   if (time.seconds && time.minutes && time.hours === 0 && time.days === 0 ) {
-  //     formattedDate = time.minutes + 'm'
-  //     return formattedDate;
-  //   }
-  //   if (time.seconds && time.minutes && time.hours && time.days === 0 ) {
-  //     formattedDate = time.hours + 'h'
-  //     return formattedDate;
-  //   }
-  //   if (time.seconds && time.minutes && time.hours && time.days) {
-  //     formattedDate = time.hours + 'd'
-  //     return formattedDate;
-  //   }
-  // };
 
   $scope.setPage = function(page) {
     $scope.page = page;
@@ -123,11 +89,11 @@ angular.module('thoughtdrop.messageController', [])
       $scope.modalNewMessage.hide();
     }, time);
   };
-
+  
   $scope.newMessage = function() {
     $scope.modalNewMessage.show();
   };
-
+  
   $scope.displayMessages = function(route, coordinates, sortMessagesBy) {
     $scope.sendData(route, coordinates, sortMessagesBy)
     .then(function (resp) {
@@ -137,12 +103,12 @@ angular.module('thoughtdrop.messageController', [])
       MessageDetail.storeMessages(resp.data);
     });    
   };
-
+  
   $scope.getPosition = function() {
     //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation.getCurrentPosition();
   };
-
+  
   $scope.findNearby = function(route, sortMessagesBy) {
     $scope.getPosition()
     .then(function(position) {
@@ -152,7 +118,7 @@ angular.module('thoughtdrop.messageController', [])
       $scope.displayMessages(route, coordinates, sortMessagesBy);
     });   
   };
-
+  
   $scope.doRefresh = function() {
     if ($scope.page === 'new') {
       $scope.findNearby('nearby', 'new', 'scroll.refreshComplete');
@@ -163,7 +129,12 @@ angular.module('thoughtdrop.messageController', [])
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
-
+  
+  // $scope.getReplies = function(message_obj) {
+  //   MessageDetail.passOver(message_obj);
+  //   // $state.go('messagedetail');
+  //   $location.path('/messagedetail');
+  // }
 
 
   //Invokes findNearby on page load for /tabs/messages
