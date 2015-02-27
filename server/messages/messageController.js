@@ -65,6 +65,7 @@ module.exports = {
 
     Message
       .find(locationQuery)
+      .where('isPrivate').equals(false)
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
@@ -82,7 +83,8 @@ module.exports = {
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
+      isPrivate: false
     };
     console.log(JSON.stringify(data));
     
