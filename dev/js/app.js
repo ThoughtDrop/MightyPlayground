@@ -13,11 +13,16 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     }
   });
 
-  if(window.localStorage.token === undefined) {
-    $location.path('/login');
-  } else {
+  // if(window.localStorage.token === undefined) {
+  //   $location.path('/login');
+  // } else {
      $state.go('tab.messages');
-  }
+  // }
+})
+
+.constant('angularMomentConfig', {
+    preprocess: 'unix', // optional
+    timezone: 'Europe/London' // optional
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

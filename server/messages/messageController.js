@@ -42,7 +42,14 @@ module.exports = {
     var messageID = req.body[0];
     console.log('Received updated voteCount from client, where votes = ', voteCount);
     var updateVote = Q.nbind(Message.findByIdAndUpdate, Message);
-    updateVote(messageID, { votes : voteCount} );
+    updateVote(messageID, { votes : voteCount} )
+      .then(function (data) {
+        res.status(200).send();
+        console.log('Vote was successfully saved to database', data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 
   queryByLocation: function(lat, long, radius) {

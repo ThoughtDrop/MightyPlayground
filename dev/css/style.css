@@ -71,6 +71,9 @@
 }
 
 /* Main Public Message Feed Page Styling */
+.text-pulling {
+  margin-bottom: 3%;
+}
 
 .header-container {
   width:100%;
@@ -101,9 +104,9 @@
   color: white;
 }
 
-.card {
-  position: relative;
-/*  z-index: -100;*/
+.message-date {
+  font-size: .5em;
+  
 }
 
 .ion-plus-round {
