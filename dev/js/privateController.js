@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = [5106047443]; //number hardcoded for testing reasons
+  $scope.recipients = []; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -28,16 +28,9 @@ angular.module('thoughtdrop.privateController', [])
 
     Geolocation.getPosition()
       .then(function(position) {
-        // console.log('located!: ' + JSON.stringify(position));
-        // console.log([position.coords.longitude, position.coords.latitude]);
-        // console.log(typeof position);
-        // var creator = $localStorage.userInfo.name; //CHANGE THIS BACK TO THIS!!!
-        var creator = 'peter!!!!'
-        // console.log(creator);
-        // console.log(typeof creator);
-        // console.log('Message is: ' + $scope.message.text);
-        // console.log('recipients are: ' + $scope.recipients);
-
+        
+        var creator = $localStorage.userInfo.name; //get user's name from local storage
+        
         var messageData = {
           _id: Math.floor(Math.random()*100000),
           location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
@@ -47,7 +40,6 @@ angular.module('thoughtdrop.privateController', [])
           isPrivate: true
         };
 
-        // console.log('message data: ' + JSON.stringify(messageData));
 
         $scope.message.text = ''; //clear the message  for next message
         console.log($scope.message);
@@ -114,7 +106,7 @@ angular.module('thoughtdrop.privateController', [])
     var userPhone;
 
     if ($localStorage.userInfo === undefined) {  //get user's phone number hard coded now for testing reasons
-      userPhone = 5106047443; 
+      userPhone = 1234567890; 
     } else {
       userPhone = $localStorage.userInfo.phoneNumber;
     }
