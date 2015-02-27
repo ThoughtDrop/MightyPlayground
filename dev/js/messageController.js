@@ -119,23 +119,6 @@ angular.module('thoughtdrop.messageController', [])
     });   
   };
   
-  $scope.doRefresh = function() {
-    if ($scope.page === 'new') {
-      $scope.findNearby('nearby', 'new', 'scroll.refreshComplete');
-    } else if ($scope.page === 'top') {
-      $scope.findNearby('nearby', 'top', 'scroll.refreshComplete');
-    }
-
-    $scope.$broadcast('scroll.refreshComplete');
-    // $scope.apply();
-  };
-  
-  // $scope.getReplies = function(message_obj) {
-  //   MessageDetail.passOver(message_obj);
-  //   // $state.go('messagedetail');
-  //   $location.path('/messagedetail');
-  // }
-
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
