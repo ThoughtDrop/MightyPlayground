@@ -1,5 +1,7 @@
 var Message = require('../../db/models/messages.js');
 var Q = require('q');
+var AWS = require('aws-sdk');
+AWS.config.region = 'us-west-1';
 
 module.exports = {
 
@@ -49,9 +51,9 @@ module.exports = {
   computeSortString: function(sortType) {
     sortType = sortType || '-created_at';
     if (sortType === 'new') {
-      sortType = '-created_at'
+      sortType = '-created_at';
     } else if (sortType === 'top') {
-      sortType = '-votes'
+      sortType = '-votes';
     }
     return sortType;
   },
@@ -68,22 +70,25 @@ module.exports = {
       .exec(function (err, messages) {
         // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
-    })
+    });
   },
 
   saveMessage: function (req, res) {
     // console.log('saveMesage! req.body: ' + JSON.stringify(req.body));
     var createMessage = Q.nbind(Message.create, Message);
-
+    console.log(req.body);
     var data = { //TODO: add a facebookID field
-      _id: Math.floor(Math.random()*100000), //message IDs use {} 
-      location: {coordinates: [req.body[0].long, req.body[0].lat]},
-      message: req.body[1],
-      created_at: new Date()
+      _id: Number(req.body.id), 
+      location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
+      message: req.body.text,
+      created_at: new Date(),
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
     };
     console.log(JSON.stringify(data));
+    
     createMessage(data) 
       .then(function (createdMessage) {
+        res.status(200).send('great work!');
         console.log('Message ' + data.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {
@@ -135,20 +140,4 @@ module.exports = {
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,5 +1,5 @@
 angular.module('thoughtdrop.messageDetailController', [])
-.controller('messageDetailController', function($scope, $state, $http, MessageDetail){
+.controller('messageDetailController', function($scope, $state, $http, $location, MessageDetail){
   
   $scope.particular = MessageDetail.getCurrentMessage();
 
@@ -18,6 +18,10 @@ angular.module('thoughtdrop.messageDetailController', [])
   $scope.addReply = function(reply, id) {
     $scope.sendData('addMessageDetail', reply, id);
     $scope.particular.messageDetail.push(reply);
+  }
+
+  $scope.go = function() {
+    $location.path('/tab/messages')
   }
 
 });

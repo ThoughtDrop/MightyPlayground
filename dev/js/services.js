@@ -201,6 +201,7 @@ angular.module('thoughtdrop.services', [])
           return false;
         } else {
           console.log('Upload Done');
+
           return $http({
             method: 'POST',
             url:  //base
