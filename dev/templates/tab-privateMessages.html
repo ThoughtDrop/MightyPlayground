@@ -1,5 +1,7 @@
 <ion-view view-title="Private Messages - MUST BE UPDATED...currently pulling in everything!">
   <ion-content>
+   <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
+    </ion-refresher>
     <div class="bar bar-header">
       <button class="button icon ion-navicon"></button>
       <button class="button" ng-click='newMessage()'>Compose</button>

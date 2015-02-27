@@ -103,13 +103,8 @@ angular.module('thoughtdrop.privateController', [])
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    var userPhone;
-
-    if ($localStorage.userInfo === undefined) {  //get user's phone number hard coded now for testing reasons
-      userPhone = 1234567890; 
-    } else {
-      userPhone = $localStorage.userInfo.phoneNumber;
-    }
+    console.log(JSON.stringify($localStorage.userInfo));
+    var userPhone = $localStorage.userInfo._id;
 
     Geolocation.getPosition()     //get users's position
       .then(function(position) {
@@ -120,6 +115,8 @@ angular.module('thoughtdrop.privateController', [])
           userPhone: userPhone
         };
 
+        console.log("userData before DB: " + JSON.stringify(data));
+
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
           $scope.privateMessages.messages = resp.data;
@@ -129,6 +126,12 @@ angular.module('thoughtdrop.privateController', [])
           console.log('Error posting message: ' +  JSON.stringify(err));
         });
       })
+  };
+
+  $scope.doRefresh = function() {
+    $scope.findPrivateMessages('scroll.refreshComplete');
+    $scope.$broadcast('scroll.refreshComplete');
+    // $scope.apply();
   };
 
   $scope.findPrivateMessages();
