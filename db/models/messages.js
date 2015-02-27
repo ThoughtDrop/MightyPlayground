@@ -1,10 +1,9 @@
 var mongoose = require('mongoose');
-// var autoIncrement = require('mongoose-auto-increment');
-
 var User = require('./user');
 
 var messagesSchema = new mongoose.Schema({
   _id: Number,
+  _creator: String,
   photo_url: String,
   created_at: { type: Date },
   // recipient: [{type: Number, ref: 'User'}],
@@ -15,13 +14,12 @@ var messagesSchema = new mongoose.Schema({
     },
     coordinates: [Number]
   },
-  // public: boolean, //for private or public messages (non MVP)
   message: String,
   votes: { type: Number, default: 0 },
-  messageDetail: []
+  isPrivate: Boolean,
+  recipients: []
 });
 
-//messagesSchema.plugin(autoIncrement.plugin, 'id')
 messagesSchema.index({ location : '2dsphere' });
 
 var Message = mongoose.model('Message', messagesSchema);

@@ -1,0 +1,35 @@
+<ion-modal-view style="height:15%">
+  <ion-view view-title="New Thought">
+    <ion-content class="padding">
+    <i class ='ion-close-round' ng-click="closeMessageBox(0)"></i> 
+      <label class="item item-input">
+        <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
+      </label>
+      <label class="item">
+        <button class="button button-block button-dark" ng-click="addImage()">Take a Picture!!!!</button>
+      </label>
+      <label class="item">
+        <button class="button button-block button-dark" ng-click="pickContact()">Contacts</button>
+      </label>
+      <label class="item">
+        <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px"/>
+      </label>
+      <label class="item">
+        <button class="button button-block button-dark" ng-click="sendMessage()">Submit!</button>
+      </label>
+
+     <div class="list">
+
+         <a class="item item-thumbnail-left" ng-repeat="contact in data.selectedContacts">
+             <img src="{{contact.photos[0].value}}" ng-if="contact.photos.length > 0">
+             <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Silver_-_replace_this_image_male.svg/200px-Silver_-_replace_this_image_male.svg.png" ng-if="contact.photos.length === 0">
+             <h2>{{contact.displayName}}</h2>
+             <p ng-if="contact.emails.length > 0">{{contact.emails[0].type}} : {{contact.emails[0].value}}</p>
+             <p ng-if="contact.phones.length > 0">{{contact.phones[0].type}} : {{contact.phones[0].value}}</p>
+         </a>
+
+     </div>
+
+    </ion-content>
+  </ion-view>
+</ion-modal-view>
