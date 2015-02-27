@@ -38,11 +38,7 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     controller: 'AuthCtrl'
   })
 
-  .state('messagedetail', {
-    url: '/messagedetail',
-    templateUrl: 'templates/messagedetail.html',
-    controller: 'messageDetailController'
-  })
+
 
   // .state('map', {
   //   url: '/map',
@@ -64,6 +60,16 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
       'tab-messages': {
         templateUrl: 'templates/tab-messages.html',
         controller: 'messageController'
+      }
+    }
+  })
+
+  .state('tab.message-detail', {
+    url: '/messages/:_id',
+    views: {
+      'tab-messages': {
+        templateUrl: 'templates/message-detail.html',
+        controller: 'messageDetailController'
       }
     }
   })
