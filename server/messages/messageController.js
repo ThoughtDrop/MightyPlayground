@@ -76,7 +76,7 @@ module.exports = {
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
-        // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
     });
   },
