@@ -1,43 +1,43 @@
 angular.module('thoughtdrop.services', [])
 
 .factory('findNearbyMessages', function($http, $cordovaGeolocation) {
-var messages = null;
+  var messages = null;
 
-var storeMessages = function(route, coordinates, sortMessagesBy) {
-  $scope.sendData(route, coordinates, sortMessagesBy)
-    .then(function (resp) {
-      //populate scope with all messages within 100m of user
-      console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-      $scope.message.messages = resp.data;
+  var storeMessages = function(route, coordinates, sortMessagesBy) {
+    $scope.sendData(route, coordinates, sortMessagesBy)
+      .then(function (resp) {
+        //populate scope with all messages within 100m of user
+        console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
+        $scope.message.messages = resp.data;
+      });   
+  };
+    
+  var getPosition = function() {
+    //returns a promise that will be used to resolve/ do work on the user's GPS position
+    return $cordovaGeolocation.getCurrentPosition();
+  };
+    
+  var findNearby = function(route, sortMessagesBy) {
+    $scope.getPosition()
+    .then(function(position) {
+      var coordinates = {};
+      coordinates.lat = position.coords.latitude;
+      coordinates.long = position.coords.longitude;
+      $scope.displayMessages(route, coordinates, sortMessagesBy);
     });   
-};
-  
-var getPosition = function() {
-  //returns a promise that will be used to resolve/ do work on the user's GPS position
-  return $cordovaGeolocation.getCurrentPosition();
-};
-  
-var findNearby = function(route, sortMessagesBy) {
-  $scope.getPosition()
-  .then(function(position) {
-    var coordinates = {};
-    coordinates.lat = position.coords.latitude;
-    coordinates.long = position.coords.longitude;
-    $scope.displayMessages(route, coordinates, sortMessagesBy);
-  });   
-};
+  };
 
-var sendData = function(route) {
-  var data = Array.prototype.slice.call(arguments, 1);
-  var route = route || "";
-  //returns a promise that will be used to resolve/ do work on the data returned by the server
-  return $http({
-    method: 'POST',
-    url:  //base
-    '/api/messages/' + route,
-    data: JSON.stringify(data)
+  var sendData = function(route) {
+    var data = Array.prototype.slice.call(arguments, 1);
+    var route = route || "";
+    //returns a promise that will be used to resolve/ do work on the data returned by the server
+    return $http({
+      method: 'POST',
+      url:  //base
+      '/api/messages/' + route,
+      data: JSON.stringify(data)
   });
-};
+ }
 
 
 return {
@@ -130,34 +130,6 @@ return {
 
 .factory('MessageDetail', function(){
 
-//ignore for now! this is for testing
-  // var chats = [{
-  //   id: 0,
-  //   name: 'Ben Sparrow',
-  //   message: 'You on your way?',
-  //   face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  // }, {
-  //   id: 1,
-  //   name: 'Max Lynx',
-  //   message: 'Hey, it\'s me',
-  //   face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  // }, {
-  //   id: 2,
-  //   name: 'Andrew Jostlin',
-  //   message: 'Did you get the ice cream?',
-  //   face: 'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
-  // }, {
-  //   id: 3,
-  //   name: 'Adam Bradleyson',
-  //   message: 'I should buy a boat',
-  //   face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  // }, {
-  //   id: 4,
-  //   name: 'Perry Governor',
-  //   message: 'Look at my mukluks!',
-  //   face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-  // }];
-
   var allMessages;
 
   var storeMessages = function(messages) {
@@ -174,37 +146,7 @@ return {
     return null;
   };
 
-  // var passOver = function(data) {
-    // particularMessage = data;
-    // return location.path('/messagedetail')
-  // };
-
-  // var destroyCurrent = function() {
-    // particularMessage = null;
-  // };
-
-  // var getCurrentMessage = function() {
-    // return particularMessage || 'Please select go back & select a message!';
-  // };
-  
   return {
-    // all: function() {
-    //   return chats;
-    // },
-    // remove: function(chat) {
-    //   chats.splice(chats.indexOf(chat), 1);
-    // },
-    // get: function(chatId) {
-    //   for (var i = 0; i < chats.length; i++) {
-    //     if (chats[i].id === parseInt(chatId)) {
-    //       return chats[i];
-    //     }
-    //   }
-    //   return null;
-    // },
-    // passOver: passOver,
-    // destroyCurrent: destroyCurrent,
-    // getCurrentMessage: getCurrentMessage,
     get: get,
     storeMessages: storeMessages
   };
@@ -285,7 +227,6 @@ return {
       data: JSON.stringify(message)
     });   
   }
-};
 
   return {
     sendMessage: sendMessage
