@@ -124,11 +124,11 @@ angular.module('thoughtdrop.messageController', [])
     // $scope.apply();
   };
 
-  $scope.getReplies = function(message_obj) {
-    MessageDetail.passOver(message_obj);
-    // $state.go('messagedetail');
-    $location.path('/messagedetail');
-  }
+  // $scope.getReplies = function(message_obj) {
+  //   MessageDetail.passOver(message_obj);
+  //   // $state.go('messagedetail');
+  //   $location.path('/messagedetail');
+  // }
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');

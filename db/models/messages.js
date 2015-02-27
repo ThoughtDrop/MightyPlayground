@@ -18,7 +18,7 @@ var messagesSchema = new mongoose.Schema({
   // public: boolean, //for private or public messages (non MVP)
   message: String,
   votes: { type: Number, default: 0 },
-  messageDetail: []
+  replies: []
 });
 
 //messagesSchema.plugin(autoIncrement.plugin, 'id')

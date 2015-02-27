@@ -9,16 +9,16 @@ module.exports = {
 
   },
 
-  addMessageDetail: function (req, res) {
-    var toAdd = req.body[0];
-    var messageID = req.body[1];
+  addReply: function (req, res) {
+    console.log('adding messagedetail');
+    console.log(req.body.text);
+    var toAdd = req.body.text;
+    var messageID = req.body.messageid;
     var addMessage = Q.nbind(Message.findByIdAndUpdate, Message);
-    addMessage(messageID, { $push : { messageDetail: toAdd }}, {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
+    addMessage(messageID, { $push : { replies: toAdd }}, {safe: true, upsert: true})
+    .then(function(reply) {
+      res.status(200).send('reply saved: ' + reply);
     });
-    //console.log(toAdd);//log out the array
-    //console.log($push);
   },
 
   updateVote: function(req, res) {
