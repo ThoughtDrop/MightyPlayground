@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = [5106047443]; //store phoneNumbers of recipients
+  $scope.recipients = [5106047443]; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -93,9 +93,9 @@ angular.module('thoughtdrop.privateController', [])
 
           if (number.length > 10) {  
             phoneNumber = number.slice(1);
-            $scope.recipients.push(phoneNumber);
+            $scope.recipients.push(parseInt(phoneNumber));
           } else {
-            $scope.recipients.push(phoneNumber);
+            $scope.recipients.push(parseInt(number));
           }
 
           // $scope.recipients.push(contact.phones[0].value));
@@ -113,7 +113,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.findPrivateMessages = function () {
     var userPhone;
 
-    if ($localStorage.userInfo === undefined) {  //get user's phone number
+    if ($localStorage.userInfo === undefined) {  //get user's phone number hard coded now for testing reasons
       userPhone = 5106047443; 
     } else {
       userPhone = $localStorage.userInfo.phoneNumber;
