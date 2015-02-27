@@ -225,54 +225,54 @@ angular.module('thoughtdrop.services', [])
 
 
 .factory('SaveMessage', function($http){ 
-  var image = {};
+  // var image = {};
 
-  var saveImage = function(data) {
-    console.log('image saved!');
-    image.data = data;
-  };
+  // var saveImage = function(data) {
+  //   console.log('image saved!');
+  //   image.data = data;
+  // };
 
-  var creds = {
-    bucket: 'mpbucket-hr23',
-    access_key: 'AKIAJOCFMQLT2OTUDEJQ',
-    secret_key: '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'
-  };
+  // var creds = {
+  //   bucket: 'mpbucket-hr23',
+  //   access_key: 'AKIAJOCFMQLT2OTUDEJQ',
+  //   secret_key: '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'
+  // };
 
   var sendMessage = function(message) {
-    console.log('image about to be uploaded');
-    AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
-    AWS.config.region = 'us-west-1';
-    var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
 
-    if(image.data) {
-     var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
-      bucket.putObject(params, function(err, data) {
-        if(err) {
-          console.log(err.message);
-          return false;
-        } else {
-          console.log('Upload Done');
+  //   console.log('image about to be uploaded');
+  //   AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+  //   AWS.config.region = 'us-west-1';
+  //   var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
 
+  //   if(image.data) {
+  //    var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
+  //     bucket.putObject(params, function(err, data) {
+  //       if(err) {
+  //         console.log(err.message);
+  //         return false;
+  //       } else {
+  //         console.log('Upload Done');
           return $http({
             method: 'POST',
             url:  //base
             '/api/messages/' + 'savemessage',
             data: JSON.stringify(message)
           });
-          }
-        }
+        //   }
+        // }
       // .on('httpUploadProgress',function(progress) {
       //   console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
       //   })
-      );
-    } else {
-      // No File Selected
-      alert('No File Selected');
+    //   );
+    // } else {
+    //   // No File Selected
+    //   alert('No File Selected');
     }
-  };
+  // };
 
   return {
-    saveImage: saveImage,
+    // saveImage: saveImage,
     sendMessage: sendMessage
   };
   //TODO refactor camera portion to be server side and also 

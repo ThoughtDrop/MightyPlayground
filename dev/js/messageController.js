@@ -18,6 +18,44 @@ angular.module('thoughtdrop.messageController', [])
   $scope.modalNewMessage = modal;
   });
 
+
+  $scope.formatDate = function(date) {
+     return moment(date).fromNow();
+  };
+
+
+  // $scope.formatDate = function(date) {
+  //   var formattedDate = null ;
+
+  //   var now = moment();//current date
+  //   var then = moment(date);//date message was created
+  //   var miliseconds = now.diff(then);//time elapsed betwen now and then in miliseconds
+
+  //   var time = {
+  //     seconds: Math.round(miliseconds/1000%60),
+  //     minutes: Math.round(time.seconds%60),
+  //     hours: Math.round(time.minutes%24),
+  //     days: Math.round(time.hours%24) //???? 
+  //   };
+
+  //   if (time.seconds && time.minutes === 0 && time.hours === 0 && time.days === 0 ) {
+  //     formattedDate = time.seconds + 's'
+  //     return formattedDate;
+  //   }
+  //   if (time.seconds && time.minutes && time.hours === 0 && time.days === 0 ) {
+  //     formattedDate = time.minutes + 'm'
+  //     return formattedDate;
+  //   }
+  //   if (time.seconds && time.minutes && time.hours && time.days === 0 ) {
+  //     formattedDate = time.hours + 'h'
+  //     return formattedDate;
+  //   }
+  //   if (time.seconds && time.minutes && time.hours && time.days) {
+  //     formattedDate = time.hours + 'd'
+  //     return formattedDate;
+  //   }
+  // };
+
   $scope.setPage = function(page) {
     $scope.page = page;
   };
@@ -126,11 +164,6 @@ angular.module('thoughtdrop.messageController', [])
     // $scope.apply();
   };
 
-  // $scope.getReplies = function(message_obj) {
-  //   MessageDetail.passOver(message_obj);
-  //   // $state.go('messagedetail');
-  //   $location.path('/messagedetail');
-  // }
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
