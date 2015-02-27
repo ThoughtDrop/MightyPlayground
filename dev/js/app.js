@@ -125,5 +125,5 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/messages');
+  $urlRouterProvider.otherwise('/map');
 });
