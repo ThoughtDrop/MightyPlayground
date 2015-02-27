@@ -1,43 +1,43 @@
 angular.module('thoughtdrop.services', [])
 
 .factory('findNearbyMessages', function($http, $cordovaGeolocation) {
-var messages = null;
+  var messages = null;
 
-var storeMessages = function(route, coordinates, sortMessagesBy) {
-  $scope.sendData(route, coordinates, sortMessagesBy)
-    .then(function (resp) {
-      //populate scope with all messages within 100m of user
-      console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-      $scope.message.messages = resp.data;
+  var storeMessages = function(route, coordinates, sortMessagesBy) {
+    $scope.sendData(route, coordinates, sortMessagesBy)
+      .then(function (resp) {
+        //populate scope with all messages within 100m of user
+        console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
+        $scope.message.messages = resp.data;
+      });   
+  };
+    
+  var getPosition = function() {
+    //returns a promise that will be used to resolve/ do work on the user's GPS position
+    return $cordovaGeolocation.getCurrentPosition();
+  };
+    
+  var findNearby = function(route, sortMessagesBy) {
+    $scope.getPosition()
+    .then(function(position) {
+      var coordinates = {};
+      coordinates.lat = position.coords.latitude;
+      coordinates.long = position.coords.longitude;
+      $scope.displayMessages(route, coordinates, sortMessagesBy);
     });   
-};
-  
-var getPosition = function() {
-  //returns a promise that will be used to resolve/ do work on the user's GPS position
-  return $cordovaGeolocation.getCurrentPosition();
-};
-  
-var findNearby = function(route, sortMessagesBy) {
-  $scope.getPosition()
-  .then(function(position) {
-    var coordinates = {};
-    coordinates.lat = position.coords.latitude;
-    coordinates.long = position.coords.longitude;
-    $scope.displayMessages(route, coordinates, sortMessagesBy);
-  });   
-};
+  };
 
-var sendData = function(route) {
-  var data = Array.prototype.slice.call(arguments, 1);
-  var route = route || "";
-  //returns a promise that will be used to resolve/ do work on the data returned by the server
-  return $http({
-    method: 'POST',
-    url:  //base
-    '/api/messages/' + route,
-    data: JSON.stringify(data)
+  var sendData = function(route) {
+    var data = Array.prototype.slice.call(arguments, 1);
+    var route = route || "";
+    //returns a promise that will be used to resolve/ do work on the data returned by the server
+    return $http({
+      method: 'POST',
+      url:  //base
+      '/api/messages/' + route,
+      data: JSON.stringify(data)
   });
-};
+ }
 
 
 return {
@@ -302,35 +302,35 @@ return {
   //         return false;
   //       } else {
   //         console.log('Upload Done');
-    console.log('image about to be uploaded');
-    AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
-    AWS.config.region = 'us-west-1';
-    var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
+    // console.log('image about to be uploaded');
+    // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+    // AWS.config.region = 'us-west-1';
+    // var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
 
-    if(image.data) {
-     var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
-      bucket.putObject(params, function(err, data) {
-        if(err) {
-          console.log(err.message);
-          return false;
-        } else {
-          console.log('Upload Done');
+    // if(image.data) {
+    //  var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
+    //   bucket.putObject(params, function(err, data) {
+    //     if(err) {
+    //       console.log(err.message);
+    //       return false;
+    //     } else {
+    //       console.log('Upload Done');
           return $http({
             method: 'POST',
             url:  //base
             '/api/messages/' + 'savemessage',
             data: JSON.stringify(message)
           });
-          }
-        }
+        //   }
+        // }
       // .on('httpUploadProgress',function(progress) {
       //   console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
       //   })
-      );
-    } else {
+    //   );
+    // } else {
       // No File Selected
-      alert('No File Selected');
-    }
+      //alert('No File Selected');
+  //   }
   };
 
   return {
