@@ -59,6 +59,7 @@ module.exports = {
   getNearbyMessages: function(req, res) {
     var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
     var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
+    console.log('public query!: ' + JSON.stringify(locationQuery));
 
     Message
       .find(locationQuery)
@@ -98,17 +99,6 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
 
-    // var data = {
-    //   _id: req.body._id,
-    //   location: coordinates: { [req.body.location.coordinates[0], req.body.location.coordinates[1]],
-    //     type: 'Point' },
-    //   message: req.body.message,
-    //   _creator: req.body._creator,
-    //   recipients: req.body.recipients  
-    // }
-
-    // console.log(JSON.stringify(req.body));
-
     createMessage(req.body) 
       .then(function (createdMessage) {
         console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
@@ -119,18 +109,46 @@ module.exports = {
   },
 
   getPrivate: function(req, res) {
-    // console.log('server req.body: ' + JSON.stringify(req.body));
-    // var locationQuery = module.exports.queryByLocation(req.body.coordinates.latitude, req.body.coordinates.long, 100);
-    // // { location: { '$near': { '$geometry': [Object], '$maxDistance': 100 } } }
-    // Message
-    //   .find(locationQuery)
-    //   .where(isPrivate).equals(true)
-    //   .where(req.body.upserPhone)
-    //   .in(recipients)
-    //   // .sort()
-    //   .exec(function(err, messages) {
-    //     res.send(messages);
-    // });
+    console.log('user info!!!: ' + JSON.stringify(req.body));
+    var userPhone = req.body.userPhone;
+    console.log('userphone String: ' + userPhone);
+    var recipients = 'recipients';
+    console.log(typeof userPhone);
+    
+    var locationQuery = module.exports.queryByLocation(req.body.longitude, req.body.latitude, 100);
 
+    Message
+      .find(locationQuery)
+      .where('isPrivate').equals(true)
+      // .where('5106047443')           // not working!!!!!, looping through on server to find matches
+      // .in(['recipients'])
+      // // // .sort()
+      .exec(function(err, messages) {
+        console.log('private message found!: ' + JSON.stringify(messages));
+        var result = [];
+        for (var i = 0; i < messages.length; i++){
+          if (messages[i].recipients.indexOf(userPhone) !== -1){
+            result.push(messages[i]);
+          }
+        }
+        res.send(result);
+    });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = []; //store phoneNumbers of recipients
+  $scope.recipients = [5106047443]; //store phoneNumbers of recipients
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -31,7 +31,8 @@ angular.module('thoughtdrop.privateController', [])
         // console.log('located!: ' + JSON.stringify(position));
         // console.log([position.coords.longitude, position.coords.latitude]);
         // console.log(typeof position);
-        var creator = $localStorage.userInfo.name;
+        // var creator = $localStorage.userInfo.name; //CHANGE THIS BACK TO THIS!!!
+        var creator = 'peter!!!!'
         // console.log(creator);
         // console.log(typeof creator);
         // console.log('Message is: ' + $scope.message.text);
@@ -42,7 +43,8 @@ angular.module('thoughtdrop.privateController', [])
           location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
           _creator: creator,
-          recipients: $scope.recipients
+          recipients: $scope.recipients,
+          isPrivate: true
         };
 
         // console.log('message data: ' + JSON.stringify(messageData));
@@ -91,9 +93,9 @@ angular.module('thoughtdrop.privateController', [])
 
           if (number.length > 10) {  
             phoneNumber = number.slice(1);
-            $scope.recipients.push(parseInt(phoneNumber));
+            $scope.recipients.push(phoneNumber);
           } else {
-            $scope.recipients.push(parseInt(number));
+            $scope.recipients.push(phoneNumber);
           }
 
           // $scope.recipients.push(contact.phones[0].value));
@@ -109,22 +111,27 @@ angular.module('thoughtdrop.privateController', [])
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    // var userPhone = $localStorage.userInfo.phoneNumber;
-    // console.log('userPhone: ' + userPhone);
-    Geolocation.getPosition()
+    var userPhone;
+
+    if ($localStorage.userInfo === undefined) {  //get user's phone number
+      userPhone = 5106047443; 
+    } else {
+      userPhone = $localStorage.userInfo.phoneNumber;
+    }
+
+    Geolocation.getPosition()     //get users's position
       .then(function(position) {
+          
         var data = {  //send user phoneNumber & coordinates
-          // userPhone: userPhone,
-          coordinates: coordinate = {
-            lat: position.coords.latitude,
-            long: position.coords.longitude
-          }
+          latitude: position.coords.longitude, 
+          longitude: position.coords.latitude,
+          userPhone: userPhone
         };
-        Private.getMessages(data)
+
+        Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
-          $scope.privateMessages = resp.data;
-          console.log('resp.data: ' + resp.data);
-          console.log('$scope.privateMessages: ' + $scope.privateMessages);
+          $scope.privateMessages.messages = resp.data;
+          console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
