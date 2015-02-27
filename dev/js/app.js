@@ -1,4 +1,4 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController','thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices','thoughtdrop.geolocation', 'ionic.utils', 'ngCordova.plugins.contacts'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage', 'directives','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation'])
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location) {
   $ionicPlatform.ready(function() {
@@ -16,9 +16,8 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   if(window.localStorage.token === undefined) {
     $location.path('/login');
   } else {
-    $state.go('tab.messages');
+     $state.go('tab.messages');
   }
-
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -44,6 +43,12 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     templateUrl: 'templates/messagedetail.html',
     controller: 'messageDetailController'
   })
+
+  // .state('map', {
+  //   url: '/map',
+  //   templateUrl: 'templates/map.html',
+  //   controller: 'mapController'
+  // })
 
   // setup an abstract state for the tabs directive
   .state('tab', {

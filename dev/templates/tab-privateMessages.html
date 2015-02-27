@@ -4,7 +4,7 @@
       <button class="button icon ion-navicon"></button>
       <button class="button" ng-click='newMessage()'>Compose</button>
     </div>
-    <div class="card" ng-repeat="message in message.messages">
+    <div class="card" ng-repeat="message in privateMessages.messages">
       <div class="item item-text-wrap">
 
       <b>Name:</b> {{message.message}}

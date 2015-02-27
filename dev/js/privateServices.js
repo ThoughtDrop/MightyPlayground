@@ -13,12 +13,13 @@ angular.module('thoughtdrop.privateServices', [])
     })
   };
 
-  var getMessages = function(data) {
-
+  var getPrivate = function(data) {
+      console.log("SERVERICES DATA: " + JSON.stringify(data));
     return $http({
       method: 'POST',
       url: //base
-      '/api/messages/private/nearby'
+      '/api/messages/private/nearby',
+      data: JSON.stringify(data)
     })
     
   };
@@ -56,7 +57,7 @@ angular.module('thoughtdrop.privateServices', [])
 
   return {
     saveMessage: saveMessage,
-    getMessages: getMessages,
+    getPrivate: getPrivate,
     pickContact: pickContact
   };
 })

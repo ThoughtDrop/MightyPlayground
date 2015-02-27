@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = []; //store phoneNumbers of recipients
+  $scope.recipients = []; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -28,24 +28,18 @@ angular.module('thoughtdrop.privateController', [])
 
     Geolocation.getPosition()
       .then(function(position) {
-        // console.log('located!: ' + JSON.stringify(position));
-        // console.log([position.coords.longitude, position.coords.latitude]);
-        // console.log(typeof position);
-        var creator = $localStorage.userInfo.name;
-        // console.log(creator);
-        // console.log(typeof creator);
-        // console.log('Message is: ' + $scope.message.text);
-        // console.log('recipients are: ' + $scope.recipients);
-
+        
+        var creator = $localStorage.userInfo.name; //get user's name from local storage
+        
         var messageData = {
           _id: Math.floor(Math.random()*100000),
           location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
           _creator: creator,
-          recipients: $scope.recipients
+          recipients: $scope.recipients,
+          isPrivate: true
         };
 
-        // console.log('message data: ' + JSON.stringify(messageData));
 
         $scope.message.text = ''; //clear the message  for next message
         console.log($scope.message);
@@ -109,22 +103,27 @@ angular.module('thoughtdrop.privateController', [])
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    // var userPhone = $localStorage.userInfo.phoneNumber;
-    // console.log('userPhone: ' + userPhone);
-    Geolocation.getPosition()
+    var userPhone;
+
+    if ($localStorage.userInfo === undefined) {  //get user's phone number hard coded now for testing reasons
+      userPhone = 1234567890; 
+    } else {
+      userPhone = $localStorage.userInfo.phoneNumber;
+    }
+
+    Geolocation.getPosition()     //get users's position
       .then(function(position) {
+          
         var data = {  //send user phoneNumber & coordinates
-          // userPhone: userPhone,
-          coordinates: coordinate = {
-            lat: position.coords.latitude,
-            long: position.coords.longitude
-          }
+          latitude: position.coords.longitude, 
+          longitude: position.coords.latitude,
+          userPhone: userPhone
         };
-        Private.getMessages(data)
+
+        Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
-          $scope.privateMessages = resp.data;
-          console.log('resp.data: ' + resp.data);
-          console.log('$scope.privateMessages: ' + $scope.privateMessages);
+          $scope.privateMessages.messages = resp.data;
+          console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
