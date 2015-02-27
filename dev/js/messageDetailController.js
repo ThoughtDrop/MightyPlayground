@@ -1,7 +1,12 @@
 angular.module('thoughtdrop.messageDetailController', [])
-.controller('messageDetailController', function($scope, $state, $http, MessageDetail){
+.controller('messageDetailController', function($scope, $state, $http, MessageDetail, $stateParams){
   
-  $scope.particular = MessageDetail.getCurrentMessage();
+  $scope.message = MessageDetail.get($stateParams._id);
+  console.log($scope.message);
+  $scope.message.text = '';
+
+
+  // $scope.particular = MessageDetail.getCurrentMessage();
 
   $scope.sendData = function(route) {
     var data = Array.prototype.slice.call(arguments, 1);
@@ -12,12 +17,12 @@ angular.module('thoughtdrop.messageDetailController', [])
       url:  //base
       '/api/messages/' + route,
       data: JSON.stringify(data)
-    })
+    });
   };
 
   $scope.addReply = function(reply, id) {
     $scope.sendData('addMessageDetail', reply, id);
-    $scope.particular.messageDetail.push(reply);
-  }
-
+    $scope.message.messageDetail.push(reply);
+    $scope.message.text = ''; 
+  };
 });
