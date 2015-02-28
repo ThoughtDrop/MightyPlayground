@@ -112,6 +112,12 @@ gulp.task('inject3', function(){
     .pipe(gulp.dest('www/js'));
 });
 
+gulp.task('inject4', function() {
+  gulp.src('www/js/privateMessages/privateDetailServices.js')
+    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
+    .pipe(gulp.dest('www/js/privateMessages'));
+  });
+
 gulp.task('ionic', shell.task([
   'ionic platform remove ios',
   'ionic platform add ios',
@@ -164,7 +170,8 @@ gulp.task('build', function(){
     'watchindex',
     ['inject1',
     'inject2',
-    'inject3'],
+    'inject3',
+    'inject4'],
     // 'ionic-build',
     // 'browser-sync'
     // 'serve'
