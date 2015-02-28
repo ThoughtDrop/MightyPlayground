@@ -20,15 +20,16 @@ angular.module('thoughtdrop.privateDetailServices', [])
   };
 
   var saveReply = function(data) {
-    console.log(JSON.stringify(data));
-
+    console.log('PDS saveReply: ' + JSON.stringify(data));
+//       "messageid":999,"message":"Goop","_creator":"Peter Kim"}
+// 2015-02-28 12:55:02.309 myApp[2018:609694] [{"messageid":999,"message":"Goop","_creator":"Peter Kim"}]
     return $http({ 
       method: 'POST',
       url: //base
       'api/messages/privateMessages/addreply',
-      data: data
+      data: JSON.stringify(data)
     })
-  }
+  };
 
   return {
     storeMessages : storeMessages,
