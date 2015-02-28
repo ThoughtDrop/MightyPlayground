@@ -77,29 +77,87 @@ angular.module('thoughtdrop.services', [])
     handleVote: handleVote,
     sendData: sendData
   };
-
 })
 
 .factory('MessageDetail', function(){
-  var particularMessage;
-  
-  var passOver = function(data) {
-    particularMessage = data;
+
+//ignore for now! this is for testing
+  // var chats = [{
+  //   id: 0,
+  //   name: 'Ben Sparrow',
+  //   message: 'You on your way?',
+  //   face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
+  // }, {
+  //   id: 1,
+  //   name: 'Max Lynx',
+  //   message: 'Hey, it\'s me',
+  //   face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
+  // }, {
+  //   id: 2,
+  //   name: 'Andrew Jostlin',
+  //   message: 'Did you get the ice cream?',
+  //   face: 'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
+  // }, {
+  //   id: 3,
+  //   name: 'Adam Bradleyson',
+  //   message: 'I should buy a boat',
+  //   face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
+  // }, {
+  //   id: 4,
+  //   name: 'Perry Governor',
+  //   message: 'Look at my mukluks!',
+  //   face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
+  // }];
+
+  var allMessages;
+
+  var storeMessages = function(messages) {
+    allMessages = messages;
+    console.log('messages stored on factory: ', allMessages);
+  };
+
+  var get = function(messageid) {
+    for (var i = 0; i < allMessages.length; i++) {
+      if (allMessages[i]._id === parseInt(messageid)) {
+        return allMessages[i];
+      }
+    }
+    return null;
+  };
+
+  // var passOver = function(data) {
+    // particularMessage = data;
     // return location.path('/messagedetail')
-  };
+  // };
 
-  var destroyCurrent = function() {
-    particularMessage = null;
-  };
+  // var destroyCurrent = function() {
+    // particularMessage = null;
+  // };
 
-  var getCurrentMessage = function() {
-    return particularMessage || 'Please select go back & select a message!';
-  };
+  // var getCurrentMessage = function() {
+    // return particularMessage || 'Please select go back & select a message!';
+  // };
   
   return {
-    passOver: passOver,
-    destroyCurrent: destroyCurrent,
-    getCurrentMessage: getCurrentMessage
+    // all: function() {
+    //   return chats;
+    // },
+    // remove: function(chat) {
+    //   chats.splice(chats.indexOf(chat), 1);
+    // },
+    // get: function(chatId) {
+    //   for (var i = 0; i < chats.length; i++) {
+    //     if (chats[i].id === parseInt(chatId)) {
+    //       return chats[i];
+    //     }
+    //   }
+    //   return null;
+    // },
+    // passOver: passOver,
+    // destroyCurrent: destroyCurrent,
+    // getCurrentMessage: getCurrentMessage,
+    get: get,
+    storeMessages: storeMessages
   };
 
   var findNearby = function() {
@@ -181,19 +239,19 @@ angular.module('thoughtdrop.services', [])
   };
 
   var sendMessage = function(message) {
-    console.log('image about to be uploaded');
-    AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
-    AWS.config.region = 'us-west-1';
-    var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
+    // console.log('image about to be uploaded');
+    // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+    // AWS.config.region = 'us-west-1';
+    // var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
 
-    if(image.data) {
-     var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
-      bucket.putObject(params, function(err, data) {
-        if(err) {
-          console.log(err.message);
-          return false;
-        } else {
-          console.log('Upload Done');
+    // if(image.data) {
+    //  var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
+    //   bucket.putObject(params, function(err, data) {
+    //     if(err) {
+    //       console.log(err.message);
+    //       return false;
+    //     } else {
+    //       console.log('Upload Done');
 
           return $http({
             method: 'POST',
@@ -201,16 +259,16 @@ angular.module('thoughtdrop.services', [])
             '/api/messages/' + 'savemessage',
             data: JSON.stringify(message)
           });
-          }
-        }
+        //   }
+        // }
       // .on('httpUploadProgress',function(progress) {
       //   console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
       //   })
-      );
-    } else {
-      // No File Selected
-      alert('No File Selected');
-    }
+      // );
+    // } else {
+    //   // No File Selected
+    //   alert('No File Selected');
+    // }
   };
 
   return {

@@ -16,7 +16,7 @@ var $ = require('gulp-load-plugins')({lazy:true});
 
 var devPaths = {
   //sass: ['./scss/**/*.scss'],
-  scripts: 'dev/js/*.js',
+  scripts: 'dev/js/**/*.js',
   templates: 'dev/templates/*.html',
   index: 'dev/*.html',
   styles: 'dev/css/*.css',
@@ -117,7 +117,6 @@ gulp.task('ionic', shell.task([
   'ionic platform add ios',
   'ionic build ios',
   'open platforms/ios/myApp.xcodeproj'
-
 ]));
 
 //change to route to your android sdk. 

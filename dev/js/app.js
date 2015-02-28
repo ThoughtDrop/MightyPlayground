@@ -1,4 +1,4 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage', 'directives','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage', 'directives','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices'])
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location) {
   $ionicPlatform.ready(function() {
@@ -38,11 +38,7 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     controller: 'AuthCtrl'
   })
 
-  .state('messagedetail', {
-    url: '/messagedetail',
-    templateUrl: 'templates/messagedetail.html',
-    controller: 'messageDetailController'
-  })
+
 
   // .state('map', {
   //   url: '/map',
@@ -64,6 +60,16 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
       'tab-messages': {
         templateUrl: 'templates/tab-messages.html',
         controller: 'messageController'
+      }
+    }
+  })
+
+  .state('tab.message-detail', {
+    url: '/messages/:_id',
+    views: {
+      'tab-messages': {
+        templateUrl: 'templates/message-detail.html',
+        controller: 'messageDetailController'
       }
     }
   })
@@ -104,6 +110,16 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AuthCtrl'
+      }
+    }
+  })
+
+  .state('tab.private-detail', {
+    url: '/privateMessages/:_id',
+    views: {
+      'tab-privateMessages': {
+        templateUrl: 'templates/private-detail.html',
+        controller: 'privateDetailController'
       }
     }
   });

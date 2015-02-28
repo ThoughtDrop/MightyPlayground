@@ -2,6 +2,8 @@ angular.module('thoughtdrop.privateServices', [])
 
 .factory('Private', function($http, $q) {
 
+  var messageStorage = {};
+
   var saveMessage = function(data) {
     console.log('SERVICES private message to save before server: ' + JSON.stringify(data));
 
@@ -24,7 +26,6 @@ angular.module('thoughtdrop.privateServices', [])
     
   };
 
-
   var formatContact = function(contact) {
 
     return {
@@ -37,22 +38,19 @@ angular.module('thoughtdrop.privateServices', [])
   };
 
   var pickContact = function() {
-
     var deferred = $q.defer();
-
     if(navigator && navigator.contacts) {
-
       navigator.contacts.pickContact(function(contact){
-
           deferred.resolve( formatContact(contact) );
       });
-
     } else {
         deferred.reject("Bummer.  No contacts in desktop browser");
     }
 
     return deferred.promise;
   };
+
+
 
 
   return {

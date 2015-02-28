@@ -1,7 +1,7 @@
 angular.module('thoughtdrop.messageController', [])
 
-
 .controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, SaveMessage, $window, $localStorage) {
+
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -92,11 +92,12 @@ angular.module('thoughtdrop.messageController', [])
 
   $scope.displayMessages = function(route, coordinates, sortMessagesBy) {
     $scope.sendData(route, coordinates, sortMessagesBy)
-      .then(function (resp) {
-        //populate scope with all messages within 100m of user
-        console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-        $scope.message.messages = resp.data;
-      });    
+    .then(function (resp) {
+      //populate scope with all messages within 100m of user
+      console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
+      $scope.message.messages = resp.data;
+      MessageDetail.storeMessages(resp.data);
+    });    
   };
 
   $scope.getPosition = function() {
@@ -125,12 +126,13 @@ angular.module('thoughtdrop.messageController', [])
     // $scope.apply();
   };
 
-  $scope.getReplies = function(message_obj) {
-    MessageDetail.passOver(message_obj);
-    // $state.go('messagedetail');
-    $location.path('/messagedetail');
-  }
+  // $scope.getReplies = function(message_obj) {
+  //   MessageDetail.passOver(message_obj);
+  //   // $state.go('messagedetail');
+  //   $location.path('/messagedetail');
+  // }
 
   //Invokes findNearby on page load for /tabs/messages
   $scope.findNearby('nearby');
+
 });

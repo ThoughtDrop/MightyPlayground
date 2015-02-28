@@ -9,16 +9,32 @@ module.exports = {
 
   },
 
-  addMessageDetail: function (req, res) {
-    var toAdd = req.body[0];
-    var messageID = req.body[1];
+  addReply: function (req, res) {
+    console.log('adding messagedetail');
+    console.log(req.body.text);
+    var toAdd = req.body.text;
+    var messageID = req.body.messageid;
+    console.log('messageId == ' + messageID);
     var addMessage = Q.nbind(Message.findByIdAndUpdate, Message);
-    addMessage(messageID, { $push : { messageDetail: toAdd }}, {safe: true, upsert: true},
-    function(err, model) {
-        console.log(err);
+    addMessage(messageID, { $push : { replies: toAdd }}, {safe: true, upsert: true})
+    .then(function(reply) {
+      res.status(200).send('reply saved: ' + reply);
     });
-    //console.log(toAdd);//log out the array
-    //console.log($push);
+  },
+
+  addPrivateReply: function(req, res) {
+    console.log('ADD PRIVATE REPLY!' + JSON.stringify(req.body));
+    var message = req.body.message;
+    var messageID = req.body.messageid;
+    console.log('messageID --- ' + messageID);
+    var addMessage = Q.nbind(Message.findByIdAndUpdate, Message);
+    addMessage(messageID, { $push : { replies: req.body }}, {safe: true, upsert: true})
+    .then(function(reply) {
+      res.status(200).send('reply saved: ' + reply);
+    })
+   .catch(function (error) {
+      console.log(error);
+    });
   },
 
   updateVote: function(req, res) {
@@ -65,6 +81,7 @@ module.exports = {
 
     Message
       .find(locationQuery)
+      .where('isPrivate').equals(false)
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
@@ -82,7 +99,8 @@ module.exports = {
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
+      isPrivate: false
     };
     console.log(JSON.stringify(data));
     
@@ -139,5 +157,7 @@ module.exports = {
         res.send(result);
     });
   }
+
 };
 
+//db.message.find({ isPrivate: { $ne: true }} );

@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, PrivateDetail) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -30,6 +30,7 @@ angular.module('thoughtdrop.privateController', [])
       .then(function(position) {
         
         var creator = $localStorage.userInfo.name; //get user's name from local storage
+        // var creator = 'p3tuh'; //ONLY FOR TESTING!
         
         var messageData = {
           _id: Math.floor(Math.random()*100000),
@@ -37,7 +38,8 @@ angular.module('thoughtdrop.privateController', [])
           message: $scope.message.text,
           _creator: creator,
           recipients: $scope.recipients,
-          isPrivate: true
+          isPrivate: true,
+          replies: []
         };
 
 
@@ -78,7 +80,6 @@ angular.module('thoughtdrop.privateController', [])
     Private.pickContact()
       .then(function(contact) {
           $scope.data.selectedContacts.push(contact);
-          // console.log(JSON.stringify(contact.phones[0].value));
           var number = contact.phones[0].value.replace(/\W+/g, "");
           console.log(' # before regex & slice' + number);
           var phoneNumber;
@@ -103,13 +104,9 @@ angular.module('thoughtdrop.privateController', [])
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    var userPhone;
-
-    if ($localStorage.userInfo === undefined) {  //get user's phone number hard coded now for testing reasons
-      userPhone = 1234567890; 
-    } else {
-      userPhone = $localStorage.userInfo.phoneNumber;
-    }
+    console.log(JSON.stringify('user info: ' + $localStorage.userInfo));
+    // var userPhone = $localStorage.userInfo._id; //CHNAGE THIS BACK, ONLY FOR TESTING!!
+    var userPhone = 5106047443;
 
     Geolocation.getPosition()     //get users's position
       .then(function(position) {
@@ -120,15 +117,26 @@ angular.module('thoughtdrop.privateController', [])
           userPhone: userPhone
         };
 
+        console.log("userData before DB: " + JSON.stringify(data));
+
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
           $scope.privateMessages.messages = resp.data;
-          console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
+          // console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
+          // console.log('resp.dat: ' + JSON.stringify(resp.data));
+          PrivateDetail.storeMessages(resp.data);
+          console.log('stored!');
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
         });
       })
+  };
+
+  $scope.doRefresh = function() {
+    $scope.findPrivateMessages('scroll.refreshComplete');
+    $scope.$broadcast('scroll.refreshComplete');
+    // $scope.apply();
   };
 
   $scope.findPrivateMessages();

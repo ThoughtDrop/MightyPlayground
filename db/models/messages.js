@@ -17,7 +17,8 @@ var messagesSchema = new mongoose.Schema({
   message: String,
   votes: { type: Number, default: 0 },
   isPrivate: Boolean,
-  recipients: []
+  recipients: [],
+  replies: []
 });
 
 messagesSchema.index({ location : '2dsphere' });
