@@ -25,7 +25,7 @@ angular.module('thoughtdrop.privateDetailServices', [])
     return $http({ 
       method: 'POST',
       url: //base
-      'api/messages/private/addreply',
+      '/api/messages/private/addreply',
       data: JSON.stringify(data)
     })
     .then(function(resp) {
