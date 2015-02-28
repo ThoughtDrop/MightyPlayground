@@ -8,5 +8,5 @@ module.exports = function (app) {
   app.post('/private/nearby', messageController.getPrivate);
   // app.post('/addMessageDetail', messageController.addMessageDetail);
   app.post('/addreply', messageController.addReply);
-  app.post('/privateMessages/addreply', messageController.addPrivateReply);
+  app.post('/private/addreply', messageController.addPrivateReply);
 };
