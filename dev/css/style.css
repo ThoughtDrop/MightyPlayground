@@ -158,11 +158,6 @@
   display: none !important;
 }
 
-.map {
-  width: 100%;
-  height: 100%;
-}
-
 .fileContainer [type=file] {   
   opacity: 0 !important;
   position: absolute !important;
@@ -189,25 +184,82 @@
 }
 
 /* Empty. Add your own CSS if you like */
- 
 
-      .angular-google-map,
-      .angular-google-map-container {
-        /*width: 100%;*/
-        height: 700px;
+/*center pin*/
+.centerMarker{
+  position:absolute;
+  /*url of the marker*/
+  /*background:url(../img/logo_pin.png) no-repeat;*/
+  /*center the marker*/
+  top:50%;left:50%;
+  z-index:1;
+  /*fix offset when needed*/
+  margin-left:-10px;
+  margin-top:-34px;
+  /*size of the image*/
+  height:34px;
+  width:20px;
+  cursor:pointer;
+}
+
+
+/*currently copy and paste from createmap.html*/
+#map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
       }
-      .centerMarker{
-        position:absolute;
-        /*url of the marker*/
-        /*background:url(../img/logo_pin.png) no-repeat;*/
-        /*center the marker*/
-        top:50%;left:50%;
-        z-index:1;
-        /*fix offset when needed*/
-        margin-left:-10px;
-        margin-top:-34px;
-        /*size of the image*/
-        height:34px;
-        width:20px;
-        cursor:pointer;
-      }
+.containerMap {
+  position: relative;
+/*  width: 100%;
+  height: 100%;*/
+}
+
+#over_map {
+  position: absolute;
+  bottom: 0;
+  right:0;
+  width:100%;
+  margin-bottom: -10px;
+  z-index: 99;
+}
+
+.controls {
+  margin-top: 16px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
