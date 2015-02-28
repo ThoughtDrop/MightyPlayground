@@ -24,7 +24,7 @@ angular.module('thoughtdrop.privateServices', [])
       data: JSON.stringify(data)
     })
     .then(function (resp) {
-        console.log('PRIVATE MESSAGES HERE: ', resp);  
+        console.log('PRIVATE MESSAGES in SERVICES: ', JSON.stringify(resp.data));  
         return resp.data;
     });
     

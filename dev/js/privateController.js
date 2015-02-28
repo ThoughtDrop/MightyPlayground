@@ -120,14 +120,15 @@ angular.module('thoughtdrop.privateController', [])
           userPhone: userPhone
         };
 
-        console.log("userData before DB: " + JSON.stringify(data));
-        console.log('userPHone before DB' + data.userPhone)
+        // console.log("userData before DB: " + JSON.stringify(data));
+        // console.log('userPHone before DB' + data.userPhone)
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
-          $scope.privateMessages.messages = resp.data;
+          console.log('RESP ' + resp);
+          $scope.privateMessages.messages = resp;
           console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
           // console.log('resp.dat: ' + JSON.stringify(resp.data));
-          PrivateDetail.storeMessages(resp.data);
+          PrivateDetail.storeMessages(resp);
           console.log('stored!');
         })
         .catch(function(err) {

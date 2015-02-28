@@ -16,9 +16,9 @@ angular.module('thoughtdrop.privateDetailController', [])
       // picture: $localStorage.userInfo.picture //store picture later
     };
 
-    console.log('reply data: ' + JSON.stringify(reply));
-    $scope.message.replies.push(reply);
+    // console.log('reply data: ' + JSON.stringify(reply));
     PrivateDetail.saveReply(reply); //server req to save this reply to the initial message
+    $scope.message.replies.push(reply); //pushes to $scope for instant rendering
     $scope.message.text = ''; 
     console.log($scope.message.replies);
   };
