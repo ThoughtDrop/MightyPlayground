@@ -3,6 +3,7 @@ angular.module('thoughtdrop.messageDetailController', [])
   
   $scope.message = MessageDetail.get($stateParams._id);
   console.log('Object in here is: ' + $scope.message);
+  console.log($stateParams._id);
 
   // $scope.particular = MessageDetail.getCurrentMessage();
 
@@ -20,6 +21,7 @@ angular.module('thoughtdrop.messageDetailController', [])
   };
 
   $scope.addReply = function(replyText, messageid) {
+    console.log('reply: ' + replyText);
     var reply = {};
     reply.text = replyText;
     reply.messageid = messageid;

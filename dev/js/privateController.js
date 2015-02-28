@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, MessageDetail) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -30,6 +30,7 @@ angular.module('thoughtdrop.privateController', [])
       .then(function(position) {
         
         var creator = $localStorage.userInfo.name; //get user's name from local storage
+        // var creator = 'p3tuh'; //ONLY FOR TESTING!
         
         var messageData = {
           _id: Math.floor(Math.random()*100000),
@@ -103,8 +104,9 @@ angular.module('thoughtdrop.privateController', [])
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    console.log(JSON.stringify($localStorage.userInfo));
-    var userPhone = $localStorage.userInfo._id;
+    console.log(JSON.stringify('user info: ' + $localStorage.userInfo));
+    // var userPhone = $localStorage.userInfo._id; //CHNAGE THIS BACK, ONLY FOR TESTING!!
+    var userPhone = 5106047443;
 
     Geolocation.getPosition()     //get users's position
       .then(function(position) {
@@ -120,7 +122,10 @@ angular.module('thoughtdrop.privateController', [])
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
           $scope.privateMessages.messages = resp.data;
-          console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
+          // console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
+          // console.log('resp.dat: ' + JSON.stringify(resp.data));
+          MessageDetail.storeMessages(resp.data);
+          console.log('stored!');
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
