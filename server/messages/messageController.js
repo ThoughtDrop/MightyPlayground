@@ -14,10 +14,26 @@ module.exports = {
     console.log(req.body.text);
     var toAdd = req.body.text;
     var messageID = req.body.messageid;
+    console.log('messageId == ' + messageID);
     var addMessage = Q.nbind(Message.findByIdAndUpdate, Message);
     addMessage(messageID, { $push : { replies: toAdd }}, {safe: true, upsert: true})
     .then(function(reply) {
       res.status(200).send('reply saved: ' + reply);
+    });
+  },
+
+  addPrivateReply: function(req, res) {
+    console.log('ADD PRIVATE REPLY!' + JSON.stringify(req.body));
+    var message = req.body.message;
+    var messageID = req.body.messageid;
+    console.log('messageID --- ' + messageID);
+    var addMessage = Q.nbind(Message.findByIdAndUpdate, Message);
+    addMessage(messageID, { $push : { replies: req.body }}, {safe: true, upsert: true})
+    .then(function(reply) {
+      res.status(200).send('reply saved: ' + reply);
+    })
+   .catch(function (error) {
+      console.log(error);
     });
   },
 
@@ -141,6 +157,7 @@ module.exports = {
         res.send(result);
     });
   }
+
 };
 
 //db.message.find({ isPrivate: { $ne: true }} );

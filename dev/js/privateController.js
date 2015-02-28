@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, MessageDetail) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, PrivateDetail) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -38,7 +38,8 @@ angular.module('thoughtdrop.privateController', [])
           message: $scope.message.text,
           _creator: creator,
           recipients: $scope.recipients,
-          isPrivate: true
+          isPrivate: true,
+          replies: []
         };
 
 
@@ -79,7 +80,6 @@ angular.module('thoughtdrop.privateController', [])
     Private.pickContact()
       .then(function(contact) {
           $scope.data.selectedContacts.push(contact);
-          // console.log(JSON.stringify(contact.phones[0].value));
           var number = contact.phones[0].value.replace(/\W+/g, "");
           console.log(' # before regex & slice' + number);
           var phoneNumber;
@@ -124,7 +124,7 @@ angular.module('thoughtdrop.privateController', [])
           $scope.privateMessages.messages = resp.data;
           // console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
           // console.log('resp.dat: ' + JSON.stringify(resp.data));
-          MessageDetail.storeMessages(resp.data);
+          PrivateDetail.storeMessages(resp.data);
           console.log('stored!');
         })
         .catch(function(err) {
