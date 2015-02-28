@@ -252,3 +252,21 @@
         font-size: 13px;
         font-weight: 300;
       }
+
+      .angular-google-map-container { height: 500px; }
+
+      .centerMarker{
+        position:absolute;
+        /*url of the marker*/
+        /*background:url(../img/logo_pin.png) no-repeat;*/
+        /*center the marker*/
+        top:50%;left:50%;
+        z-index:1;
+        /*fix offset when needed*/
+        margin-left:-10px;
+        margin-top:-34px;
+        /*size of the image*/
+        height:34px;
+        width:20px;
+        cursor:pointer;
+      }
