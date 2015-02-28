@@ -143,3 +143,4 @@ module.exports = {
   }
 };
 
+//db.message.find({ isPrivate: { $ne: true }} );

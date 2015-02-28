@@ -24,7 +24,6 @@ angular.module('thoughtdrop.privateServices', [])
     
   };
 
-
   var formatContact = function(contact) {
 
     return {
