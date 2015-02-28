@@ -104,8 +104,11 @@ angular.module('thoughtdrop.privateController', [])
 
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
-    console.log(JSON.stringify('user info: ' + $localStorage.userInfo));
-    var userPhone = $localStorage.userInfo._id; //CHNAGE THIS BACK, ONLY FOR TESTING!!
+    console.log('user info1234: ' + JSON.stringify($localStorage.userInfo));
+
+    // {"id":"10103966531605673","name":"Peter Kim","picture":{"data":{"is_silhouette":false,"url":"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc3/v/t1.0-1/c50.50.621.621/s50x50/562654_10101324562083773_1204928530_n.jpg?oh=f1621c740c7e9cb83a483c75c8ed0a49&oe=557C4EB1&__gda__=1435790626_d9fe2f02c9c3119aa0e78ca67714693a"}},"phoneNumber":"5106047443"}
+
+    var userPhone = $localStorage.userInfo.phoneNumber; //CHNAGE THIS BACK, ONLY FOR TESTING!!
     // var userPhone = 5106047443;
 
     Geolocation.getPosition()     //get users's position
@@ -118,11 +121,11 @@ angular.module('thoughtdrop.privateController', [])
         };
 
         console.log("userData before DB: " + JSON.stringify(data));
-
+        console.log('userPHone before DB' + data.userPhone)
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
           $scope.privateMessages.messages = resp.data;
-          // console.log('$scope.privateMessages: ' + JSON.stringify($scope.privateMessages.messages));
+          console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
           // console.log('resp.dat: ' + JSON.stringify(resp.data));
           PrivateDetail.storeMessages(resp.data);
           console.log('stored!');

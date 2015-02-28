@@ -149,11 +149,14 @@ module.exports = {
       .exec(function(err, messages) {
         console.log('private message found!: ' + JSON.stringify(messages));
         var result = [];
+
         for (var i = 0; i < messages.length; i++){
           if (messages[i].recipients.indexOf(userPhone) !== -1){
             result.push(messages[i]);
           }
         }
+        
+        console.log(result);
         res.send(result);
     });
   }
