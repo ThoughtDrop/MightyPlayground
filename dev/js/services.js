@@ -191,7 +191,7 @@ angular.module('thoughtdrop.services', [])
   };
 })
 
-.factory('Facebook', function($http){
+.factory('Facebook', function($http, $localStorage){
 
   var dataStorage = {};
 
@@ -205,6 +205,8 @@ angular.module('thoughtdrop.services', [])
     console.log('data Storage123: ' + JSON.stringify(dataStorage));
     dataStorage.userData.phoneNumber = data.phoneNumber; 
     console.log('final data before sending to db: ', JSON.stringify(dataStorage.userData));
+    $localStorage.userInfo = dataStorage.userData;
+    console.log('userINFO IN LOCAL STORAGE ' + JSON.stringify($localStorage.userInfo));
 
     return $http({
       method: 'POST',

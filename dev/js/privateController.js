@@ -105,8 +105,8 @@ angular.module('thoughtdrop.privateController', [])
   //send coordinates & users's phone number
   $scope.findPrivateMessages = function () {
     console.log(JSON.stringify('user info: ' + $localStorage.userInfo));
-    // var userPhone = $localStorage.userInfo._id; //CHNAGE THIS BACK, ONLY FOR TESTING!!
-    var userPhone = 5106047443;
+    var userPhone = $localStorage.userInfo._id; //CHNAGE THIS BACK, ONLY FOR TESTING!!
+    // var userPhone = 5106047443;
 
     Geolocation.getPosition()     //get users's position
       .then(function(position) {
