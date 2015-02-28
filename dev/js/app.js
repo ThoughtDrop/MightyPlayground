@@ -112,6 +112,16 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
         controller: 'AuthCtrl'
       }
     }
+  })
+
+  .state('tab.private-detail', {
+    url: '/privateMessages/:_id',
+    views: {
+      'tab-privateMessages': {
+        templateUrl: 'templates/private-detail.html',
+        controller: 'messageDetailController'
+      }
+    }
   });
 
   // if none of the above states are matched, use this as the fallback
