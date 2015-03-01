@@ -40,11 +40,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
 
 
 
-  // .state('map', {
-  //   url: '/map',
-  //   templateUrl: 'templates/map.html',
-  //   controller: 'mapController'
-  // })
+  .state('map', {
+    url: '/map',
+    templateUrl: 'templates/map.html',
+    controller: 'mapController'
+  })
 
   // setup an abstract state for the tabs directive
   .state('tab', {
