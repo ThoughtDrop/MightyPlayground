@@ -63,28 +63,6 @@ angular.module('thoughtdrop.services', [])
       data: JSON.stringify(data)
   });
  }
-var messages = null;
-
-var storeMessages = function(route, coordinates, sortMessagesBy) {
-  $scope.sendData(route, coordinates, sortMessagesBy)
-    .then(function (resp) {
-      //populate scope with all messages within 100m of user
-      console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-      $scope.message.messages = resp.data;
-    });   
-  };
-
-  var sendData = function(route) {
-    var data = Array.prototype.slice.call(arguments, 1);
-    var route = route || "";
-    //returns a promise that will be used to resolve/ do work on the data returned by the server
-    return $http({
-      method: 'POST',
-      url:  //base
-      '/api/messages/' + route,
-      data: JSON.stringify(data)
-  });
- }
 
  var factory = {
    newMessages: 'apple',
