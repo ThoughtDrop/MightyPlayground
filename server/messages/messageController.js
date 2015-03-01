@@ -2,12 +2,9 @@ var Message = require('../../db/models/messages.js');
 var Q = require('q');
 var AWS = require('aws-sdk');
 AWS.config.region = 'us-west-1';
+var User = require('../../db/models/user.js');
 
 module.exports = {
-
-  displayReplies: function(req, res) {
-
-  },
 
   addReply: function (req, res) {
     console.log('adding messagedetail');
@@ -125,13 +122,23 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
 
-    createMessage(req.body) 
+
+    createMessage(req.body) //save message into db
       .then(function (createdMessage) {
-        res.status(200).send('great work!');
-        console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
+        res.status(200).send('Private Saved!');
+        console.log('Private Message ' + req.body.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {
         console.log(error);
+      });
+
+    User.find()  //find all users in db in the recipients array
+      .where('_id')
+      .in(req.body.recipients)
+      .exec(function (err, result) {
+        // {$push: {'privateMessages': req.body}}
+        console.log(err);
+        console.log('DB results: ' + result);
       });
   },
 
