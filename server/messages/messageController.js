@@ -134,13 +134,8 @@ module.exports = {
 
     createMessage(req.body) //save message into db
       .then(function (createdMessage) {
-<<<<<<< HEAD
-        res.status(200).send('great work!');
-        console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
-=======
         res.status(200).send('Private Saved!');
         console.log('Private Message ' + req.body.message + ' was successfully saved to database', createdMessage);
->>>>>>> (feat) Find all users in DB that match the recipient array
       })
       .catch(function (error) {
         console.log(error);

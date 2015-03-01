@@ -8,7 +8,6 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-
   $scope.recipients = [5106047443, 1234567890]; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
@@ -107,7 +106,7 @@ angular.module('thoughtdrop.privateController', [])
     console.log('user info1234: ' + JSON.stringify($localStorage.userInfo));
 
     // var userPhone = $localStorage.userInfo.phoneNumber;
-    var userPhone = 5106047443; //CHNAGE THIS BACK, ONLY FOR 
+    var userPhone = 5106047443; //CHNAGE THIS BACK, ONLY FOR TESTING!!
 
     Geolocation.getPosition()     //get users's position
       .then(function(position) {
