@@ -41,7 +41,7 @@ angular.module('thoughtdrop.privateController', [])
           isPrivate: true,
           replies: []
         };
-        Private.saveMessage(messageData)
+        Private.tempStorage(messageData)
         .then(function(resp) {
           console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
           $scope.message.text = ''; //clear the message  for next message
@@ -58,7 +58,7 @@ angular.module('thoughtdrop.privateController', [])
       .then(function() {
         console.log('closing!');
         $scope.closeMessageBox();
-      })
+      });
   };
 
   $scope.closeMessageBox = function(time) {
@@ -129,7 +129,7 @@ angular.module('thoughtdrop.privateController', [])
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
         });
-      })
+      });
   };
 
   $scope.doRefresh = function() {
