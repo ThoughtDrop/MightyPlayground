@@ -1,30 +1,55 @@
 angular.module('thoughtdrop.services', [])
 
-.factory('findNearbyMessages', function($http, $cordovaGeolocation) {
-  var messages = null;
-
-  var storeMessages = function(route, coordinates, sortMessagesBy) {
-    $scope.sendData(route, coordinates, sortMessagesBy)
+.factory('CachePublicMessages', function($http, $cordovaGeolocation, $location, $timeout) {
+  var storeMessages = function(route, coordinates, sortMessagesBy, callback) {
+    sendData(route, coordinates, sortMessagesBy)
       .then(function (resp) {
-        //populate scope with all messages within 100m of user
-        console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-        $scope.message.messages = resp.data;
+        //cache all public messages messages within 100m of user
+        //console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
+        if (sortMessagesBy === 'new') {
+          factory.newMessages = resp.data;
+          console.log('New Messages Cache from Factory: ', factory.newMessages);
+          if (callback) {
+            callback();
+          }
+        } else if (sortMessagesBy === 'top') {
+          factory.topMessages = resp.data;
+          console.log('Top Messages Cache from Factory: ', factory.topMessages);
+          if (callback) {
+            callback();
+          }
+        }
       });   
   };
     
-  var getPosition = function() {
+  var getPosition1 = function() {
+    //returns a promise that will be used to resolve/ do work on the user's GPS position
+    return $cordovaGeolocation.getCurrentPosition();
+  };
+
+  var getPosition2 = function() {
     //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation.getCurrentPosition();
   };
     
-  var findNearby = function(route, sortMessagesBy) {
-    $scope.getPosition()
-    .then(function(position) {
-      var coordinates = {};
-      coordinates.lat = position.coords.latitude;
-      coordinates.long = position.coords.longitude;
-      $scope.displayMessages(route, coordinates, sortMessagesBy);
-    });   
+  var findNearby = function(route, sortMessagesBy, callback, message) {
+    if (sortMessagesBy === 'new') {
+      getPosition1()
+      .then(function(position) {
+        var coordinates = {};
+        coordinates.lat = position.coords.latitude;
+        coordinates.long = position.coords.longitude;
+        storeMessages(route, coordinates, sortMessagesBy, callback); 
+      });  
+    } else if (sortMessagesBy === 'top') {
+      getPosition2()
+      .then(function(position) {
+        var coordinates = {};
+        coordinates.lat = position.coords.latitude;
+        coordinates.long = position.coords.longitude;
+        storeMessages(route, coordinates, sortMessagesBy, callback); 
+      });  
+    }
   };
 
   var sendData = function(route) {
@@ -61,14 +86,17 @@ var storeMessages = function(route, coordinates, sortMessagesBy) {
   });
  }
 
+ var factory = {
+   newMessages: 'apple',
+   topMessages: 'orange',
+   storeMessages: storeMessages,
+   getPosition1: getPosition1,
+   getPosition2: getPosition2,
+   findNearby: findNearby,
+   sendData: sendData
+ };
 
-return {
-  messages: messages,
-  storeMessages: storeMessages,
-  getPosition: getPosition,
-  findNearby: findNearby,
-  sendData: sendData
-};
+return factory;
 
 }) 
 
@@ -84,7 +112,7 @@ return {
         //If this message is not an upVoteButtonLock property or the button is not locked
         if (!upVoteButtonLock[message._id] ) {
         //Lock upvote button by setting upVoteButtonLock[message._id] to True
-        upVoteButtonLock[message._id] = true;dataStorage.userData.data.phoneNumber = data.phoneNumber
+        upVoteButtonLock[message._id] = true; 
         //Increment vote in DOM and send incremented vote to server
         incrementVote(message);
         //Unlock downvote button by setting downVoteButtonLock[message._id] to False  
@@ -150,14 +178,9 @@ return {
   };
 })
 
-.factory('MessageDetail', function(){
 
-  var allMessages;
-
-  var storeMessages = function(messages) {
-    allMessages = messages;
-    console.log('messages stored on factory: ', allMessages);
-  };
+.factory('MessageDetail', function(CachePublicMessages){
+  var allMessages = CachePublicMessages.newMessages;
 
   var get = function(messageid) {
     for (var i = 0; i < allMessages.length; i++) {
@@ -169,8 +192,7 @@ return {
   };
 
   return {
-    get: get,
-    storeMessages: storeMessages
+    get: get
   };
 
   var findNearby = function() {

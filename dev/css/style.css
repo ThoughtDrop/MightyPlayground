@@ -71,8 +71,14 @@
 }
 
 /* Main Public Message Feed Page Styling */
+/*Prevents pull refresh from sticking out into page*/
 .text-pulling {
-  margin-bottom: 3%;
+  margin-bottom: 2%; 
+}
+
+.message-block a {
+  color: #0060B6;
+  text-decoration: none;
 }
 
 .header-container {

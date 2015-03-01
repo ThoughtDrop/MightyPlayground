@@ -3,7 +3,8 @@
   <div class="overLay">
         <h1>Thought Drop</h1>
         <img class="logo" src="img/logo.png">
-        <button class="button button-full button-positive fb-button" ng-click="login()" type="submit"><b>Sign in with Facebook!</b></button>
+        <button class="button button-full button-positive fb-button" ng-click="login();cachePublicMessages('nearby', 'new'); cachePublicMessages('nearby', 'top')" type="submit"><b>Sign in with Facebook!</b></button>
   </div>
   </ion-content>
 </ion-view>
+

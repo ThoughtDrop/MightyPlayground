@@ -15,13 +15,14 @@
     </ion-refresher>
 
 <!-- Public Messages -->
-    <ion-item class="card" ng-repeat="message in message.messages" type="item-text-wrap" href="#/tab/messages/{{message._id}}">
+    <ion-item class="card" ng-repeat="message in message.messagesToDisplay" type="item-text-wrap">
       <div class="item item-text-wrap message-block">
+      <a href="#/tab/messages/{{message._id}}">
         <div class = "message-text">
-          {{ message.message }}
           <span>{{message.message}}</span> 
           <span class="message-date">{{formatDate(message.created_at)}}</span>
         </div>
+      </a>
         <div class = "votes-container">
           <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
           <b>{{message.votes}}</b>
