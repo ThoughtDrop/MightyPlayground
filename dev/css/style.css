@@ -71,6 +71,15 @@
 }
 
 /* Main Public Message Feed Page Styling */
+/*Prevents pull refresh from sticking out into page*/
+.text-pulling {
+  margin-bottom: 2%; 
+}
+
+.message-block a {
+  color: #0060B6;
+  text-decoration: none;
+}
 
 .header-container {
   width:100%;
@@ -101,9 +110,9 @@
   color: white;
 }
 
-.card {
-  position: relative;
-/*  z-index: -100;*/
+.message-date {
+  font-size: .5em;
+  
 }
 
 .ion-plus-round {

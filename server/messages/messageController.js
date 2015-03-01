@@ -42,7 +42,14 @@ module.exports = {
     var messageID = req.body[0];
     console.log('Received updated voteCount from client, where votes = ', voteCount);
     var updateVote = Q.nbind(Message.findByIdAndUpdate, Message);
-    updateVote(messageID, { votes : voteCount} );
+    updateVote(messageID, { votes : voteCount} )
+      .then(function (data) {
+        res.status(200).send();
+        console.log('Vote was successfully saved to database', data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 
   queryByLocation: function(lat, long, radius) {
@@ -75,6 +82,7 @@ module.exports = {
   },
 
   getNearbyMessages: function(req, res) {
+    console.log('/////Trying to get messages from DATABASE!!!');
     var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
     var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
     console.log('public query!: ' + JSON.stringify(locationQuery));
@@ -85,7 +93,7 @@ module.exports = {
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
-        // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
     });
   },
