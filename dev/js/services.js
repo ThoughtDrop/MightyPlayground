@@ -1,30 +1,55 @@
 angular.module('thoughtdrop.services', [])
 
-.factory('findNearbyMessages', function($http, $cordovaGeolocation) {
-  var messages = null;
-
-  var storeMessages = function(route, coordinates, sortMessagesBy) {
-    $scope.sendData(route, coordinates, sortMessagesBy)
+.factory('CachePublicMessages', function($http, $cordovaGeolocation, $location, $timeout) {
+  var storeMessages = function(route, coordinates, sortMessagesBy, callback) {
+    sendData(route, coordinates, sortMessagesBy)
       .then(function (resp) {
-        //populate scope with all messages within 100m of user
-        console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-        $scope.message.messages = resp.data;
+        //cache all public messages messages within 100m of user
+        //console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
+        if (sortMessagesBy === 'new') {
+          factory.newMessages = resp.data;
+          console.log('New Messages Cache from Factory: ', factory.newMessages);
+          if (callback) {
+            callback();
+          }
+        } else if (sortMessagesBy === 'top') {
+          factory.topMessages = resp.data;
+          console.log('Top Messages Cache from Factory: ', factory.topMessages);
+          if (callback) {
+            callback();
+          }
+        }
       });   
   };
     
-  var getPosition = function() {
+  var getPosition1 = function() {
+    //returns a promise that will be used to resolve/ do work on the user's GPS position
+    return $cordovaGeolocation.getCurrentPosition();
+  };
+
+  var getPosition2 = function() {
     //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation.getCurrentPosition();
   };
     
-  var findNearby = function(route, sortMessagesBy) {
-    $scope.getPosition()
-    .then(function(position) {
-      var coordinates = {};
-      coordinates.lat = position.coords.latitude;
-      coordinates.long = position.coords.longitude;
-      $scope.displayMessages(route, coordinates, sortMessagesBy);
-    });   
+  var findNearby = function(route, sortMessagesBy, callback, message) {
+    if (sortMessagesBy === 'new') {
+      getPosition1()
+      .then(function(position) {
+        var coordinates = {};
+        coordinates.lat = position.coords.latitude;
+        coordinates.long = position.coords.longitude;
+        storeMessages(route, coordinates, sortMessagesBy, callback); 
+      });  
+    } else if (sortMessagesBy === 'top') {
+      getPosition2()
+      .then(function(position) {
+        var coordinates = {};
+        coordinates.lat = position.coords.latitude;
+        coordinates.long = position.coords.longitude;
+        storeMessages(route, coordinates, sortMessagesBy, callback); 
+      });  
+    }
   };
 
   var sendData = function(route) {
@@ -39,14 +64,17 @@ angular.module('thoughtdrop.services', [])
   });
  }
 
+ var factory = {
+   newMessages: 'apple',
+   topMessages: 'orange',
+   storeMessages: storeMessages,
+   getPosition1: getPosition1,
+   getPosition2: getPosition2,
+   findNearby: findNearby,
+   sendData: sendData
+ };
 
-return {
-  messages: messages,
-  storeMessages: storeMessages,
-  getPosition: getPosition,
-  findNearby: findNearby,
-  sendData: sendData
-};
+return factory;
 
 }) 
 
@@ -62,7 +90,7 @@ return {
         //If this message is not an upVoteButtonLock property or the button is not locked
         if (!upVoteButtonLock[message._id] ) {
         //Lock upvote button by setting upVoteButtonLock[message._id] to True
-        upVoteButtonLock[message._id] = true;dataStorage.userData.data.phoneNumber = data.phoneNumber
+        upVoteButtonLock[message._id] = true; 
         //Increment vote in DOM and send incremented vote to server
         incrementVote(message);
         //Unlock downvote button by setting downVoteButtonLock[message._id] to False  
@@ -128,42 +156,13 @@ return {
   };
 })
 
-.factory('MessageDetail', function(){
+.factory('MessageDetail', function(CachePublicMessages){
+  var allMessages = CachePublicMessages.newMessages;
 
-//ignore for now! this is for testing
-  // var chats = [{
-  //   id: 0,
-  //   name: 'Ben Sparrow',
-  //   message: 'You on your way?',
-  //   face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  // }, {
-  //   id: 1,
-  //   name: 'Max Lynx',
-  //   message: 'Hey, it\'s me',
-  //   face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  // }, {
-  //   id: 2,
-  //   name: 'Andrew Jostlin',
-  //   message: 'Did you get the ice cream?',
-  //   face: 'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
-  // }, {
-  //   id: 3,
-  //   name: 'Adam Bradleyson',
-  //   message: 'I should buy a boat',
-  //   face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  // }, {
-  //   id: 4,
-  //   name: 'Perry Governor',
-  //   message: 'Look at my mukluks!',
-  //   face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-  // }];
-
-  var allMessages;
-
-  var storeMessages = function(messages) {
-    allMessages = messages;
-    console.log('messages stored on factory: ', allMessages);
-  };
+  // var storeMessages = function(messages) {
+  //   allMessages = messages;
+  //   console.log('messages stored on factory: ', allMessages);
+  // };
 
   var get = function(messageid) {
     for (var i = 0; i < allMessages.length; i++) {
@@ -205,8 +204,8 @@ return {
     // passOver: passOver,
     // destroyCurrent: destroyCurrent,
     // getCurrentMessage: getCurrentMessage,
-    get: get,
-    storeMessages: storeMessages
+    get: get
+    // storeMessages: storeMessages
   };
 
   var findNearby = function() {
