@@ -159,7 +159,6 @@ return factory;
 
 .factory('MessageDetail', function(CachePublicMessages){
   var allMessages = CachePublicMessages.newMessages;
-
   var get = function(messageid) {
     for (var i = 0; i < allMessages.length; i++) {
       if (allMessages[i]._id === parseInt(messageid)) {
@@ -250,6 +249,7 @@ return factory;
     });   
   }
   
+
   return {
     sendMessage: sendMessage
   };

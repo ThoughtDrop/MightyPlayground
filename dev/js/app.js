@@ -20,16 +20,6 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   }
 })
 
-.constant('angularMomentConfig', {
-    preprocess: 'unix', // optional
-    timezone: 'Europe/London' // optional
-})
-
-.constant('angularMomentConfig', {
-    preprocess: 'unix', // optional
-    timezone: 'Europe/London' // optional
-})
-
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $ionicConfigProvider.tabs.position('bottom');
 
