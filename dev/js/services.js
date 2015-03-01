@@ -191,7 +191,7 @@ angular.module('thoughtdrop.services', [])
   };
 })
 
-.factory('Facebook', function($http){
+.factory('Facebook', function($http, $localStorage){
 
   var dataStorage = {};
 
@@ -205,6 +205,8 @@ angular.module('thoughtdrop.services', [])
     console.log('data Storage123: ' + JSON.stringify(dataStorage));
     dataStorage.userData.phoneNumber = data.phoneNumber; 
     console.log('final data before sending to db: ', JSON.stringify(dataStorage.userData));
+    $localStorage.userInfo = dataStorage.userData;
+    console.log('userINFO IN LOCAL STORAGE ' + JSON.stringify($localStorage.userInfo));
 
     return $http({
       method: 'POST',
@@ -239,19 +241,19 @@ angular.module('thoughtdrop.services', [])
   };
 
   var sendMessage = function(message) {
-    console.log('image about to be uploaded');
-    AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
-    AWS.config.region = 'us-west-1';
-    var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
+    // console.log('image about to be uploaded');
+    // AWS.config.update({ accessKeyId: creds.access_key, secretAccessKey: creds.secret_key });
+    // AWS.config.region = 'us-west-1';
+    // var bucket = new AWS.S3({ params: { Bucket: creds.bucket } });
 
-    if(image.data) {
-     var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
-      bucket.putObject(params, function(err, data) {
-        if(err) {
-          console.log(err.message);
-          return false;
-        } else {
-          console.log('Upload Done');
+    // if(image.data) {
+    //  var params = { Key: message.id, ContentType: image.data.type, Body: image.data, ServerSideEncryption: 'AES256' };
+    //   bucket.putObject(params, function(err, data) {
+    //     if(err) {
+    //       console.log(err.message);
+    //       return false;
+    //     } else {
+    //       console.log('Upload Done');
 
           return $http({
             method: 'POST',
@@ -259,16 +261,16 @@ angular.module('thoughtdrop.services', [])
             '/api/messages/' + 'savemessage',
             data: JSON.stringify(message)
           });
-          }
-        }
+        //   }
+        // }
       // .on('httpUploadProgress',function(progress) {
       //   console.log(Math.round(progress.loaded / progress.total * 100) + '% done');
       //   })
-      );
-    } else {
-      // No File Selected
-      alert('No File Selected');
-    }
+      // );
+    // } else {
+    //   // No File Selected
+    //   alert('No File Selected');
+    // }
   };
 
   return {

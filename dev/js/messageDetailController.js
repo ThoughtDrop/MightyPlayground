@@ -3,11 +3,12 @@ angular.module('thoughtdrop.messageDetailController', [])
   
   $scope.message = MessageDetail.get($stateParams._id);
   console.log('Object in here is: ' + $scope.message);
+  console.log($stateParams._id);
 
   // $scope.particular = MessageDetail.getCurrentMessage();
 
   $scope.sendData = function(route, data) {
-    console.log(typeof data);
+    console.log(route);
     console.log(data);
     var route = route || "";
     //returns a promise that will be used to resolve/ do work on the data returned by the server
@@ -20,9 +21,12 @@ angular.module('thoughtdrop.messageDetailController', [])
   };
 
   $scope.addReply = function(replyText, messageid) {
+    console.log('reply: ' + replyText);
     var reply = {};
     reply.text = replyText;
     reply.messageid = messageid;
+
+    console.log(reply);
 
     $scope.sendData('addreply', reply);
     $scope.message.replies.push(reply.text);
