@@ -62,11 +62,14 @@ angular.module('thoughtdrop.mapController', [])
 
   //************** SEARCH BAR FUNCTIONALITY ****************//
     var input = (document.getElementById('pac-input'));
+    var clearButton = (document.getElementById('clearButton'));
     // var input2 = (document.getElementById('subButton'));
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-    // map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input2);
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(clearButton);
     var searchBox = new google.maps.places.SearchBox(
       /** @type {HTMLInputElement} */(input));
+    // var autocomplete = new google.maps.places.Autocomplete(input);
+    //autocomplete.bindTo('bounds', map);
 
     // [START region_getplaces]
     // Listen for the event fired when the user selects an item from the
@@ -84,7 +87,9 @@ angular.module('thoughtdrop.mapController', [])
       var bounds = map.getBounds();
       searchBox.setBounds(bounds);
     });
-
+    $scope.clearText = function(){
+      document.getElementById('pac-input').value = '';
+    }
     // $scope.alert = function(){
     //   alert(map.getCenter());
     // };

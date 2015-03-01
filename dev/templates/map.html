@@ -2,10 +2,15 @@
   <!-- <ion-content ng-controller="mapController"> -->
 
     <div class='containerMap'>
-      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+      <input id="pac-input" class="controls" name="focus" required class="search-box"type="text" placeholder="Search Box">
       <div id="map-canvas" data-tap-disabled="true"></div>
 
       <div class="centerMarker"><img src='img/logo_pin.png' alt='You are here!'></div>
+
+          <!-- <button class="close-icon" type="reset"></button> -->
+      <div id="clearButton" class="controls" ng-click="clearText()"><img src='img/cancel.png' alt='Clear'></div>
+
+
       <div id="over_map">
         <button class="button button-block button-calm" id='subButton' ng-click="alert()"><b>Submit Message</b></button>
       </div>
