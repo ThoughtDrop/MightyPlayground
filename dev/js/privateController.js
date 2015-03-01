@@ -9,7 +9,11 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message.text = '';
   $scope.page = 'new';
 <<<<<<< HEAD
+<<<<<<< HEAD
   $scope.recipients = [5104732806]; //number hardcoded for testing reasons
+=======
+  $scope.recipients = [5106047443, 1234567890]; //number hardcoded for testing reasons
+>>>>>>> (feat) Find all users in DB that match the recipient array
 =======
   $scope.recipients = [5106047443, 1234567890]; //number hardcoded for testing reasons
 >>>>>>> (feat) Find all users in DB that match the recipient array
@@ -47,20 +51,22 @@ angular.module('thoughtdrop.privateController', [])
         };
         Private.tempStorage(messageData);
 
-
-
-        // Private.saveMessage(messageData)
-        // .then(function(resp) {
-        //   console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-        //   //return resp;
-        // })
-        // .catch(function(err) {
-        //   console.log('Error posting private message: ',  JSON.stringify(err));
-        // });
+        Private.saveMessage(messageData)
+        .then(function(resp) {
+          console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
+          $scope.message.text = ''; //clear the message  for next message
+          console.log($scope.message);
+          // $scope.recipients = []; //clear the recipients array for next message
+          $scope.closeMessageBox();
+          // $scope.data = {selectedContacts: []}; //clear contacts for next message
+          //return resp;
+        })
+        .catch(function(err) {
+          console.log('Error posting private message: ',  JSON.stringify(err));
+        });
       })
       .then(function() {
-        // $scope.findNearby('nearby');
-        $location.path('/map');
+        console.log('closing!');
         $scope.closeMessageBox();
       })
   };
