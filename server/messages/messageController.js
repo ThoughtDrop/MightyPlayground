@@ -6,10 +6,6 @@ var User = require('../../db/models/user.js');
 
 module.exports = {
 
-  displayReplies: function(req, res) {
-
-  },
-
   addReply: function (req, res) {
     console.log('adding messagedetail');
     console.log(req.body.text);
@@ -100,7 +96,6 @@ module.exports = {
   },
 
   saveMessage: function (req, res) {
-    // console.log('saveMesage! req.body: ' + JSON.stringify(req.body));
     var createMessage = Q.nbind(Message.create, Message);
     console.log(req.body);
     var data = { //TODO: add a facebookID field
@@ -108,11 +103,11 @@ module.exports = {
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
-      isPrivate: false
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
     };
-    console.log(JSON.stringify(data));
-    
+    console.log('typeof data id ' + typeof data._id);
+    console.log('data id value ' + data._id);
+
     createMessage(data) 
       .then(function (createdMessage) {
         res.status(200).send('great work!');
@@ -123,8 +118,34 @@ module.exports = {
       });
   },
 
-  displayReplies: function (req, res) {
-    //stuff
+  getSignedUrl: function(req, res) {
+    console.log('about to send to AWS');
+
+    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    AWS.config.region = 'us-west-1';
+
+    var s3bucket = new AWS.S3();
+    
+    var params = { 
+      Bucket: process.env.amazonBUCKET,
+      Key: req.body.id,
+      ContentType: 'image/jpeg',
+      ServerSideEncryption: 'AES256' 
+    };
+
+    s3bucket.getSignedUrl('putObject', params, function(err, url) {
+      if(err){
+        console.log('here is your error!: ' +err);
+      } else {
+        console.log('url confirmation: ' + url);
+        var return_data = {
+          signedUrl: url,
+          shortUrl: 'https://'+ params.Bucket +'.s3.amazonaws.com/'+req.body.id
+        };
+        res.send(JSON.stringify(return_data));
+        res.end();
+      }
+    });
   },
 
   savePrivate: function(req, res) {

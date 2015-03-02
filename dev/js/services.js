@@ -237,21 +237,89 @@ return factory;
   };
 })
 
+.factory('Messages', function($http, $cordovaCamera){
+  var globalImage = {};
 
-.factory('SaveMessage', function($http){ 
- 
-  var sendMessage = function(message) {
-    return $http({
-      method: 'POST',
-      url:  //base
-      '/api/messages/' + 'savemessage',
-      data: JSON.stringify(message)
-    });   
-  }
-  
-
-  return {
-    sendMessage: sendMessage
+  var sendMessage = function(message, image) {
+    //if there is an image, do a put request to the signed url to upload the image
+    if (image) {
+      return $http({
+        method: 'PUT',
+        url: resp.data.signedUrl,
+        data: imgURI,
+        headers: {
+          'Content-Type': 'image/jpeg'
+        },
+      })
+      .then(function(resp) {
+        console.log('the response image successfully uploaded!');
+        console.log('message from promise -1 exists?: ' + message);
+        message.id = image.id;
+        return $http({
+          method: 'POST',
+          url:  //base
+          '/api/messages/' + 'savemessage',
+          data: JSON.stringify(message)
+        });
+      })
+      .then(function(resp) {
+        console.log('message saved successfully!');
+      })
+      .catch(function(err) {
+        console.log('there was an error: ' + err);
+      });
+    } else {
+      //if thre isn't an image, just send the message as is
+      return $http({
+        method: 'POST',
+        url:  //base
+        '/api/messages/' + 'savemessage',
+        data: JSON.stringify(message)
+      })
+      .then(function(resp) {
+        console.log('message saved successfully!');
+      })
+      .catch(function(err) {
+        console.log('there was an error: ' + err);
+      });
+    }
   };
 
+  var storeImage = function() {
+    console.log('store image activated');
+    var options = {
+      destinationType : 0,
+      sourceType : 1,
+      allowEdit : true,
+      encodingType: 0,
+      quality: 30,
+      targetWidth: 320,
+      targetHeight: 320,
+    };
+
+    $cordovaCamera.getPicture(options)
+    .then(function(imageData) {
+      var imgURI = ('data:image/jpeg;base64,' + imageData);
+      globalImage.src = imgURI;
+      globalImage.id = Math.floor(Math.random()*100000000);
+      return $http({
+        method: 'PUT',
+        url: //base
+        '/api/messages/getsignedurl',
+        data: JSON.stringify(globalImage.id)
+      })
+      .then(function(resp) {
+        globalImage.shortUrl = resp.body.shortUrl;
+        globalImage.signedUrl = resp.body.signedUrl;
+        console.log('successfully got response URL!');
+        console.log('short img url: ' + globalImage.shortUrl);
+        console.log('signed img url: ' + globalImage.signedUrl);
+      });
+    });
+  };
+
+  return {
+    sendMessage: sendMessage,
+    storeImage: storeImage
+  };
 });

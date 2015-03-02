@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, SaveMessage, $window, $localStorage, CachePublicMessages) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state, MessageDetail, Vote, Messages, $window, $localStorage, CachePublicMessages) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -46,41 +46,34 @@ angular.module('thoughtdrop.messageController', [])
     angular.element(document.querySelector( '#imageInput' ))[0].click();
   };
 
-  $scope.sendMessage = function() {
-    $scope.closeMessageBox();
-    
-    $scope.getPosition()
-      .then(function(position) {
-        var message = {};
-        message.id = JSON.stringify(Math.floor(Math.random()*100000));
-        message.text = $scope.message.text;
-        message.coordinates = {};
-        message.coordinates.lat = position.coords.latitude;
-        message.coordinates.long = position.coords.longitude;
-        $scope.message.text = '';
-        SaveMessage.sendMessage(message, function() {
-          $scope.findNearby('nearby');
-        });
-      });
+  $scope.storeImage = function() {
+    Messages.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
   };
 
-
   $scope.sendMessage = function() {
     $scope.closeMessageBox();
     $scope.getPosition()
-      .then(function(position) {
-        var message = {};
-        message.id = JSON.stringify(Math.floor(Math.random()*100000));
-        message.text = $scope.message.text;
-        message.coordinates = {};
-        message.coordinates.lat = position.coords.latitude;
-        message.coordinates.long = position.coords.longitude;
-        $scope.message.text = '';
-
-        SaveMessage.sendMessage(message, function() {
-          $scope.findNearby('nearby');
-        });
-      });
+    .then(function(position) {
+      var message = {};
+      message.id = JSON.stringify(Math.floor(Math.random()*100000));
+      message.text = $scope.message.text;
+      message.coordinates = {};
+      message.coordinates.lat = position.coords.latitude;
+      message.coordinates.long = position.coords.longitude;
+      $scope.message.text = '';
+      //if image was taken, Messages.globalImage will not be null, send message with globalImage
+      if (Messages.globalImage !== undefined) {
+        Messages.sendMessage(message, Messages.globalImage);
+      } else { 
+        Messages.sendMessage(message);
+      }
+    });
   };
 
   $scope.cachePublicMessages = function(route, sortMessagesBy) {
