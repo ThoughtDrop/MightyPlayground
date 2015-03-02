@@ -130,6 +130,8 @@ module.exports = {
   savePrivate: function(req, res) {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
+    // var UserMessages = Q.nbind(User.findByIdAndUpdate, User);
+    var ID = req.body._id;
 
 
     createMessage(req.body) //save message into db
@@ -141,14 +143,40 @@ module.exports = {
         console.log(error);
       });
 
-    User.find()  //find all users in db in the recipients array
-      .where('_id')
-      .in(req.body.recipients)
-      .exec(function (err, result) {
-        // {$push: {'privateMessages': req.body}}
-        console.log(err);
-        console.log('DB results: ' + result);
-      })
+    // User.find()  //find all users in db in the recipients array and add message into user model
+    //   .where('_id')
+    //   .in(req.body.recipients)
+    //   .exec(function (err, result) {
+    //     // {$push: {'privateMessages': req.body}}
+    //     console.log('error finding users: ' + err);
+    //     console.log('DB results: ' + result);
+    //   });
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
+
+
+    // UserMessages(ID, { $push: {'privateMessages': req.body }} )
+    //   .then(function (data) {
+    //     res.status(200).send();
+    //     console.log('PrivateMessage saved in User Document: ' + data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   })
+  
+    for (var i = 0; i < req.body.recipients.length; i++){
+      User.update(
+        { _id: req.body.recipients[i] },
+        { $push: { 'privateMessages': req.body } },
+        function (err, model) {
+          console.log("ERROR!!: " + err);
+          console.log(model);
+        }
+      );
+    }
+  
+
   },
 
   getPrivate: function(req, res) {
