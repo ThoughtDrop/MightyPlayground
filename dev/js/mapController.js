@@ -1,32 +1,17 @@
 angular.module('thoughtdrop.mapController', [])
 
-.controller('mapController', function ($scope, $log) {
+.controller('mapController', function($scope, $log, Private, Geolocation) {
         //$scope.map.center points to the center all the time. 
         // TODO: factory passes in the initial latt and long!!!
+
+
+        //WHY IS IT NOT LOGGING THIS WHEN I TRANSFER STATE TO HERE>>>????
+  (function geo () {
+    console.log("GGGGEOOOOOOOOO", Geolocation.testing);
+  })();
+
+  
   var global_lat= 37.771421, global_lon = -122.424469;
-  function geoFindMe () {
-    if (!navigator.geolocation){
-      alert("Geolocation is not supported by your browser");
-      return;
-    }
-    function success (position) {
-      var latitude  = position.coords.latitude;
-      var longitude = position.coords.longitude;
-      //SET GLOBAL
-      global_lat = latitude;
-      global_lon = longitude;
-
-      initialize();
-    };
-    function error () {
-      alert("Can't find your location. Please adjust settings");
-    };
-
-    navigator.geolocation.getCurrentPosition(success, error);
-  } //geoFindMe
-
-  // TODO: get latt&long from factory if not run geoFindMe. 
-
 
   // used for grabbing title of address
   var nameParse = function (address) {
@@ -93,6 +78,12 @@ angular.module('thoughtdrop.mapController', [])
     // $scope.alert = function(){
     //   alert(map.getCenter());
     // };
+
+
+    $scope.submit = function(){
+      Private.saveMessage(map.getCenter());
+    }
+    
   }//initialized
 
   // Google GeoCoder. Returns a physical address from latt and lng. 
@@ -132,6 +123,7 @@ angular.module('thoughtdrop.mapController', [])
     //   google.maps.event.addDomListener(window, 'load', geoFindMe);
     // }
     initialize();
+
 
 
   // map title validity checker. 
