@@ -103,6 +103,7 @@ gulp.task('inject1', function(){
 gulp.task('inject2', function(){
   gulp.src('www/js/services.js')
     .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 
@@ -123,6 +124,7 @@ gulp.task('inject4', function(){
 gulp.task('inject5', function() {
   gulp.src('www/js/privateMessages/privateDetailServices.js')
     .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
     .pipe(gulp.dest('www/js/privateMessages'));
 });
 
