@@ -159,18 +159,28 @@ module.exports = {
     //   .catch(function (error) {
     //     console.log(error);
     //   })
-  
+    
     for (var i = 0; i < req.body.recipients.length; i++){
       User.update(
         { _id: req.body.recipients[i] },
         { $push: { 'privateMessages': req.body } },
         function (err, model) {
           console.log("ERROR!!: " + err);
-          console.log(model);
+          console.log(model);  //RETURN LATER, IF USER DOESNT EXIST, CREATE A NEW USER DOCUMENT & INSERT MESSAGE OBJ
+          // if (!model) {
+          //   console.log('model not found: ' + model);
+          // }
         }
       );
     }
-  
+            //   db.collection.findAndModify({
+            //   query: { _id: "some potentially existing id" },
+            //   update: {
+            //     $setOnInsert: { foo: "bar" }
+            //   },
+            //   new: true,   // return new doc if one is upserted
+            //   upsert: true // insert the document if it does not exist
+            // })
 
   },
 
@@ -193,11 +203,13 @@ module.exports = {
         console.log('private message found!: ' + JSON.stringify(messages));
         var result = [];
 
+        if (messages) {
           for (var i = 0; i < messages.length; i++){
             if (messages[i].recipients.indexOf(userPhone) !== -1){
               result.push(messages[i]);
             }
           }
+        }
         
         console.log('get private Results: ' + result);
         res.send(result);
