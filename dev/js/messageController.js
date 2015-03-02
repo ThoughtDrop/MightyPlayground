@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, $window, $localStorage, SaveMessage, CachePublicMessages, $ionicLoading) {
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state, MessageDetail, Vote, $window, $localStorage, SaveMessage, CachePublicMessages, $ionicLoading, Messages) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -61,6 +61,16 @@ angular.module('thoughtdrop.messageController', [])
     $scope.loadingIndicator.hide();
   };
     
+  $scope.storeImage = function() {
+    Messages.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
   $scope.sendMessage = function() {
     var callback = function() {
       //After getting messages from db and caching in factory, pull messages from factory into controller
@@ -83,6 +93,7 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.text = '';
         //Call saveMessages in factory to save message in DB and pull in fresh messages cache
         SaveMessage.saveMessage('savemessage', message, callback);
+
     });
   };
   
