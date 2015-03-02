@@ -50,7 +50,7 @@ angular.module('thoughtdrop.privateController', [])
           $scope.closeMessageBox();
           // $scope.data = {selectedContacts: []}; //clear contacts for next message
           //return resp;
-          
+
         // Private.saveMessage(messageData)
         // .then(function(resp) {
         //   console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
