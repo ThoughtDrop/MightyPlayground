@@ -114,6 +114,7 @@ module.exports = {
       });
   },
 
+<<<<<<< HEAD
   getSignedUrl: function(req, res) {
     console.log('about to send to AWS');
     console.log(Object.keys(req.body));
@@ -144,12 +145,17 @@ module.exports = {
     });
   },
 
+=======
+>>>>>>> (feat) Update user document with private messages when user is a recipient
   savePrivate: function(req, res) {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
     // var UserMessages = Q.nbind(User.findByIdAndUpdate, User);
     var ID = req.body._id;
+<<<<<<< HEAD
 
+=======
+>>>>>>> (feat) Update user document with private messages when user is a recipient
 
     createMessage(req.body) //save message into db
       .then(function (createdMessage) {
@@ -160,6 +166,7 @@ module.exports = {
         console.log(error);
       });
 
+<<<<<<< HEAD
     // User.find()  //find all users in db in the recipients array and add message into user model
     //   .where('_id')
     //   .in(req.body.recipients)
@@ -173,6 +180,16 @@ module.exports = {
       // })
 
 
+=======
+    User.find()  //find all users in db in the recipients array
+      .where('_id')
+      .in(req.body.recipients)
+      .exec(function (err, result) {
+        // {$push: {'privateMessages': req.body}}
+        console.log(err);
+        console.log('DB results: ' + result);
+      });
+>>>>>>> (feat) Update user document with private messages when user is a recipient
     // UserMessages(ID, { $push: {'privateMessages': req.body }} )
     //   .then(function (data) {
     //     res.status(200).send();
@@ -181,13 +198,18 @@ module.exports = {
     //   .catch(function (error) {
     //     console.log(error);
     //   })
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> (feat) Update user document with private messages when user is a recipient
     for (var i = 0; i < req.body.recipients.length; i++){
       User.update(
         { _id: req.body.recipients[i] },
         { $push: { 'privateMessages': req.body } },
         function (err, model) {
           console.log("ERROR!!: " + err);
+<<<<<<< HEAD
           console.log(model);  //RETURN LATER, IF USER DOESNT EXIST, CREATE A NEW USER DOCUMENT & INSERT MESSAGE OBJ
           // if (!model) {
           //   console.log('model not found: ' + model);
@@ -204,6 +226,12 @@ module.exports = {
             //   upsert: true // insert the document if it does not exist
             // })
 
+=======
+          console.log(model);
+        }
+      );
+    }
+>>>>>>> (feat) Update user document with private messages when user is a recipient
   },
 
   getPrivate: function(req, res) {
