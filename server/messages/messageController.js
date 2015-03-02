@@ -114,14 +114,11 @@ module.exports = {
       });
   },
 
-  displayReplies: function (req, res) {
-    //stuff
-  },
-
   savePrivate: function(req, res) {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
-
+    // var UserMessages = Q.nbind(User.findByIdAndUpdate, User);
+    var ID = req.body._id;
 
     createMessage(req.body) //save message into db
       .then(function (createdMessage) {
@@ -140,6 +137,25 @@ module.exports = {
         console.log(err);
         console.log('DB results: ' + result);
       });
+    // UserMessages(ID, { $push: {'privateMessages': req.body }} )
+    //   .then(function (data) {
+    //     res.status(200).send();
+    //     console.log('PrivateMessage saved in User Document: ' + data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   })
+  
+    for (var i = 0; i < req.body.recipients.length; i++){
+      User.update(
+        { _id: req.body.recipients[i] },
+        { $push: { 'privateMessages': req.body } },
+        function (err, model) {
+          console.log("ERROR!!: " + err);
+          console.log(model);
+        }
+      );
+    }
   },
 
   getPrivate: function(req, res) {
