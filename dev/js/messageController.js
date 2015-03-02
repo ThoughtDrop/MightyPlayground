@@ -1,10 +1,7 @@
 angular.module('thoughtdrop.messageController', [])
 
-<<<<<<< HEAD
-
-=======
->>>>>>> (feat) starts message caching on application load. Implements loading spinner and caches fresh messages after submitting message post form
 .controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, $window, $localStorage, SaveMessage, CachePublicMessages, $ionicLoading) {
+
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -50,7 +47,6 @@ angular.module('thoughtdrop.messageController', [])
     angular.element(document.querySelector( '#imageInput' ))[0].click();
   };
 
-<<<<<<< HEAD
 
   $scope.showLoading = function() {
     $ionicLoading.show({
@@ -63,23 +59,20 @@ angular.module('thoughtdrop.messageController', [])
     }); 
   };
 
-=======
-  $scope.showLoading = function() {
-    $ionicLoading.show({
-      // content: '<i class="icon ion-loading-c"></i>',
-      content: 'Showing Loading Indicator!',
-      animation: 'fade-in',
-      showBackdrop: false,
-      maxWidth: 200,
-      showDelay: 500
-    }); 
-  };
-
->>>>>>> (feat) starts message caching on application load. Implements loading spinner and caches fresh messages after submitting message post form
   $scope.hideLoading = function() {
     $scope.loadingIndicator.hide();
   };
     
+  $scope.storeImage = function() {
+    Messages.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
   $scope.sendMessage = function() {
     var callback = function() {
       //After getting messages from db and caching in factory, pull messages from factory into controller
@@ -103,6 +96,7 @@ angular.module('thoughtdrop.messageController', [])
         $scope.message.text = '';
         //Call saveMessages in factory to save message in DB and pull in fresh messages cache
         SaveMessage.saveMessage('savemessage', message, callback);
+
     });
   };
   
