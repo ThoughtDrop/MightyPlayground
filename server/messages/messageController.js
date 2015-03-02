@@ -132,6 +132,7 @@ module.exports = {
 
     createMessage(req.body) 
       .then(function (createdMessage) {
+        res.status(200).send('great work!');
         console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {

@@ -38,8 +38,6 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     controller: 'AuthCtrl'
   })
 
-
-
   .state('map', {
     url: '/map',
     templateUrl: 'templates/map.html',
