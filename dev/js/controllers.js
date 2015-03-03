@@ -4,19 +4,6 @@ angular.module('thoughtdrop.controllers', [])
 
   $scope.data = {};
 
-  $scope.cachePublicMessages = function(route, sortMessagesBy) {
-    console.log('fetching public messages');
-    if (sortMessagesBy === 'new') {
-      CachePublicMessages.findNearby(route, 'new'); //calls factory
-    } else if (sortMessagesBy === 'top') {
-      $timeout(function() {
-        CachePublicMessages.findNearby(route, 'top'); //calls factory
-      }, 2000);
-    }
-
-    //display loading spinner?????
-  };
-
   $scope.login = function() {
     $cordovaOauth.facebook(427819184047831, []).then(function(result) {
       $scope.data = result;
