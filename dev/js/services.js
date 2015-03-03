@@ -245,7 +245,7 @@ return factory;
     return globalImage;
   };
 
-  var sendMessage = function(message, image) {
+  var sendMessage = function(message, image, callback) {
     //if there is an image, do a put request to the signed url to upload the image
     console.log(globalImage.signedUrl);
     if (image) {
