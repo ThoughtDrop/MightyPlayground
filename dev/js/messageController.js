@@ -41,11 +41,6 @@ angular.module('thoughtdrop.messageController', [])
     Vote.handleVote(message, className);
   };
 
-  $scope.clickHidden = function() {
-    console.log('you clicked me!');
-    angular.element(document.querySelector( '#imageInput' ))[0].click();
-  };
-
   $scope.showLoading = function() {
     $ionicLoading.show({
       // content: '<i class="icon ion-loading-c"></i>',
