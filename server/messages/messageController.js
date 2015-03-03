@@ -64,11 +64,6 @@ module.exports = {
       }
     };
     return query;
-    
-    findAround(query, function(err, result){
-      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
-      res.sendStatus(result);
-    });
   },
 
   computeSortString: function(sortType) {
@@ -103,11 +98,11 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log(req.body);
     var data = { //TODO: add a facebookID field
-      _id: Number(req.body.id), 
-      location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
-      message: req.body.text,
+      _id: Number(req.body[0].id), 
+      location: {coordinates: [req.body[0].coordinates.long, req.body[0].coordinates.lat]},
+      message: req.body[0].text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body[0].id,
       isPrivate: false
     };
     console.log(JSON.stringify(data));
