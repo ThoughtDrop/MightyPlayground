@@ -1,6 +1,9 @@
 angular.module('thoughtdrop.messageController', [])
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> (feat) starts message caching on application load. Implements loading spinner and caches fresh messages after submitting message post form
 .controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, $window, $localStorage, SaveMessage, CachePublicMessages, $ionicLoading) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
@@ -47,6 +50,7 @@ angular.module('thoughtdrop.messageController', [])
     angular.element(document.querySelector( '#imageInput' ))[0].click();
   };
 
+<<<<<<< HEAD
 
   $scope.showLoading = function() {
     $ionicLoading.show({
@@ -59,6 +63,19 @@ angular.module('thoughtdrop.messageController', [])
     }); 
   };
 
+=======
+  $scope.showLoading = function() {
+    $ionicLoading.show({
+      // content: '<i class="icon ion-loading-c"></i>',
+      content: 'Showing Loading Indicator!',
+      animation: 'fade-in',
+      showBackdrop: false,
+      maxWidth: 200,
+      showDelay: 500
+    }); 
+  };
+
+>>>>>>> (feat) starts message caching on application load. Implements loading spinner and caches fresh messages after submitting message post form
   $scope.hideLoading = function() {
     $scope.loadingIndicator.hide();
   };

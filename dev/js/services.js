@@ -253,7 +253,6 @@ return factory;
     storeUser: storeUser,
     keepInfo: keepInfo
   };
-<<<<<<< HEAD
 })
 
 .factory('Messages', function($http, $cordovaCamera){
@@ -344,3 +343,4 @@ return factory;
     storeImage: storeImage
   };
 });
+
