@@ -1,22 +1,5 @@
 angular.module('thoughtdrop.services', [])
 
-.factory('SaveMessage', function(CachePublicMessages) {
-
-  var saveMessage = function(route, message, callback) {
-    CachePublicMessages.sendData(route, message)
-      .then(function(resp) {
-        //call to DB to get top and new streams, then cache them
-        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'new', callback); 
-        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'top', callback);         
-      });
-  };
- 
-  return {
-   saveMessage: saveMessage
-  };
-
-}) 
-
 .factory('CachePublicMessages', function($http, $cordovaGeolocation) {
   var cacheMessages = function(route, data, sortMessagesBy, callback) {
     sendData(route, data)
@@ -25,7 +8,7 @@ angular.module('thoughtdrop.services', [])
         if (sortMessagesBy === 'new') {
           factory.newMessages = resp.data;
           console.log('Caching ' + resp.data.length + " " + sortMessagesBy + '-public messages within 100m of '+ JSON.stringify(data) + ' from db on FACTORY:', resp.data);
-          
+
           if (callback) {
             callback();
           }
@@ -36,10 +19,10 @@ angular.module('thoughtdrop.services', [])
           if (callback) {
             callback();
           }
-        } 
-      });   
+        }
+      });
   };
-    
+
   var getPosition1 = function() {
     //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation.getCurrentPosition();
@@ -49,7 +32,7 @@ angular.module('thoughtdrop.services', [])
     //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation.getCurrentPosition();
   };
-    
+
   var findNearby = function(route, sortMessagesBy, callback) {
     if (sortMessagesBy === 'new') {
       getPosition1()
@@ -57,16 +40,16 @@ angular.module('thoughtdrop.services', [])
         var coordinates = {};
         coordinates.lat = position.coords.latitude;
         coordinates.long = position.coords.longitude;
-        cacheMessages(route, coordinates, sortMessagesBy, callback); 
-      });  
+        cacheMessages(route, coordinates, sortMessagesBy, callback);
+      });
     } else if (sortMessagesBy === 'top') {
       getPosition2()
       .then(function(position) {
         var coordinates = {};
         coordinates.lat = position.coords.latitude;
         coordinates.long = position.coords.longitude;
-        cacheMessages(route, coordinates, sortMessagesBy, callback); 
-      });  
+        cacheMessages(route, coordinates, sortMessagesBy, callback);
+      });
     }
   };
 
@@ -94,7 +77,7 @@ angular.module('thoughtdrop.services', [])
 
 return factory;
 
-}) 
+})
 
 .factory('Vote', function($http){
 
@@ -108,16 +91,16 @@ return factory;
         //If this message is not an upVoteButtonLock property or the button is not locked
         if (!upVoteButtonLock[message._id] ) {
         //Lock upvote button by setting upVoteButtonLock[message._id] to True
-        upVoteButtonLock[message._id] = true; 
+        upVoteButtonLock[message._id] = true;
         //Increment vote in DOM and send incremented vote to server
         incrementVote(message);
-        //Unlock downvote button by setting downVoteButtonLock[message._id] to False  
+        //Unlock downvote button by setting downVoteButtonLock[message._id] to False
         downVoteButtonLock[message._id] = false;
 
         } else if (upVoteButtonLock[message._id] === true) { //Otherwise, if upVoteButtonLock[message._id] is True
         //Unlock downvote button by setting downVoteButtonLock[message._id] to False
         downVoteButtonLock[message._id] = false;
-        } 
+        }
     //If downvoting
     } else if (className === 'downVote') {
         //If downVoteButtonLock[message._id] exists OR is False
@@ -126,24 +109,24 @@ return factory;
         downVoteButtonLock[message._id] = true;
         //Decrement vote in DOM and send decremented vote to server
         decrementVote(message);
-        //Unlock upvote button by setting upVoteButtonLock[message._id] to False  
+        //Unlock upvote button by setting upVoteButtonLock[message._id] to False
         upVoteButtonLock[message._id] = false;
 
         } else if (upVoteButtonLock[message._id] === true) { //Otherwise, if upVoteButtonLock[message._id] is True
         //Unlock downvote button by setting downVoteButtonLock[message._id] to False
         downVoteButtonLock[message._id] = false;
-        } 
+        }
     }
-  }; 
+  };
 
-  var incrementVote = function(message) {    
+  var incrementVote = function(message) {
       //Increment vote count in the DOM
       message.votes++;
       console.log('upVOTING and changing vote to: ' + message.votes);
       //send incremented count along with messageID to server
       sendData('updatevote', message._id, message.votes);
       console.log('Sending vote of: ' + message.votes + ' to server!');
-  }; 
+  };
 
   var decrementVote = function(message) {
       //Decrement vote count in the DOM
@@ -199,11 +182,11 @@ return factory;
         data: JSON.stringify(data)
       })
       .then(function (resp) {
-        console.log('Server resp to func call to findNearby: ', resp);  
+        console.log('Server resp to func call to findNearby: ', resp);
         return resp.data;
       });
     };
-    
+
     $cordovaGeolocation
     .getCurrentPosition()
     .then(function(position) {
@@ -233,7 +216,7 @@ return factory;
   var storeUser = function(data) {
     console.log('storeUser triggered: ', JSON.stringify(data));
     console.log('data Storage123: ' + JSON.stringify(dataStorage));
-    dataStorage.userData.phoneNumber = data.phoneNumber; 
+    dataStorage.userData.phoneNumber = data.phoneNumber;
     console.log('final data before sending to db: ', JSON.stringify(dataStorage.userData));
     $localStorage.userInfo = dataStorage.userData;
     console.log('userINFO IN LOCAL STORAGE ' + JSON.stringify($localStorage.userInfo));
@@ -346,13 +329,18 @@ return factory;
 .factory('Messages', function($http, $cordovaCamera){
   var globalImage = {};
 
+  var returnGlobal = function() {
+    return globalImage;
+  };
+
   var sendMessage = function(message, image) {
     //if there is an image, do a put request to the signed url to upload the image
+    console.log(globalImage.signedUrl);
     if (image) {
       return $http({
         method: 'PUT',
-        url: resp.data.signedUrl,
-        data: imgURI,
+        url: globalImage.signedUrl,
+        data: globalImage.src,
         headers: {
           'Content-Type': 'image/jpeg'
         },
@@ -370,9 +358,12 @@ return factory;
       })
       .then(function(resp) {
         console.log('message saved successfully!');
-      })
+        //call to DB to get top and new streams, then cache them
+        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'new', callback);
+        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'top', callback);
+        })
       .catch(function(err) {
-        console.log('there was an error: ' + err);
+        console.log('there was an error in save image: ' + err);
       });
     } else {
       //if thre isn't an image, just send the message as is
@@ -384,9 +375,11 @@ return factory;
       })
       .then(function(resp) {
         console.log('message saved successfully!');
+        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'new', callback);
+        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'top', callback);
       })
       .catch(function(err) {
-        console.log('there was an error: ' + err);
+        console.log('there was an error in save message: ' + err);
       });
     }
   };
@@ -417,17 +410,21 @@ return factory;
         data: JSON.stringify(globalImage)
       })
       .then(function(resp) {
-        globalImage.shortUrl = resp.body.shortUrl;
-        globalImage.signedUrl = resp.body.signedUrl;
+        console.log('success!' + JSON.stringify(resp));
+        console.log('resp shorturl!' + resp.data.shortUrl);
+        console.log('resp signedurl!' + resp.data.signedUrl);
+        globalImage.shortUrl = resp.data.shortUrl;
+        globalImage.signedUrl = resp.data.signedUrl;
         console.log('successfully got response URL!');
-        console.log('short img url: ' + globalImage.shortUrl);
-        console.log('signed img url: ' + globalImage.signedUrl);
+        console.log('globalimage short img url: ' + globalImage.shortUrl);
+        console.log('globalimage signed img url: ' + globalImage.signedUrl);
       });
     });
   };
 
   return {
     sendMessage: sendMessage,
-    storeImage: storeImage
+    storeImage: storeImage,
+    returnGlobal:returnGlobal
   };
 });

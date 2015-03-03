@@ -77,7 +77,7 @@ angular.module('thoughtdrop.messageController', [])
     var callback = function() {
       //After getting messages from db and caching in factory, pull messages from factory into controller
       $scope.cacheMessages();
-      //Close message box and stop loadging spinner
+      //Close message box and stop loading spinner
       $scope.closeMessageBox();
       $ionicLoading.hide();
     };
@@ -154,10 +154,10 @@ angular.module('thoughtdrop.messageController', [])
 
     if ($scope.page === 'new') {
       $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
-      console.log('Pulling cached "NEW" messages from factory into controller: ',CachePublicMessages.newMessages);
+      console.log('Pulling cached "NEW" messages from factory into controller: ', CachePublicMessages.newMessages);
     } else if ($scope.page === 'top') {
       $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
-      console.log('Pulling cached "TOP" messages from factory into controller: ',CachePublicMessages.topMessages);
+      console.log('Pulling cached "TOP" messages from factory into controller: ', CachePublicMessages.topMessages);
     }
   };
 
