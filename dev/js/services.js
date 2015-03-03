@@ -1,24 +1,42 @@
 angular.module('thoughtdrop.services', [])
 
-.factory('CachePublicMessages', function($http, $cordovaGeolocation, $location, $timeout) {
-  var storeMessages = function(route, coordinates, sortMessagesBy, callback) {
-    sendData(route, coordinates, sortMessagesBy)
+.factory('SaveMessage', function(CachePublicMessages) {
+
+  var saveMessage = function(route, message, callback) {
+    CachePublicMessages.sendData(route, message)
+      .then(function(resp) {
+        //call to DB to get top and new streams, then cache them
+        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'new', callback); 
+        CachePublicMessages.cacheMessages('nearby', message.coordinates, 'top', callback);         
+      })
+  }
+ 
+  return {
+   saveMessage: saveMessage
+  };
+
+}) 
+
+.factory('CachePublicMessages', function($http, $cordovaGeolocation) {
+  var cacheMessages = function(route, data, sortMessagesBy, callback) {
+    sendData(route, data)
       .then(function (resp) {
         //cache all public messages messages within 100m of user
-        //console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
         if (sortMessagesBy === 'new') {
           factory.newMessages = resp.data;
-          console.log('New Messages Cache from Factory: ', factory.newMessages);
+          console.log('Caching ' + resp.data.length + " " + sortMessagesBy + '-public messages within 100m of '+ JSON.stringify(data) + ' from db on FACTORY:', resp.data);
+          
           if (callback) {
             callback();
           }
         } else if (sortMessagesBy === 'top') {
           factory.topMessages = resp.data;
-          console.log('Top Messages Cache from Factory: ', factory.topMessages);
+          console.log('Caching ' + resp.data.length + " " + sortMessagesBy + '-public messages within 100m of '+ JSON.stringify(data) + ' from db on FACTORY:', resp.data);
+
           if (callback) {
             callback();
           }
-        }
+        } 
       });   
   };
     
@@ -32,14 +50,14 @@ angular.module('thoughtdrop.services', [])
     return $cordovaGeolocation.getCurrentPosition();
   };
     
-  var findNearby = function(route, sortMessagesBy, callback, message) {
+  var findNearby = function(route, sortMessagesBy, callback) {
     if (sortMessagesBy === 'new') {
       getPosition1()
       .then(function(position) {
         var coordinates = {};
         coordinates.lat = position.coords.latitude;
         coordinates.long = position.coords.longitude;
-        storeMessages(route, coordinates, sortMessagesBy, callback); 
+        cacheMessages(route, coordinates, sortMessagesBy, callback); 
       });  
     } else if (sortMessagesBy === 'top') {
       getPosition2()
@@ -47,7 +65,7 @@ angular.module('thoughtdrop.services', [])
         var coordinates = {};
         coordinates.lat = position.coords.latitude;
         coordinates.long = position.coords.longitude;
-        storeMessages(route, coordinates, sortMessagesBy, callback); 
+        cacheMessages(route, coordinates, sortMessagesBy, callback); 
       });  
     }
   };
@@ -67,7 +85,7 @@ angular.module('thoughtdrop.services', [])
  var factory = {
    newMessages: 'apple',
    topMessages: 'orange',
-   storeMessages: storeMessages,
+   cacheMessages: cacheMessages,
    getPosition1: getPosition1,
    getPosition2: getPosition2,
    findNearby: findNearby,
@@ -235,6 +253,7 @@ return factory;
     storeUser: storeUser,
     keepInfo: keepInfo
   };
+<<<<<<< HEAD
 })
 
 .factory('Messages', function($http, $cordovaCamera){
