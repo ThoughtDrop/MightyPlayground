@@ -408,11 +408,13 @@ return factory;
       var imgURI = ('data:image/jpeg;base64,' + imageData);
       globalImage.src = imgURI;
       globalImage.id = Math.floor(Math.random()*100000000);
+      console.log('globalImage src: ' + globalImage.src);
+      console.log('globalImage id: ' + globalImage.id);
       return $http({
         method: 'PUT',
         url: //base
         '/api/messages/getsignedurl',
-        data: JSON.stringify(globalImage.id)
+        data: JSON.stringify(globalImage)
       })
       .then(function(resp) {
         globalImage.shortUrl = resp.body.shortUrl;
