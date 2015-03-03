@@ -3,7 +3,6 @@ angular.module('thoughtdrop.messageController', [])
 .controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state, MessageDetail, Vote, $window, $localStorage, CachePublicMessages, $ionicLoading, Messages) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
-        //modularize all http requests to services
         //look into using socket.io to handle simultaneous upvote/downvote requests from clients
   $scope.message = {};
   $scope.message.messagesToDisplay = null;
