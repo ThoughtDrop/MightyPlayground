@@ -128,7 +128,6 @@ module.exports = {
     // var UserMessages = Q.nbind(User.findByIdAndUpdate, User);
     var ID = req.body._id;
 
-
     createMessage(req.body) //save message into db
       .then(function (createdMessage) {
         res.status(200).send('Private Saved!');
