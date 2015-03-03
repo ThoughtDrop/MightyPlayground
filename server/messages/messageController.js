@@ -116,7 +116,7 @@ module.exports = {
 
   getSignedUrl: function(req, res) {
     console.log('about to send to AWS');
-
+    console.log(Object.keys(req.body));
     AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     AWS.config.region = 'us-west-1';
 
@@ -124,7 +124,7 @@ module.exports = {
     
     var params = { 
       Bucket: process.env.amazonBUCKET,
-      Key: req.body.id,
+      Key: req.body.id.toString(),
       ContentType: 'image/jpeg',
       ServerSideEncryption: 'AES256' 
     };
