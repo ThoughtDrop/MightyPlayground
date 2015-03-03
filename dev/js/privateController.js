@@ -50,7 +50,7 @@ angular.module('thoughtdrop.privateController', [])
           $scope.closeMessageBox();
           // $scope.data = {selectedContacts: []}; //clear contacts for next message
           //return resp;
-
+          
         // Private.saveMessage(messageData)
         // .then(function(resp) {
         //   console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
@@ -114,8 +114,8 @@ angular.module('thoughtdrop.privateController', [])
       .then(function(position) {
           
         var data = {  //send user phoneNumber & coordinates
-          latitude: position.coords.longitude, 
-          longitude: position.coords.latitude,
+          latitude: position.coords.latitude, 
+          longitude: position.coords.longitude,
           userPhone: userPhone
         };
 
