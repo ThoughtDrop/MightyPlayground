@@ -41,9 +41,7 @@ angular.module('thoughtdrop.privateController', [])
           isPrivate: true,
           replies: []
         };
-
         Private.tempStorage(messageData);
-
           $scope.message.text = ''; //clear the message  for next message
           console.log($scope.message);
           // $scope.recipients = []; //clear the recipients array for next message
@@ -62,7 +60,7 @@ angular.module('thoughtdrop.privateController', [])
       .then(function() {
         $location.path('/map');
         $scope.closeMessageBox();
-      })
+      });
   };
 
   $scope.closeMessageBox = function(time) {
@@ -133,7 +131,7 @@ angular.module('thoughtdrop.privateController', [])
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
         });
-      })
+      });
   };
 
   $scope.doRefresh = function() {

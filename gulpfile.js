@@ -97,18 +97,18 @@ gulp.task('clean', function(){
 //===========INJECTIONS===========
 gulp.task('inject1', function(){
   gulp.src('www/js/messageController.js')
-    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 gulp.task('inject2', function(){
   gulp.src('www/js/services.js')
-    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 
 gulp.task('inject3', function(){
   gulp.src('www/js/privateServices.js')
-    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 
@@ -122,7 +122,7 @@ gulp.task('inject4', function(){
 
 gulp.task('inject5', function() {
   gulp.src('www/js/privateMessages/privateDetailServices.js')
-    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
     .pipe(gulp.dest('www/js/privateMessages'));
 });
 
@@ -134,7 +134,8 @@ gulp.task('inject6', function() {
 
 gulp.task('inject7', function() {
   gulp.src('www/js/messageDetailController.js')
-    .pipe(replace('//base', "'https://mightyplayground-test.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mightyplayground.herokuapp.com' +"))
+    .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 
@@ -197,7 +198,7 @@ gulp.task('build', function(){
     'inject7',],
     // 'ionic-build',
     // 'browser-sync'
-    // 'serve'
+    'serve',
     'ionic'
     );
 });
