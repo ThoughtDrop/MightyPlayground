@@ -310,8 +310,7 @@ return factory;
 
     $cordovaCamera.getPicture(options)
     .then(function(imageData) {
-      var imgURI = ('data:image/jpeg;base64,' + imageData);
-      globalImage.src = imgURI;
+      globalImage.src = imageData;
       globalImage.id = Math.floor(Math.random()*100000000);
       console.log('globalImage src: ' + globalImage.src);
       console.log('globalImage id: ' + globalImage.id);
