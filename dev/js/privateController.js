@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = [5104732806]; //number hardcoded for testing reasons
+  $scope.recipients = [5106047443, 1234567890]; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -29,8 +29,8 @@ angular.module('thoughtdrop.privateController', [])
     Geolocation.getPosition()
       .then(function(position) {
         
-        //var creator = $localStorage.userInfo.name; //get user's name from local storage
-         var creator = 'p3tuh'; //ONLY FOR TESTING!
+        // var creator = $localStorage.userInfo.name; //get user's name from local storage
+        var creator = 'p3tuh'; //ONLY FOR TESTING!
         
         var messageData = {
           _id: Math.floor(Math.random()*100000),
@@ -42,28 +42,25 @@ angular.module('thoughtdrop.privateController', [])
           replies: []
         };
         Private.tempStorage(messageData);
-
-
-        $scope.message.text = ''; //clear the message  for next message
-        console.log($scope.message);
-        $scope.recipients = []; //clear the recipients array for next message
-        $scope.closeMessageBox();
-        $scope.data = {selectedContacts: []}; //clear contacts for next message
+          $scope.message.text = ''; //clear the message  for next message
+          console.log($scope.message);
+          // $scope.recipients = []; //clear the recipients array for next message
+          $scope.closeMessageBox();
+          // $scope.data = {selectedContacts: []}; //clear contacts for next message
+          //return resp;
 
         // Private.saveMessage(messageData)
         // .then(function(resp) {
         //   console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-        //   //return resp;
         // })
         // .catch(function(err) {
         //   console.log('Error posting private message: ',  JSON.stringify(err));
         // });
       })
       .then(function() {
-        // $scope.findNearby('nearby');
         $location.path('/map');
         $scope.closeMessageBox();
-      })
+      });
   };
 
   $scope.closeMessageBox = function(time) {
@@ -108,8 +105,8 @@ angular.module('thoughtdrop.privateController', [])
   $scope.findPrivateMessages = function () {
     console.log('user info1234: ' + JSON.stringify($localStorage.userInfo));
 
-    //var userPhone = $localStorage.userInfo.phoneNumber;
-     var userPhone = 5104732806; //CHNAGE THIS BACK, ONLY FOR TESTING!!
+    // var userPhone = $localStorage.userInfo.phoneNumber;
+    var userPhone = 5106047443; //CHNAGE THIS BACK, ONLY FOR TESTING!!
 
     Geolocation.getPosition()     //get users's position
       .then(function(position) {
@@ -134,7 +131,7 @@ angular.module('thoughtdrop.privateController', [])
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
         });
-      })
+      });
   };
 
   $scope.doRefresh = function() {

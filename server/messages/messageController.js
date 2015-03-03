@@ -2,12 +2,9 @@ var Message = require('../../db/models/messages.js');
 var Q = require('q');
 var AWS = require('aws-sdk');
 AWS.config.region = 'us-west-1';
+var User = require('../../db/models/user.js');
 
 module.exports = {
-
-  displayReplies: function(req, res) {
-
-  },
 
   addReply: function (req, res) {
     console.log('adding messagedetail');
@@ -94,19 +91,18 @@ module.exports = {
   },
 
   saveMessage: function (req, res) {
-    // console.log('saveMesage! req.body: ' + JSON.stringify(req.body));
     var createMessage = Q.nbind(Message.create, Message);
     console.log(req.body);
     var data = { //TODO: add a facebookID field
-      _id: Number(req.body[0].id), 
-      location: {coordinates: [req.body[0].coordinates.long, req.body[0].coordinates.lat]},
-      message: req.body[0].text,
+      _id: Number(req.body.id), 
+      location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
+      message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body[0].id,
-      isPrivate: false
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
     };
-    console.log(JSON.stringify(data));
-    
+    console.log('typeof data id ' + typeof data._id);
+    console.log('data id value ' + data._id);
+
     createMessage(data) 
       .then(function (createdMessage) {
         res.status(200).send('great work!');
@@ -117,22 +113,102 @@ module.exports = {
       });
   },
 
-  displayReplies: function (req, res) {
-    //stuff
+  getSignedUrl: function(req, res) {
+    console.log('about to send to AWS');
+    console.log(Object.keys(req.body));
+    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    AWS.config.region = 'us-west-1';
+
+    var s3bucket = new AWS.S3();
+    
+    var params = { 
+      Bucket: process.env.amazonBUCKET,
+      Key: req.body.id.toString(),
+      ContentType: 'image/jpeg',
+      ServerSideEncryption: 'AES256' 
+    };
+
+    s3bucket.getSignedUrl('putObject', params, function(err, url) {
+      if(err){
+        console.log('here is your error!: ' +err);
+      } else {
+        console.log('url confirmation: ' + url);
+        var return_data = {
+          signedUrl: url,
+          shortUrl: 'https://'+ params.Bucket +'.s3.amazonaws.com/'+req.body.id
+        };
+        res.send(JSON.stringify(return_data));
+        res.end();
+      }
+    });
   },
 
   savePrivate: function(req, res) {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
+    // var UserMessages = Q.nbind(User.findByIdAndUpdate, User);
+    var ID = req.body._id;
 
-    createMessage(req.body) 
+    createMessage(req.body) //save message into db
       .then(function (createdMessage) {
-        res.status(200).send('great work!');
-        console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
+        res.status(200).send('Private Saved!');
+        console.log('Private Message ' + req.body.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {
         console.log(error);
       });
+
+    User.find()  //find all users in db in the recipients array
+      .where('_id')
+      .in(req.body.recipients)
+      .exec(function (err, result) {
+        // {$push: {'privateMessages': req.body}}
+        console.log(err);
+        console.log('DB results: ' + result);
+      });
+    // User.find()  //find all users in db in the recipients array and add message into user model
+    //   .where('_id')
+    //   .in(req.body.recipients)
+    //   .exec(function (err, result) {
+    //     // {$push: {'privateMessages': req.body}}
+    //     console.log('error finding users: ' + err);
+    //     console.log('DB results: ' + result);
+    //   });
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
+
+    // UserMessages(ID, { $push: {'privateMessages': req.body }} )
+    //   .then(function (data) {
+    //     res.status(200).send();
+    //     console.log('PrivateMessage saved in User Document: ' + data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   })
+    
+    for (var i = 0; i < req.body.recipients.length; i++){
+      User.update(
+        { _id: req.body.recipients[i] },
+        { $push: { 'privateMessages': req.body } },
+        function (err, model) {
+          console.log("ERROR!!: " + err);
+          console.log(model);  //RETURN LATER, IF USER DOESNT EXIST, CREATE A NEW USER DOCUMENT & INSERT MESSAGE OBJ
+          // if (!model) {
+          //   console.log('model not found: ' + model);
+          // }
+        }
+      );
+    }
+            //   db.collection.findAndModify({
+            //   query: { _id: "some potentially existing id" },
+            //   update: {
+            //     $setOnInsert: { foo: "bar" }
+            //   },
+            //   new: true,   // return new doc if one is upserted
+            //   upsert: true // insert the document if it does not exist
+            // })
+
   },
 
   getPrivate: function(req, res) {
@@ -154,11 +230,13 @@ module.exports = {
         console.log('private message found!: ' + JSON.stringify(messages));
         var result = [];
 
+        if (messages) {
           for (var i = 0; i < messages.length; i++){
             if (messages[i].recipients.indexOf(userPhone) !== -1){
               result.push(messages[i]);
             }
           }
+        }
         
         console.log('get private Results: ' + result);
         res.send(result);

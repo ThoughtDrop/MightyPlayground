@@ -5,7 +5,8 @@ var usersSchema = new mongoose.Schema({
   _id: Number,//phone number
   fbID: Number,
   name: String,
-  picture: String
+  picture: String,
+  privateMessages: []
   // messages: [{type: Schema.Types.ObjectId, ref: 'Message'}]
 });
 
