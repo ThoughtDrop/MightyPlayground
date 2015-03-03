@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $state, PrivateDetail) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -28,6 +28,12 @@ angular.module('thoughtdrop.privateController', [])
 
     Geolocation.getPosition()
       .then(function(position) {
+        // $scope.findNearby('nearby');
+        Geolocation.lastPosition = position;
+        $state.go('map');
+        $scope.closeMessageBox();
+      }) // redirect to map then package data behind. 
+      .then(function() {
         
         // var creator = $localStorage.userInfo.name; //get user's name from local storage
         var creator = 'p3tuh'; //ONLY FOR TESTING!

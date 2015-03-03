@@ -1,19 +1,21 @@
 angular.module('thoughtdrop.geolocation', [])
 
 .factory('Geolocation', function($http, $cordovaGeolocation) {
-  var QlastPosition = "Error: run geolocate";
-  var testing = '1';
+  var lastPosition;
   // Run function to get most current location.
   var getPosition = function() {
-    console.log("WENT INTO GET POSITION");
     var QlastPosition = $cordovaGeolocation.getCurrentPosition();
-    testing ='2';
     return QlastPosition;
+  }
+
+  var unPromiseLocation = function(){
+    getPosition().then(function(position){lastPosition = position});
+    return lastPosition;
   }
 
   return {
     getPosition: getPosition,
-    QlastPosition: QlastPosition,
-    testing: testing
+    unPromiseLocation: unPromiseLocation,
+    lastPosition: lastPosition
   };
 })

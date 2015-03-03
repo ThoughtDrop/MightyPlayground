@@ -1,27 +1,9 @@
 angular.module('thoughtdrop.mapController', [])
 
 .controller('mapController', function($scope, $log, Private, Geolocation) {
-        //$scope.map.center points to the center all the time. 
-        // TODO: factory passes in the initial latt and long!!!
-
-
-        //WHY IS IT NOT LOGGING THIS WHEN I TRANSFER STATE TO HERE>>>????
-  (function geo () {
-    console.log("GGGGEOOOOOOOOO", Geolocation.testing);
-  })();
-
-  
-  var global_lat= 37.771421, global_lon = -122.424469;
-
-  // used for grabbing title of address
-  var nameParse = function (address) {
-    console.log(address);
-    var temp = address.split(',');
-    return temp[0];
-  }
+  var global_lat, global_lon;
 
   // renders google map
-
   function initialize () {
     var map_canvas = document.getElementById('map-canvas');
     var myLatlng = new google.maps.LatLng(global_lat, global_lon);
@@ -79,7 +61,6 @@ angular.module('thoughtdrop.mapController', [])
     //   alert(map.getCenter());
     // };
 
-
     $scope.submit = function(){
       Private.saveMessage(map.getCenter());
     }
@@ -115,15 +96,20 @@ angular.module('thoughtdrop.mapController', [])
     });
   }
     //TODO: check logic to see if latt and long exist, if not check. 
-    // if(getCookie('latitude') && getCookie('longitude')){
-    //   global_lat = parseFloat(getCookie('latitude'));
-    //   global_lon = parseFloat(getCookie('longitude'));
-    //   google.maps.event.addDomListener(window, 'load', initialize);
-    // } else{
-    //   google.maps.event.addDomListener(window, 'load', geoFindMe);
-    // }
+  if(!!Geolocation.lastPosition){
+    var coordinates = Geolocation.lastPosition.coords;
+    global_lat = coordinates.latitude;
+    global_lon = coordinates.longitude;
     initialize();
-
+  } else {
+      Geolocation.getPosition().then(function(position){
+        var coordinates = position.coords;
+        global_lat = coordinates.latitude;
+        global_lon = coordinates.longitude;
+        initialize();
+      });  
+  }
+  
 
 
   // map title validity checker. 
@@ -134,52 +120,5 @@ angular.module('thoughtdrop.mapController', [])
   //   } else {
   //     return false;
   //   }
-  // }
-  //*****************SUBMIT BUTTON*********************//
-  // $('.pushToServer').click(function () {
-  //   if(submitform()){
-  //   var points_length = $('.onePoint').length;
-  //   for( var i = 0; i < points_length; i++ ){
-  //     var pointObj = {};
-  //     pointObj['name'] = $('.in_name'+i).val();
-  //     pointObj['lat'] = $('.pointLat'+i).val();
-  //     pointObj['lng'] = $('.pointLng'+i).val();
-  //     pointObj['address'] = $('.pointAddr'+i).val();
-  //     pointObj['desc'] = $('.in_text'+i).val();
-
-  //     data.locations.push(pointObj);
-  //   }
-  //   data.mapName = $('#mapTit').val();
-
-  //   $.ajax({
-  //       type: "POST",
-  //       url: '/createMaps',
-  //       data: data,
-  //       success: function (res) {
-  //         swal({
-  //           title: "Your map has been created!",   
-  //           text: "You can now view your map",   
-  //           type: "success",   
-  //           showCancelButton: true,   
-  //           confirmButtonColor: "#DD6B55",   
-  //           confirmButtonText: "Yes, show me!",   
-  //           cancelButtonText: "No, create a new map",   
-  //           closeOnConfirm: false,   
-  //           closeOnCancel: false }, 
-  //           function (isConfirm) {   
-  //             if (isConfirm) {     
-  //               window.location = '/maps/' + res;  
-  //             } else {     
-  //               window.location = '/createMaps';  
-  //             } 
-  //           });
-  //       },
-  //       error: function () {
-  //         swal("Whoops!", "Please submit again" , "error");
-  //       }
-  //   });
-  // } else {
-  //   swal("Please Enter a Map Title", "Whoops", "warning");
-  // }
-  // });
+  // 
   });
