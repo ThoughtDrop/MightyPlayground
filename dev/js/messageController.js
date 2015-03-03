@@ -82,7 +82,8 @@ angular.module('thoughtdrop.messageController', [])
     //Show Loading Spinner
     $scope.showLoading();
     //Get Position
-    $scope.getPosition().then(function(position) {
+    $scope.getPosition()
+    .then(function(position) {
       var message = {};
       message.id = JSON.stringify(Math.floor(Math.random()*100000));
       message.text = $scope.message.text;
@@ -99,8 +100,8 @@ angular.module('thoughtdrop.messageController', [])
         Messages.sendMessage(message, photo, callback);
       } else { 
         Messages.sendMessage(message, null, callback);
-      }
-    });
+    }
+  });
   };
   
   $scope.cachePublicMessages = function(route, sortMessagesBy) {

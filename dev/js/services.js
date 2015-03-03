@@ -337,6 +337,6 @@ return factory;
   return {
     sendMessage: sendMessage,
     storeImage: storeImage,
-    returnGlobal:returnGlobal
+    returnGlobal: returnGlobal
   };
 });

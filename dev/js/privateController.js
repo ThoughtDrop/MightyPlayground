@@ -41,7 +41,6 @@ angular.module('thoughtdrop.privateController', [])
           isPrivate: true,
           replies: []
         };
-
         Private.tempStorage(messageData);
           $scope.message.text = ''; //clear the message  for next message
           console.log($scope.message);

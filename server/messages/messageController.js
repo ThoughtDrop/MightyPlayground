@@ -98,8 +98,7 @@ module.exports = {
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
-      isPrivate: false
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id
     };
     console.log('typeof data id ' + typeof data._id);
     console.log('data id value ' + data._id);
@@ -167,6 +166,18 @@ module.exports = {
         console.log(err);
         console.log('DB results: ' + result);
       });
+    // User.find()  //find all users in db in the recipients array and add message into user model
+    //   .where('_id')
+    //   .in(req.body.recipients)
+    //   .exec(function (err, result) {
+    //     // {$push: {'privateMessages': req.body}}
+    //     console.log('error finding users: ' + err);
+    //     console.log('DB results: ' + result);
+    //   });
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
+
     // UserMessages(ID, { $push: {'privateMessages': req.body }} )
     //   .then(function (data) {
     //     res.status(200).send();
@@ -189,6 +200,15 @@ module.exports = {
         }
       );
     }
+            //   db.collection.findAndModify({
+            //   query: { _id: "some potentially existing id" },
+            //   update: {
+            //     $setOnInsert: { foo: "bar" }
+            //   },
+            //   new: true,   // return new doc if one is upserted
+            //   upsert: true // insert the document if it does not exist
+            // })
+
   },
 
   getPrivate: function(req, res) {
