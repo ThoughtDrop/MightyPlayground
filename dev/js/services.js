@@ -194,19 +194,22 @@ return factory;
 })
 
 
-.factory('MessageDetail', function(CachePublicMessages){
+.factory('MessageDetail', function(CachePublicMessages, $http){
   var allMessages = CachePublicMessages.newMessages;
   var get = function(messageid) {
     for (var i = 0; i < allMessages.length; i++) {
       if (allMessages[i]._id === parseInt(messageid)) {
-        return allMessages[i];
+        return $http({
+          method: 'GET',
+          url: allMessages[i].photo_url
+        })
+        .then(function(resp) {
+          allMessages[i].image = (resp.data);
+          return allMessages[i];
+        });
       }
     }
-    return null;
-  };
-
-  return {
-    get: get
+  return null;
   };
 
   var findNearby = function() {
@@ -235,8 +238,8 @@ return factory;
   };
 
   return {
-    getMessages: getMessages,
-    findNearby: findNearby
+    findNearby: findNearby,
+    get: get
   };
 })
 
@@ -287,8 +290,8 @@ return factory;
     if (image) {
       return $http({
         method: 'PUT',
-        url: globalImage.signedUrl,
-        data: globalImage.src,
+        url: globalImage.signedUrl, //change to image.signedUrl?
+        data: globalImage.src, //change to image.src?
         headers: {
           'Content-Type': 'image/jpeg'
         },
@@ -297,6 +300,7 @@ return factory;
         console.log('image saved successfully!');
         //since image sent successfully, set message.id to equal image.id for convenience
         message.id = image.id;
+        message.shortUrl = image.shortUrl;
         return $http({
           method: 'POST',
           url:  //base
