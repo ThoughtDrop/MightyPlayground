@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateServices', [])
 
-.factory('Private', function($http, $q, $location, $state) {
+.factory('Private', function($http, $q, $location, $state, GeofenceService) {
 
   var messageStorage = {};
 
@@ -10,7 +10,7 @@ angular.module('thoughtdrop.privateServices', [])
   }
 
   var saveMessage = function(data) {
-    messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
+    // messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
     console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
     return $http({
@@ -65,14 +65,36 @@ angular.module('thoughtdrop.privateServices', [])
   };
 
   var watchGeoFence = function(message) { //message is an array of message objects
-    console.log('geofence Data: ' + JSON.stringify(message[0]));
+    // console.log('geofence Data: ' + JSON.stringify(message[0]));
 
     for (var i = 0; i < message.length; i++){  //beastly object for local watching geofence
+      // var geoFence = {
+      //   id: message[i]._id,
+      //   latitude: message[i].location.coordinates[1],
+      //   longitude: message[i].location.coordinates[0],
+      //   radius: 100,
+      //   transitionType: 1,
+      //   notification: {
+      //     id: message[i]._id,
+      //     title: 'ThoughDrop',
+      //     text: message[i].message,
+      //     openAppOnClick: true,
+      //     data: {
+      //       id: message[i].id,
+      //       latitude: message[i].location.coordinates[1],
+      //       longitude: message[i].location.coordinates[0],
+      //       radius: 100,
+      //       transitionType: 1,
+      //       notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
+      //     }
+      //   }
+      // };
+
       var geoFence = {
-        id: message[i]._id,
+        id: message[i]._id.toString(),
         latitude: message[i].location.coordinates[1],
         longitude: message[i].location.coordinates[0],
-        radius: 100,
+        radius: 25,
         transitionType: 1,
         notification: {
           id: message[i]._id,
@@ -83,12 +105,13 @@ angular.module('thoughtdrop.privateServices', [])
             id: message[i].id,
             latitude: message[i].location.coordinates[1],
             longitude: message[i].location.coordinates[0],
-            radius: 100,
+            radius: 25,
             transitionType: 1,
             notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
           }
         }
       };
+      // console.log('final geofence111 : ' + JSON.stringify(geoFence));
       GeofenceService.addOrUpdate(geoFence);    
     }
 

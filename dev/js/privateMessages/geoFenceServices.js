@@ -3,6 +3,7 @@ angular.module('ionic-geofence', [])
 
     $window.geofence = $window.geofence || {
         addOrUpdate: function (fences) {
+            console.log('$window: ' + JSON.stringify(fences));
             var deffered = $q.defer();
             console.log('Mocked geofence plugin addOrUpdate', fences);
             deffered.resolve();
@@ -76,19 +77,20 @@ angular.module('ionic-geofence', [])
             return self._geofencesPromise.promise;
         },
     addOrUpdate: function (geofence) {
-       console.log('addOrUpdate000 ', JSON.stringify(geofence));
+       // console.log('addOrUpdate000 ', JSON.stringify(geofence));
 
         var self = this;
+        console.log('self? : ' + self);
         $window.geofence.addOrUpdate(geofence).then(function () {
-            if ((self.createdGeofenceDraft && self.createdGeofenceDraft === geofence) ||
-            !self.findById(geofence.id)) {
+            // if ((self.createdGeofenceDraft && self.createdGeofenceDraft === geofence) ||
+            // !self.findById(geofence.id)) {
                 self._geofences.push(geofence);
                 self.saveToLocalStorage();
-            }
+            // }
 
-            if (self.createdGeofenceDraft) {
-                self.createdGeofenceDraft = null;
-            }
+            // if (self.createdGeofenceDraft) {
+            //     self.createdGeofenceDraft = null;
+            // }
         });
 
     },

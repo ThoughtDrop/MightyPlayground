@@ -34,7 +34,7 @@ angular.module('thoughtdrop.privateController', [])
         
         var messageData = {
           _id: Math.floor(Math.random()*100000),
-          //location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
+          location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
           _creator: creator,
           recipients: $scope.recipients,
@@ -44,21 +44,21 @@ angular.module('thoughtdrop.privateController', [])
         Private.tempStorage(messageData);
           $scope.message.text = ''; //clear the message  for next message
           console.log($scope.message);
-          // $scope.recipients = []; //clear the recipients array for next message
+          $scope.recipients = []; //clear the recipients array for next message
           $scope.closeMessageBox();
-          // $scope.data = {selectedContacts: []}; //clear contacts for next message
+          $scope.data = {selectedContacts: []}; //clear contacts for next message
           //return resp;
           
-        // Private.saveMessage(messageData)
-        // .then(function(resp) {
-        //   console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-        // })
-        // .catch(function(err) {
-        //   console.log('Error posting private message: ',  JSON.stringify(err));
-        // });
+        Private.saveMessage(messageData)
+        .then(function(resp) {
+          console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
+        })
+        .catch(function(err) {
+          console.log('Error posting private message: ',  JSON.stringify(err));
+        });
       })
       .then(function() {
-        $location.path('/map');
+        // $location.path('/map');
         $scope.closeMessageBox();
       });
   };
