@@ -2,18 +2,13 @@
   <ion-view view-title="New Thought">
     <ion-content class="padding">
     <button class="button button-block button-calm" ng-click="closeMessageBox(0)">Close!</button>
-      <label class="item item-input">
-        <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
-      </label>
-      <!-- <label class="item filecontainer button button-block button-dark" for='file' data-tap-disabled="true"> <i class="ion-camera"></i> -->
-      <!-- </label> -->
-      <!-- <label class="item"> -->
-      <button class="button button-block button-calm" ng-click="storeImage()">Take pic!</button>
-        <!-- <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px"/> -->
-      </label>
-      <label class="item">
-        <button class="button button-block button-calm" ng-click="sendMessage()">Send!</button>
-      </label>
+    <label class="item item-input">
+      <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
+    </label>
+    <button class="button button-block button-calm" ng-click="storeImage()">Take pic!</button>
+    <label class="item">
+    <button class="button button-block button-calm" ng-click="sendMessage()">Send!</button>
+    </label>
     </ion-content>
   </ion-view>
 </ion-modal-view> 

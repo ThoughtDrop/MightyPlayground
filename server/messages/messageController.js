@@ -92,8 +92,8 @@ module.exports = {
 
   saveMessage: function (req, res) {
     var createMessage = Q.nbind(Message.create, Message);
-    console.log(req.body);
-    var data = { //TODO: add a facebookID field
+    console.log(JSON.stringify(req.body));
+    var data = {
       _id: Number(req.body.id), 
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
