@@ -32,8 +32,16 @@ angular.module('thoughtdrop.messageController', [])
     if (action === 'new') {
       $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
     } else if (action === 'top') {
+      //ensure messages are filtered by top 
+      $scope.sortbyVoteCount(CachePublicMessages.topMessages);
       $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
     }
+  };
+
+  $scope.sortbyVoteCount = function(messages) {
+    messages.sort(function(a, b) {
+      return b.votes - a.votes;
+    })
   };
 
   $scope.handleVote = function(message, className) {
