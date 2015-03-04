@@ -83,9 +83,8 @@ angular.module('thoughtdrop.messageController', [])
       $scope.closeMessageBox();
       $ionicLoading.hide();
     };
-    //Show Loading Spinner
+    // After clicking send, show Loading Spinner and Get Position
     $scope.showLoading();
-    //Get Position
     $scope.getPosition()
     .then(function(position) {
       var message = {};
@@ -97,7 +96,6 @@ angular.module('thoughtdrop.messageController', [])
       $scope.message.text = '';
       //if image was taken, Messages.globalImage will not be null, send message with globalImage
       var photo = Messages.returnGlobal();
-      console.log(photo);
       if (Object.keys(photo).length > 0) {
         console.log('yay we have a photo!');
         //Call sendMessage in factory to save message in DB and pull in fresh messages cache
