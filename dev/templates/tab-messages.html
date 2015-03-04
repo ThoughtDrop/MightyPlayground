@@ -15,7 +15,7 @@
     </ion-refresher>
 
 <!-- Public Messages -->
-    <ion-item class="card" ng-repeat="message in message.messagesToDisplay" type="item-text-wrap">
+    <ion-item class="card" ng-repeat="message in message.messagesToDisplay track by $index" type="item-text-wrap">
       <div class="item item-text-wrap message-block">
       <a href="#/tab/messages/{{message._id}}">
         <div class = "message-text">
@@ -24,7 +24,7 @@
         </div>
       </a>
         <div class = "votes-container">
-          <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote')"></i> 
+          <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote');"></i> 
           <b>{{message.votes}}</b>
           <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
         </div>
