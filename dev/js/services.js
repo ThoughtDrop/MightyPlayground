@@ -246,7 +246,7 @@ return factory;
 
   var keepInfo = function(data) {
     dataStorage.userData = data;
-    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData.data));
+    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData));
   };
 
   var storeUser = function(data) {
@@ -273,6 +273,7 @@ return factory;
     keepInfo: keepInfo
   };
 })
+
 
 .factory('Messages', function($http, $cordovaCamera, CachePublicMessages){
   var globalImage = {};
