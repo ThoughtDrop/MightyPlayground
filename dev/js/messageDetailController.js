@@ -7,8 +7,6 @@ angular.module('thoughtdrop.messageDetailController', [])
   console.log($scope);
   console.log(Object.keys($scope));
 
-  // $scope.particular = MessageDetail.getCurrentMessage();
-
   $scope.sendData = function(route, data) {
     console.log(route);
     console.log(data);
