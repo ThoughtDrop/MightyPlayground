@@ -2,7 +2,7 @@
   <ion-content has-header="true" padding="true">
     <div class = 'parent'>
       <h1>{{message.message}}</h1>
-      <img ng-src="data:image/jpeg;base64,{{message.photo_url}}"/>
+      <img ng-src="data:image/jpeg;base64,{{message.image}}"/>
       <!-- <img ng-src="{{photo_url}}" isImage /> -->
     </div>  
     <div class="card" ng-repeat="reply in message.replies track by $index">
