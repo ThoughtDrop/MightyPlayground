@@ -4,8 +4,8 @@ angular.module('thoughtdrop.privateDetailController', [])
   console.log('ID: ' + $stateParams._id);
   $scope.message = PrivateDetail.get($stateParams._id);
   console.log('Object in here is: ' + JSON.stringify($scope.message));
-  var creator = $localStorage.userInfo.name;
-  // var creator = 'p3tuh' //ONLY FOR TESTING COMMENT OUT!
+  //var creator = $localStorage.userInfo.name;
+   var creator = 'p3tuh' //ONLY FOR TESTING COMMENT OUT!
 
   $scope.addReply = function(replyText, messageID) { //store this reply message as an array inside the individual private messages for simplicity
     var reply = {

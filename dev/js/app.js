@@ -1,6 +1,6 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage', 'directives','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage', 'directives','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices', 'ionic-geofence'])
 
-.run(function($ionicPlatform, $window, $localStorage, $state, $location) {
+.run(function($ionicPlatform, $window, $localStorage, $state, $location, CachePublicMessages, $timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +18,22 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   } else {
      $state.go('tab.messages');
   }
+
+  var cachePublicMessages = function(route, sortMessagesBy) {
+    console.log('fetching public messages');
+    if (sortMessagesBy === 'new') {
+      CachePublicMessages.findNearby(route, 'new'); //calls factory
+    } else if (sortMessagesBy === 'top') {
+      $timeout(function() {
+        CachePublicMessages.findNearby(route, 'top'); //calls factory
+      }, 2000);
+    }
+  };
+
+  cachePublicMessages('nearby', 'top');
+  cachePublicMessages('nearby', 'new');
+
+
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -38,13 +54,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     controller: 'AuthCtrl'
   })
 
-
-
-  // .state('map', {
-  //   url: '/map',
-  //   templateUrl: 'templates/map.html',
-  //   controller: 'mapController'
-  // })
+  .state('map', {
+    url: '/map',
+    templateUrl: 'templates/map.html',
+    controller: 'mapController'
+  })
 
   // setup an abstract state for the tabs directive
   .state('tab', {

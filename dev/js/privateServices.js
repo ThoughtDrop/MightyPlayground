@@ -1,18 +1,28 @@
 angular.module('thoughtdrop.privateServices', [])
 
-.factory('Private', function($http, $q) {
+.factory('Private', function($http, $q, $location, $state) {
 
   var messageStorage = {};
 
+  var tempStorage = function(obj) {
+    messageStorage = obj;
+    console.log(messageStorage);
+  }
+
   var saveMessage = function(data) {
-    console.log('PServices message to save before server: ' + JSON.stringify(data));
+    messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
+    console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
     return $http({
       method: 'POST',
       url:  //base
       '/api/messages/private',
-      data: JSON.stringify(data)
+      data: JSON.stringify(messageStorage)
     })
+      .then(function (resp) {
+        console.log("private message saved");
+        $state.go('tab.privateMessages');
+      });
   };
 
   var getPrivate = function(data) {
@@ -60,6 +70,7 @@ angular.module('thoughtdrop.privateServices', [])
   return {
     saveMessage: saveMessage,
     getPrivate: getPrivate,
-    pickContact: pickContact
+    pickContact: pickContact,
+    tempStorage: tempStorage
   };
 })

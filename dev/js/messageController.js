@@ -1,13 +1,14 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, SaveMessage, $window, $localStorage) {
-
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, $window, $localStorage, SaveMessage, CachePublicMessages, $ionicLoading) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
         //look into using socket.io to handle simultaneous upvote/downvote requests from clients
   $scope.message = {};
+  $scope.message.messagesToDisplay = null;
   $scope.message.text = '';
+
   //Keeps track of what 'feed sort' the user is currently on to inform what data to fetch on a 'pull refresh'
   $scope.page = 'new';
   $scope.images = [];
@@ -18,6 +19,10 @@ angular.module('thoughtdrop.messageController', [])
   $scope.modalNewMessage = modal;
   });
 
+  $scope.formatDate = function(date) {
+     return moment(date).fromNow();
+  };
+
   $scope.setPage = function(page) {
     $scope.page = page;
   };
@@ -26,9 +31,9 @@ angular.module('thoughtdrop.messageController', [])
     $scope.setPage(action);
     console.log('sorting feed by ' + "'" + action + "' messages");
     if (action === 'new') {
-      $scope.findNearby('nearby', 'new');
+      $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
     } else if (action === 'top') {
-      $scope.findNearby('nearby', 'top');
+      $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
     }
   };
 
@@ -41,9 +46,32 @@ angular.module('thoughtdrop.messageController', [])
     angular.element(document.querySelector( '#imageInput' ))[0].click();
   };
 
-  $scope.sendMessage = function() {
-    $scope.closeMessageBox();
+  $scope.showLoading = function() {
+    $ionicLoading.show({
+      // content: '<i class="icon ion-loading-c"></i>',
+      content: 'Showing Loading Indicator!',
+      animation: 'fade-in',
+      showBackdrop: false,
+      maxWidth: 200,
+      showDelay: 500
+    }); 
+  };
+
+  $scope.hideLoading = function() {
+    $scope.loadingIndicator.hide();
+  };
     
+  $scope.sendMessage = function() {
+    var callback = function() {
+      //After getting messages from db and caching in factory, pull messages from factory into controller
+      $scope.cacheMessages();
+      //Close message box and stop loadging spinner
+      $scope.closeMessageBox();
+      $ionicLoading.hide();
+    };
+    //Show Loading Spinner
+    $scope.showLoading();
+    //Get Position
     $scope.getPosition()
       .then(function(position) {
         var message = {};
@@ -53,32 +81,22 @@ angular.module('thoughtdrop.messageController', [])
         message.coordinates.lat = position.coords.latitude;
         message.coordinates.long = position.coords.longitude;
         $scope.message.text = '';
-        SaveMessage.sendMessage(message, function() {
-          $scope.findNearby('nearby');
-        });
-      });
-  };
-
-  $scope.closeMessageBox = function(time) {
-    var time = time || 250;
-    $timeout(function() {
-      $scope.modalNewMessage.hide();
-    }, time);
-  };
-
-  $scope.sendData = function(route) {
-    var data = Array.prototype.slice.call(arguments, 1);
-    console.log('sendData : ' + JSON.stringify(data));
-    var route = route || "";
-    //returns a promise that will be used to resolve/ do work on the data returned by the server
-    return $http({
-      method: 'POST',
-      url:  //base
-      '/api/messages/' + route,
-      data: JSON.stringify(data)
+        //Call saveMessages in factory to save message in DB and pull in fresh messages cache
+        SaveMessage.saveMessage('savemessage', message, callback);
     });
   };
-
+  
+  $scope.cachePublicMessages = function(route, sortMessagesBy) {
+    console.log('fetching public messages');
+    if (sortMessagesBy === 'new') {
+      CachePublicMessages.findNearby(route, 'new'); //calls factory
+    } else if (sortMessagesBy === 'top') {
+      $timeout(function() {
+        CachePublicMessages.findNearby(route, 'top'); //calls factory
+      }, 2000);
+    }
+  };
+  
   $scope.closeMessageBox = function(time) {
     var time = time || 250;
     $timeout(function() {
@@ -86,53 +104,49 @@ angular.module('thoughtdrop.messageController', [])
     }, time);
   };
 
+  $scope.closeMessageBox = function(time) {
+    var time = time || 250;
+    $timeout(function() {
+      $scope.modalNewMessage.hide();
+    }, time);
+  };
+  
   $scope.newMessage = function() {
     $scope.modalNewMessage.show();
   };
-
-  $scope.displayMessages = function(route, coordinates, sortMessagesBy) {
-    $scope.sendData(route, coordinates, sortMessagesBy)
-    .then(function (resp) {
-      //populate scope with all messages within 100m of user
-      console.log('Received ' + resp.data.length + ' messages within 100m of '+ JSON.stringify(coordinates) + ' from server:', resp.data);
-      $scope.message.messages = resp.data;
-      MessageDetail.storeMessages(resp.data);
-    });    
-  };
-
+  
   $scope.getPosition = function() {
     //returns a promise that will be used to resolve/ do work on the user's GPS position
     return $cordovaGeolocation.getCurrentPosition();
   };
-
-  $scope.findNearby = function(route, sortMessagesBy) {
-    $scope.getPosition()
-    .then(function(position) {
-      var coordinates = {};
-      coordinates.lat = position.coords.latitude;
-      coordinates.long = position.coords.longitude;
-      $scope.displayMessages(route, coordinates, sortMessagesBy);
-    });   
-  };
-
+  
   $scope.doRefresh = function() {
-    if ($scope.page === 'new') {
-      $scope.findNearby('nearby', 'new', 'scroll.refreshComplete');
-    } else if ($scope.page === 'top') {
-      $scope.findNearby('nearby', 'top', 'scroll.refreshComplete');
-    }
+    CachePublicMessages.findNearby('nearby', 'new', function() {
+      if ($scope.page === 'new') {
+        $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
+        $scope.$broadcast('scroll.refreshComplete'); //Stops pull refresh loading spinner
+      }
+    });
 
-    $scope.$broadcast('scroll.refreshComplete');
-    // $scope.apply();
+    CachePublicMessages.findNearby('nearby', 'top', function() {
+      if ($scope.page === 'top') {
+        $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
+        $scope.$broadcast('scroll.refreshComplete'); //Stops pull refresh loading spinner
+      }
+    });
+  };  
+
+  $scope.cacheMessages = function() {
+
+    if ($scope.page === 'new') {
+      $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
+      console.log('Pulling cached "NEW" messages from factory into controller: ',CachePublicMessages.newMessages);
+    } else if ($scope.page === 'top') {
+      $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
+      console.log('Pulling cached "TOP" messages from factory into controller: ',CachePublicMessages.topMessages);
+    }
   };
 
-  // $scope.getReplies = function(message_obj) {
-  //   MessageDetail.passOver(message_obj);
-  //   // $state.go('messagedetail');
-  //   $location.path('/messagedetail');
-  // }
-
-  //Invokes findNearby on page load for /tabs/messages
-  $scope.findNearby('nearby');
+  $scope.cacheMessages();
 
 });

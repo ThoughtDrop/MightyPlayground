@@ -6,7 +6,6 @@ module.exports = function (app) {
  	app.post('/updatevote', messageController.updateVote);
   app.post('/private', messageController.savePrivate);
   app.post('/private/nearby', messageController.getPrivate);
-  // app.post('/addMessageDetail', messageController.addMessageDetail);
   app.post('/addreply', messageController.addReply);
   app.post('/private/addreply', messageController.addPrivateReply);
 };

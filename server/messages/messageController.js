@@ -2,6 +2,7 @@ var Message = require('../../db/models/messages.js');
 var Q = require('q');
 var AWS = require('aws-sdk');
 AWS.config.region = 'us-west-1';
+var User = require('../../db/models/user.js');
 
 module.exports = {
 
@@ -42,7 +43,14 @@ module.exports = {
     var messageID = req.body[0];
     console.log('Received updated voteCount from client, where votes = ', voteCount);
     var updateVote = Q.nbind(Message.findByIdAndUpdate, Message);
-    updateVote(messageID, { votes : voteCount} );
+    updateVote(messageID, { votes : voteCount} )
+      .then(function (data) {
+        res.status(200).send();
+        console.log('Vote was successfully saved to database', data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 
   queryByLocation: function(lat, long, radius) {
@@ -57,11 +65,6 @@ module.exports = {
       }
     };
     return query;
-    
-    findAround(query, function(err, result){
-      console.log('Sent messages within 100m of (' + req.body[0].long + ", " + req.body[0].lat + ') to client. Here are the messages:' + result);
-      res.sendStatus(result);
-    });
   },
 
   computeSortString: function(sortType) {
@@ -75,6 +78,7 @@ module.exports = {
   },
 
   getNearbyMessages: function(req, res) {
+    console.log('/////Trying to get messages from DATABASE!!!');
     var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
     var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
     console.log('public query!: ' + JSON.stringify(locationQuery));
@@ -85,7 +89,7 @@ module.exports = {
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
-        // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
     });
   },
@@ -95,11 +99,11 @@ module.exports = {
     var createMessage = Q.nbind(Message.create, Message);
     console.log(req.body);
     var data = { //TODO: add a facebookID field
-      _id: Number(req.body.id), 
-      location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
-      message: req.body.text,
+      _id: Number(req.body[0].id), 
+      location: {coordinates: [req.body[0].coordinates.long, req.body[0].coordinates.lat]},
+      message: req.body[0].text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
+      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body[0].id,
       isPrivate: false
     };
     console.log(JSON.stringify(data));
@@ -121,25 +125,73 @@ module.exports = {
   savePrivate: function(req, res) {
     var createMessage = Q.nbind(Message.create, Message);
     console.log('private message data: ' + JSON.stringify(req.body));
+    // var UserMessages = Q.nbind(User.findByIdAndUpdate, User);
+    var ID = req.body._id;
 
-    createMessage(req.body) 
+    createMessage(req.body) //save message into db
       .then(function (createdMessage) {
-        console.log('Message ' + req.body.message + ' was successfully saved to database', createdMessage);
+        res.status(200).send('Private Saved!');
+        console.log('Private Message ' + req.body.message + ' was successfully saved to database', createdMessage);
       })
       .catch(function (error) {
         console.log(error);
       });
+
+    // User.find()  //find all users in db in the recipients array and add message into user model
+    //   .where('_id')
+    //   .in(req.body.recipients)
+    //   .exec(function (err, result) {
+    //     // {$push: {'privateMessages': req.body}}
+    //     console.log('error finding users: ' + err);
+    //     console.log('DB results: ' + result);
+    //   });
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
+
+
+    // UserMessages(ID, { $push: {'privateMessages': req.body }} )
+    //   .then(function (data) {
+    //     res.status(200).send();
+    //     console.log('PrivateMessage saved in User Document: ' + data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   })
+    
+    for (var i = 0; i < req.body.recipients.length; i++){
+      User.update(
+        { _id: req.body.recipients[i] },
+        { $push: { 'privateMessages': req.body } },
+        function (err, model) {
+          console.log("ERROR!!: " + err);
+          console.log(model);  //RETURN LATER, IF USER DOESNT EXIST, CREATE A NEW USER DOCUMENT & INSERT MESSAGE OBJ
+          // if (!model) {
+          //   console.log('model not found: ' + model);
+          // }
+        }
+      );
+    }
+            //   db.collection.findAndModify({
+            //   query: { _id: "some potentially existing id" },
+            //   update: {
+            //     $setOnInsert: { foo: "bar" }
+            //   },
+            //   new: true,   // return new doc if one is upserted
+            //   upsert: true // insert the document if it does not exist
+            // })
+
   },
 
   getPrivate: function(req, res) {
     console.log('user info!!!: ' + JSON.stringify(req.body));
+    // user info!!!: {"latitude":37.7726402,"longitude":-122.40991539999997,"userPhone":5106047443}
     var userPhone = req.body.userPhone;
     console.log('userphone String: ' + userPhone);
-    var recipients = 'recipients';
     console.log(typeof userPhone);
     
-    var locationQuery = module.exports.queryByLocation(req.body.longitude, req.body.latitude, 100);
-
+    var locationQuery = module.exports.queryByLocation(req.body.latitude, req.body.longitude, 100);
+    console.log(JSON.stringify(locationQuery));
     Message
       .find(locationQuery)
       .where('isPrivate').equals(true)
@@ -150,11 +202,13 @@ module.exports = {
         console.log('private message found!: ' + JSON.stringify(messages));
         var result = [];
 
+        if (messages) {   // if any privates are found, loop through and find those user is the recipient of
           for (var i = 0; i < messages.length; i++){
             if (messages[i].recipients.indexOf(userPhone) !== -1){
               result.push(messages[i]);
             }
           }
+        }
         
         console.log('get private Results: ' + result);
         res.send(result);

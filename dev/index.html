@@ -14,16 +14,24 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <!-- Used for Formatting Time Stamps on Messages -->
+    <script src="bower_components/moment/moment.js"></script>
+    <!-- App.js and Controllers -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/messageController.js"></script>
     <script src="js/messageDetailController.js"></script>
     <script src="js/services.js"></script>
     <script src="js/mapController.js"></script>
+    <!-- Cordova Oauth -->
     <script src="js/ng-cordova-oauth.min.js"></script>
     <!-- <script src="js/ng-cordova.min.js"></script> -->
     <script src="js/directives.js"></script>
@@ -37,15 +45,9 @@
     <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
     <script src="js/privateMessages/privateDetailController.js"></script>
     <script src="js/privateMessages/privateDetailServices.js"></script>
+    <script src="js/privateMessages/geoFenceServices.js"></script>
   </head>
   <body ng-app="thoughtdrop">
     <ion-nav-view></ion-nav-view>
   </body>
-</html>   
-
-<!-- 
-
-<script src="js/mapController.js"></script> 
-<script src="https://maps.googleapis.com/maps/api/js"></script>
-
--->
+</html>
