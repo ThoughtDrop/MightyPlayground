@@ -98,9 +98,13 @@ angular.module('thoughtdrop.messageController', [])
       var photo = Messages.returnGlobal();
       if (Object.keys(photo).length > 0) {
         console.log('yay we have a photo!');
+        console.log(Object.keys(photo));
+        console.log(JSON.stringify(photo));
         //Call sendMessage in factory to save message in DB and pull in fresh messages cache
         Messages.sendMessage(message, photo, callback);
       } else { 
+        console.log('no photo!');
+
         Messages.sendMessage(message, null, callback);
     }
   });
