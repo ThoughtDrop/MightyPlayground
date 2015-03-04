@@ -67,7 +67,7 @@ angular.module('thoughtdrop.privateServices', [])
   var watchGeoFence = function(message) { //message is an array of message objects
     console.log('geofence Data: ' + JSON.stringify(message[0]));
 
-    for (var i = 0; i < message.length; i++){  //wtfffffff
+    for (var i = 0; i < message.length; i++){  //beastly object for local watching geofence
       var geoFence = {
         id: message[i]._id,
         latitude: message[i].location.coordinates[1],
