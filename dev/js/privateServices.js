@@ -64,6 +64,36 @@ angular.module('thoughtdrop.privateServices', [])
     return deferred.promise;
   };
 
+  var watchGeoFence = function(message) { //message is an array of message objects
+    console.log('geofence Data: ' + JSON.stringify(message[0]));
+
+    for (var i = 0; i < message.length; i++){  //wtfffffff
+      var geoFence = {
+        id: message[i]._id,
+        latitude: message[i].location.coordinates[1],
+        longitude: message[i].location.coordinates[0],
+        radius: 100,
+        transitionType: 1,
+        notification: {
+          id: message[i]._id,
+          title: 'ThoughDrop',
+          text: message[i].message,
+          openAppOnClick: true,
+          data: {
+            id: message[i].id,
+            latitude: message[i].location.coordinates[1],
+            longitude: message[i].location.coordinates[0],
+            radius: 100,
+            transitionType: 1,
+            notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
+          }
+        }
+      };
+      GeofenceService.addOrUpdate(geoFence);    
+    }
+
+  }
+
 
 
 
@@ -71,6 +101,7 @@ angular.module('thoughtdrop.privateServices', [])
     saveMessage: saveMessage,
     getPrivate: getPrivate,
     pickContact: pickContact,
-    tempStorage: tempStorage
+    tempStorage: tempStorage,
+    watchGeoFence: watchGeoFence
   };
 })

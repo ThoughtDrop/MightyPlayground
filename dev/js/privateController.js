@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail, GeofenceService) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
         //modularize all http requests to services
@@ -8,7 +8,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = [5106047443, 1234567890]; //number hardcoded for testing reasons
+  $scope.recipients = [5106047443]; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -24,7 +24,7 @@ angular.module('thoughtdrop.privateController', [])
 
   $scope.sendMessage = function() {
     console.log('sendMessage!');
-    console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
+    // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
 
     Geolocation.getPosition()
       .then(function(position) {
@@ -127,6 +127,7 @@ angular.module('thoughtdrop.privateController', [])
           // console.log('resp.dat: ' + JSON.stringify(resp.data));
           PrivateDetail.storeMessages(resp);
           console.log('stored!');
+          Private.watchGeoFence(resp);
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));

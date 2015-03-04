@@ -1,5 +1,5 @@
 angular.module('ionic-geofence', [])
-    .factory('GeofenceService', function ($rootScope, $window, $q, $log, $ionicLoading) {
+    .factory('GeofenceService', function ($rootScope, $window, $q, $log, $ionicLoading, toaster) {
 
     $window.geofence = $window.geofence || {
         addOrUpdate: function (fences) {
