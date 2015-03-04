@@ -159,35 +159,7 @@ module.exports = {
         console.log(error);
       });
 
-    User.find()  //find all users in db in the recipients array
-      .where('_id')
-      .in(req.body.recipients)
-      .exec(function (err, result) {
-        // {$push: {'privateMessages': req.body}}
-        console.log(err);
-        console.log('DB results: ' + result);
-      });
-    // User.find()  //find all users in db in the recipients array and add message into user model
-    //   .where('_id')
-    //   .in(req.body.recipients)
-    //   .exec(function (err, result) {
-    //     // {$push: {'privateMessages': req.body}}
-    //     console.log('error finding users: ' + err);
-    //     console.log('DB results: ' + result);
-    //   });
-      // .catch(function (error) {
-      //   console.log(error);
-      // })
 
-    // UserMessages(ID, { $push: {'privateMessages': req.body }} )
-    //   .then(function (data) {
-    //     res.status(200).send();
-    //     console.log('PrivateMessage saved in User Document: ' + data);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   })
-    
     for (var i = 0; i < req.body.recipients.length; i++){
       User.update(
         { _id: req.body.recipients[i] },
@@ -209,7 +181,6 @@ module.exports = {
             //   new: true,   // return new doc if one is upserted
             //   upsert: true // insert the document if it does not exist
             // })
-
   },
 
   getPrivate: function(req, res) {

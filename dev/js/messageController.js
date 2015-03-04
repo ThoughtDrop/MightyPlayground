@@ -1,5 +1,6 @@
 angular.module('thoughtdrop.messageController', [])
 
+
 .controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state, MessageDetail, Vote, $window, $localStorage, CachePublicMessages, $ionicLoading, Messages) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
@@ -51,6 +52,7 @@ angular.module('thoughtdrop.messageController', [])
       showDelay: 500
     }); 
   };
+
 
   $scope.hideLoading = function() {
     $scope.loadingIndicator.hide();

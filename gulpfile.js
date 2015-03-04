@@ -135,7 +135,6 @@ gulp.task('inject6', function() {
 gulp.task('inject7', function() {
   gulp.src('www/js/messageDetailController.js')
     .pipe(replace('//base', "'https://mightyplayground.herokuapp.com' +"))
-    .pipe(replace('//base', "'https://mp-rob.herokuapp.com' +"))
     .pipe(gulp.dest('www/js'));
 });
 
