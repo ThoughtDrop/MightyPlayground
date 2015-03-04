@@ -2,8 +2,7 @@ angular.module('thoughtdrop.messageDetailController', [])
 .controller('messageDetailController', function($scope, $state, $http, MessageDetail, $stateParams, $timeout){
   
   $scope.message = MessageDetail.get($stateParams._id);
-  console.log($stateParams._id);
-
+  
   $scope.sendData = function(route, data) {
     console.log(route);
     console.log(data);
