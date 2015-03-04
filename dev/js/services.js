@@ -193,10 +193,12 @@ return factory;
   };
 })
 
-
 .factory('MessageDetail', function(CachePublicMessages, $http){
   var allMessages = CachePublicMessages.newMessages;
-  var get = function(messageid) {
+  console.log('all messages = CachePublicMessages = ', allMessages);
+  var clickedMessage;
+
+  var get = function(messageid, callback) {
     for (var i = 0; i < allMessages.length; i++) {
       if (allMessages[i]._id === parseInt(messageid)) {
         return $http({
@@ -204,6 +206,7 @@ return factory;
           url: allMessages[i].photo_url
         })
         .then(function(resp) {
+          console.log('resp after downloading image to s3' + resp);
           allMessages[i].image = (resp.data);
           return allMessages[i];
         });
