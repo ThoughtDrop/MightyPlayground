@@ -159,6 +159,7 @@ module.exports = {
         console.log(error);
       });
 
+
     for (var i = 0; i < req.body.recipients.length; i++){
       User.update(
         { _id: req.body.recipients[i] },
