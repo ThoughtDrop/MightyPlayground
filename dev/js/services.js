@@ -210,7 +210,7 @@ return factory;
 
   var keepInfo = function(data) {
     dataStorage.userData = data;
-    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData.data));
+    console.log('FB factory keepInfo triggered: ', JSON.stringify(dataStorage.userData));
   };
 
   var storeUser = function(data) {
@@ -338,6 +338,5 @@ return factory;
     sendMessage: sendMessage,
     storeImage: storeImage,
     returnGlobal: returnGlobal
->>>>>>> a24d686d970de30f8bf5fa0adc6e977be57bb322
   };
 });

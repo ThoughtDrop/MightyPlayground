@@ -35,16 +35,16 @@ angular.module('thoughtdrop.messageDetailController', [])
     $scope.message.text = ''; 
   };
 
-  $scope.message.photo = function() {
-    console.log($scope.message.photo_url);
-    return $http({
-      method: 'GET',
-      url: $scope.message.photo_url,
-    })
-    .then(function(resp) {
-      $scope.message.image = (resp.data);
-    });
-  };
+  // $scope.message.photo = function() {
+  //   console.log($scope.message.photo_url);
+  //   return $http({
+  //     method: 'GET',
+  //     url: $scope.message.photo_url,
+  //   })
+  //   .then(function(resp) {
+  //     $scope.message.image = (resp.data);
+  //   });
+  // };
 
-  $scope.message.photo();
+  // $scope.message.photo();
 });
