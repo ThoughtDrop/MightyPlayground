@@ -247,7 +247,6 @@ return factory;
 
   var sendMessage = function(message, image, callback) {
     //if there is an image, do a put request to the signed url to upload the image
-    console.log(globalImage.signedUrl);
     if (image) {
       return $http({
         method: 'PUT',
@@ -258,13 +257,13 @@ return factory;
         },
       })
       .then(function(resp) {
-        console.log('the response image successfully uploaded!');
-        console.log('message from promise -1 exists?: ' + message);
+        console.log('image saved successfully!');
+        //since image sent successfully, set message.id to equal image.id for convenience
         message.id = image.id;
         return $http({
           method: 'POST',
           url:  //base
-          '/api/messages/' + 'savemessage',
+          '/api/messages/savemessage',
           data: JSON.stringify(message)
         });
       })
@@ -282,7 +281,7 @@ return factory;
       return $http({
         method: 'POST',
         url:  //base
-        '/api/messages/' + 'savemessage',
+        '/api/messages/savemessage',
         data: JSON.stringify(message)
       })
       .then(function(resp) {
@@ -310,7 +309,7 @@ return factory;
 
     $cordovaCamera.getPicture(options)
     .then(function(imageData) {
-      globalImage.src = imageData;
+      globalImage.src = 'data:image/jpeg;base64,' + imageData;
       globalImage.id = Math.floor(Math.random()*100000000);
       console.log('globalImage src: ' + globalImage.src);
       console.log('globalImage id: ' + globalImage.id);
@@ -321,9 +320,6 @@ return factory;
         data: JSON.stringify(globalImage)
       })
       .then(function(resp) {
-        console.log('success!' + JSON.stringify(resp));
-        console.log('resp shorturl!' + resp.data.shortUrl);
-        console.log('resp signedurl!' + resp.data.signedUrl);
         globalImage.shortUrl = resp.data.shortUrl;
         globalImage.signedUrl = resp.data.signedUrl;
         console.log('successfully got response URL!');

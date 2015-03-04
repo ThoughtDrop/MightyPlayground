@@ -14,35 +14,35 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-
-
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- your app's js -->
-    <!-- Used for Formatting Time Stamps on Messages -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>    <!-- App.js and Controllers -->
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.14.min.js"></script>
+    <!-- app's js files -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/messageController.js"></script>
     <script src="js/messageDetailController.js"></script>
     <script src="js/services.js"></script>
     <script src="js/mapController.js"></script>
-    <!-- Cordova Oauth -->
+    <script src="js/privateController.js"></script>
+    <script src="js/privateServices.js"></script>
+    <script src="js/geolocation.js"></script>
+    <script src="js/privateMessages/privateDetailController.js"></script>
+    <script src="js/privateMessages/privateDetailServices.js"></script>
+
+    <!-- Cordova Oauth -->    
     <script src="js/ng-cordova-oauth.min.js"></script>
     <!-- <script src="js/ng-cordova.min.js"></script> -->
     <script src="js/ng-cordova.js"></script>
     <script src="js/ngStorage.min.js"></script>
-    <script src="js/privateController.js"></script>
-    <script src="js/privateServices.js"></script>
-    <script src="js/geolocation.js"></script>
     <script src="js/utils.js"></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
-    <script src="js/privateMessages/privateDetailController.js"></script>
-    <script src="js/privateMessages/privateDetailServices.js"></script>
+
+    <!-- CDN script files -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>
+    <script src="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.14.min.js"></script>
   </head>
   <body ng-app="thoughtdrop">
     <ion-nav-view></ion-nav-view>

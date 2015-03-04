@@ -98,7 +98,7 @@ module.exports = {
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
+      photo_url: req.body.shortUrl || '',
       isPrivate: false
     };
     console.log('typeof data id ' + typeof data._id);
@@ -116,7 +116,6 @@ module.exports = {
 
   getSignedUrl: function(req, res) {
     console.log('about to send to AWS');
-    console.log(Object.keys(req.body));
     AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     AWS.config.region = 'us-west-1';
 
@@ -136,7 +135,7 @@ module.exports = {
         console.log('url confirmation: ' + url);
         var return_data = {
           signedUrl: url,
-          shortUrl: 'https://'+ params.Bucket +'.s3.amazonaws.com/'+req.body.id
+          shortUrl: 'https://'+ params.Bucket +'.s3.amazonaws.com/' + req.body.id.toString()
         };
         res.send(JSON.stringify(return_data));
         res.end();
