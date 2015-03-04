@@ -9,8 +9,9 @@ angular.module('thoughtdrop.privateServices', [])
     console.log(messageStorage);
   }
 
-  var saveMessage = function(data) {
+  var saveMessage = function(data, dist) {
     messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
+    messageStorage.radius = dist;
     console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
     return $http({

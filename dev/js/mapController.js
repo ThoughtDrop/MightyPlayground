@@ -121,7 +121,7 @@ angular.module('thoughtdrop.mapController', [])
       var offCenter = offsetCenter(map.getCenter(), 53, 0);
       var distance = measure(center.lat(), center.lng(), offCenter.lat(), offCenter.lng());
       console.log('center: ' + center, 'offCenter: ' + offCenter + 'distance: '+ distance);
-      return distance;
+      return Math.round(distance);
     }
 
 
@@ -146,7 +146,7 @@ angular.module('thoughtdrop.mapController', [])
     // };
 
     $scope.submit = function(){
-      Private.saveMessage(map.getCenter());
+      Private.saveMessage(map.getCenter(), $scope.coverage);
     }
     
   }//initialized

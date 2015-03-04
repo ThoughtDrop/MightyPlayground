@@ -265,7 +265,9 @@
   width: 350px;
 }
 
-
+h6 {
+  color: red;
+}
 
 .pac-container {
   font-family: Roboto;
