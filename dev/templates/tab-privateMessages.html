@@ -1,11 +1,19 @@
-<ion-view view-title="Private Messages - MUST BE UPDATED...currently pulling in everything!">
+<ion-view view-title="Private Messages">
+<ion-header-bar align-title="center" class="bar-calm">
+    <span class="header-container">
+      <div class="sort-buttons">
+        <button class ='top-button' ng-click="">Inbox</button>
+        <button class ='new-button' ng-click="">Sent</button>
+      </div>
+      <div class="drop-button">
+        <i class ='ion-compose' ng-click='newMessage()'></i>
+      </div>
+   </span> 
+  </ion-header-bar>
   <ion-content>
    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
     </ion-refresher>
-    <div class="bar bar-header">
-      <button class="button icon ion-navicon"></button>
-      <button class="button" ng-click='newMessage()'>Compose</button>
-    </div>
+    
     <ion-item class="card" ng-repeat="message in privateMessages.messages" href="#/tab/privateMessages/{{message._id}}">
       <!-- <div class="item item-text-wrap"> -->
 
