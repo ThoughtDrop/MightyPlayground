@@ -86,6 +86,7 @@ angular.module('thoughtdrop.privateController', [])
 
     Private.pickContact()
       .then(function(contact) {
+          $scope.newMessage();
           $scope.data.selectedContacts.push(contact);
           var number = contact.phones[0].value.replace(/\W+/g, "");
           console.log(' # before regex & slice' + number);
