@@ -13,11 +13,11 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
     }
   });
 
-  if(window.localStorage.token === undefined) {
-    $location.path('/login');
-  } else {
+  // if(window.localStorage.token === undefined) {
+  //   $location.path('/login');
+  // } else {
      $state.go('tab.messages');
-  }
+  // }
 
   var cachePublicMessages = function(route, sortMessagesBy) {
     console.log('fetching public messages');
