@@ -23,8 +23,9 @@
 
     <!-- your app's js -->
     <!-- Used for Formatting Time Stamps on Messages -->
-    <script src="bower_components/moment/moment.js"></script>
-    <!-- App.js and Controllers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"></script>    <!-- App.js and Controllers -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.14.min.js"></script>
+
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/messageController.js"></script>
@@ -34,18 +35,17 @@
     <!-- Cordova Oauth -->
     <script src="js/ng-cordova-oauth.min.js"></script>
     <!-- <script src="js/ng-cordova.min.js"></script> -->
-    <script src="js/directives.js"></script>
     <script src="js/ng-cordova.js"></script>
     <script src="js/ngStorage.min.js"></script>
     <script src="js/privateController.js"></script>
     <script src="js/privateServices.js"></script>
     <script src="js/geolocation.js"></script>
     <script src="js/utils.js"></script>
-    <script src="lib/aws-sdk-js/dist/aws-sdk.js"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
     <script src="js/privateMessages/privateDetailController.js"></script>
     <script src="js/privateMessages/privateDetailServices.js"></script>
     <script src="js/privateMessages/geoFenceServices.js"></script>
+    <script src="lib/angularjs-toaster/toaster.js"></script>
   </head>
   <body ng-app="thoughtdrop">
     <ion-nav-view></ion-nav-view>

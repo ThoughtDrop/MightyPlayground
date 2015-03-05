@@ -1,9 +1,9 @@
 angular.module('thoughtdrop.messageController', [])
 
-.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state,MessageDetail, Vote, $window, $localStorage, SaveMessage, CachePublicMessages, $ionicLoading) {
+
+.controller('messageController', function($scope, $timeout, $http, $cordovaGeolocation, $ionicModal, $cordovaCamera, $location, $state, MessageDetail, Vote, $window, $localStorage, CachePublicMessages, $ionicLoading, Messages) {
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
-        //modularize all http requests to services
         //look into using socket.io to handle simultaneous upvote/downvote requests from clients
   $scope.message = {};
   $scope.message.messagesToDisplay = null;
@@ -33,17 +33,20 @@ angular.module('thoughtdrop.messageController', [])
     if (action === 'new') {
       $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
     } else if (action === 'top') {
+      //ensure messages are filtered by top 
+      $scope.sortbyVoteCount(CachePublicMessages.topMessages);
       $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
     }
   };
 
-  $scope.handleVote = function(message, className) {
-    Vote.handleVote(message, className);
+  $scope.sortbyVoteCount = function(messages) {
+    messages.sort(function(a, b) {
+      return b.votes - a.votes;
+    })
   };
 
-  $scope.clickHidden = function() {
-    console.log('you clicked me!');
-    angular.element(document.querySelector( '#imageInput' ))[0].click();
+  $scope.handleVote = function(message, className) {
+    Vote.handleVote(message, className);
   };
 
   $scope.showLoading = function() {
@@ -57,15 +60,26 @@ angular.module('thoughtdrop.messageController', [])
     }); 
   };
 
+
   $scope.hideLoading = function() {
     $scope.loadingIndicator.hide();
   };
     
+  $scope.storeImage = function() {
+    Messages.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
   $scope.sendMessage = function() {
     var callback = function() {
       //After getting messages from db and caching in factory, pull messages from factory into controller
       $scope.cacheMessages();
-      //Close message box and stop loadging spinner
+      //Close message box and stop loading spinner
       $scope.closeMessageBox();
       $ionicLoading.hide();
     };
@@ -73,17 +87,25 @@ angular.module('thoughtdrop.messageController', [])
     $scope.showLoading();
     //Get Position
     $scope.getPosition()
-      .then(function(position) {
-        var message = {};
-        message.id = JSON.stringify(Math.floor(Math.random()*100000));
-        message.text = $scope.message.text;
-        message.coordinates = {};
-        message.coordinates.lat = position.coords.latitude;
-        message.coordinates.long = position.coords.longitude;
-        $scope.message.text = '';
-        //Call saveMessages in factory to save message in DB and pull in fresh messages cache
-        SaveMessage.saveMessage('savemessage', message, callback);
-    });
+    .then(function(position) {
+      var message = {};
+      message.id = JSON.stringify(Math.floor(Math.random()*100000));
+      message.text = $scope.message.text;
+      message.coordinates = {};
+      message.coordinates.lat = position.coords.latitude;
+      message.coordinates.long = position.coords.longitude;
+      $scope.message.text = '';
+      //if image was taken, Messages.globalImage will not be null, send message with globalImage
+      var photo = Messages.returnGlobal();
+      console.log(photo);
+      if (Object.keys(photo).length > 0) {
+        console.log('yay we have a photo!');
+        //Call sendMessage in factory to save message in DB and pull in fresh messages cache
+        Messages.sendMessage(message, photo, callback);
+      } else { 
+        Messages.sendMessage(message, null, callback);
+    }
+  });
   };
   
   $scope.cachePublicMessages = function(route, sortMessagesBy) {
@@ -140,10 +162,10 @@ angular.module('thoughtdrop.messageController', [])
 
     if ($scope.page === 'new') {
       $scope.message.messagesToDisplay =  CachePublicMessages.newMessages;
-      console.log('Pulling cached "NEW" messages from factory into controller: ',CachePublicMessages.newMessages);
+      console.log('Pulling cached "NEW" messages from factory into controller: ', CachePublicMessages.newMessages);
     } else if ($scope.page === 'top') {
       $scope.message.messagesToDisplay =  CachePublicMessages.topMessages;
-      console.log('Pulling cached "TOP" messages from factory into controller: ',CachePublicMessages.topMessages);
+      console.log('Pulling cached "TOP" messages from factory into controller: ', CachePublicMessages.topMessages);
     }
   };
 

@@ -1,4 +1,4 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage', 'directives','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices', 'ionic-geofence'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices', 'ionic-geofence', 'toaster']) //add toaster
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location, CachePublicMessages, $timeout) {
   $ionicPlatform.ready(function() {
@@ -38,6 +38,7 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $ionicConfigProvider.tabs.position('bottom');
+  $ionicConfigProvider.views.transition('none');
 
 // Ionic uses AngularUI Router which uses the concept of states. Learn more here: https://github.com/angular-ui/ui-router
   $stateProvider
