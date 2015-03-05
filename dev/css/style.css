@@ -12,29 +12,11 @@
 	margin-top: 15%;
 }
 
-
-.title{
-  display: table;
-  margin: 0 auto;
-  font-size: 4em;
-  margin-bottom: 2%;
-  font-weight: 300px;
-  font-style: helvetica;
-
-}
 .slogan{
   display: table;
   margin: 0 auto;
   font-size: 2em;
 }
-/* Phone number Page Styling */
-.bar {
-  position: relative;
-}
-
-/*.button-positive{
-     right:70px !important;
-}*/
 
 .button.button-positive.fb-button {
   margin-top: 15%;
@@ -43,6 +25,17 @@
   border-radius: 10px;
   width: 300px;
 }
+
+/* Phone number Page Styling */
+.bar {
+  position: relative;
+}
+
+.phone-number-title {
+  width: 50%;
+  margin: 0 auto;
+}
+
 
 /*Add map image to login background*/
 .scroll-content.loginPage {
@@ -87,6 +80,7 @@
 .sort-buttons {
   text-align: left;
   display:inline;
+  margin-left: 2.5%;
 }
 
 .sort-buttons button {
@@ -94,6 +88,12 @@
   border-color: white;
   background-color: Transparent;
   color: white;
+  font-size: 1.5em;
+
+}
+
+.sort-buttons .new-button {
+  margin-left: .5%;
 }
 
 .drop-button {
@@ -101,30 +101,18 @@
   text-align: right;
   width: 15%;
   float:right;
+  margin-right: 2.5%;
+
 }
-.drop-button button {
+.drop-button .ion-compose {
   /*Button Styling*/
-  border:1.5px solid transparent;
-  border-color: white;
-  background-color: Transparent;
+  border: none;
   color: white;
+  font-size: 2.5em; 
 }
 
 .message-date {
   font-size: .5em;
-  
-}
-
-.ion-plus-round {
-  z-index: 10;
-  padding: 3% 6% 3% 3%;
-  position: relative;
-}
-
-.ion-minus-round {
-  z-index: 10;
-  padding: 3% 3% 3% 6%;
-  position: relative;
 }
 
 .message-text {
@@ -145,10 +133,30 @@
 }
 
 .votes-container {
-  width:20%;
-  text-align: right;
-  float:right;
+position: absolute;
+width: 5%;
+text-align: center;
+float: right;
+right: 0;
+top: 50%;
+margin-top: -16px;
+}
 
+.ion-plus-round {
+  padding: 4% 7% 4% 4%;
+  font-size: 1.3em;
+  margin: auto;
+}
+
+.ion-minus-round {
+  padding: 4% 4% 4% 7%;
+  font-size: 1.3em;
+  margin: auto;
+}
+
+/*Post Form for Public Messages*/
+.close-button .ion-close-round {
+  font-size: 2em;
 }
 
 /* Message Detail Page Styling */

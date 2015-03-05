@@ -123,7 +123,7 @@ angular.module('thoughtdrop.privateController', [])
           longitude: position.coords.longitude,
           userPhone: userPhone
         };
-
+        
         // console.log("userData before DB: " + JSON.stringify(data));
         // console.log('userPHone before DB' + data.userPhone)
         Private.getPrivate(data) //fetch private messages

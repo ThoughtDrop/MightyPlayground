@@ -68,36 +68,14 @@ angular.module('thoughtdrop.privateServices', [])
   };
 
   var watchGeoFence = function(message) { //message is an array of message objects
-    // console.log('geofence Data: ' + JSON.stringify(message[0]));
+    console.log('before watching message555: ' + JSON.stringify(message));
+    for (var i = 0; i < message.length; i++){  
 
-    for (var i = 0; i < message.length; i++){  //beastly object for local watching geofence
-      // var geoFence = {
-      //   id: message[i]._id,
-      //   latitude: message[i].location.coordinates[1],
-      //   longitude: message[i].location.coordinates[0],
-      //   radius: 100,
-      //   transitionType: 1,
-      //   notification: {
-      //     id: message[i]._id,
-      //     title: 'ThoughDrop',
-      //     text: message[i].message,
-      //     openAppOnClick: true,
-      //     data: {
-      //       id: message[i].id,
-      //       latitude: message[i].location.coordinates[1],
-      //       longitude: message[i].location.coordinates[0],
-      //       radius: 100,
-      //       transitionType: 1,
-      //       notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
-      //     }
-      //   }
-      // };
-
-      var geoFence = {
+      var geoFence = {  //message object to be stored and watched on device
         id: message[i]._id.toString(),
         latitude: message[i].location.coordinates[1],
         longitude: message[i].location.coordinates[0],
-        radius: message[i].radius,
+        radius: message[i].radius || 100,
         transitionType: 1,
         notification: {
           id: message[i]._id,
@@ -108,13 +86,12 @@ angular.module('thoughtdrop.privateServices', [])
             id: message[i].id,
             latitude: message[i].location.coordinates[1],
             longitude: message[i].location.coordinates[0],
-            radius: message[i].radius,
+            radius: message[i].radius || 100,
             transitionType: 1,
             notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
           }
         }
       };
-      
       console.log('final geofence111 : ' + JSON.stringify(geoFence));
       GeofenceService.addOrUpdate(geoFence);    
     }
