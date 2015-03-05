@@ -2,8 +2,8 @@
   <ion-header-bar align-title="center" class="bar-calm">
     <span class="header-container">
       <div class="sort-buttons">
-        <button ng-click="sortFeed('top')">Top</button>
-        <button ng-click="sortFeed('new')">New</button>
+        <button class ='top-button' ng-click="sortFeed('top')">Top</button>
+        <button class ='new-button' ng-click="sortFeed('new')">New</button>
       </div>
       <div class="drop-button">
         <button ng-click='newMessage()'>Drop</button>
@@ -19,14 +19,14 @@
       <div class="item item-text-wrap message-block">
       <a href="#/tab/messages/{{message._id}}">
         <div class = "message-text">
-          <span>{{message.message}}</span> 
+          <span>{{message.message}}</span> <br>
           <span class="message-date">{{formatDate(message.created_at)}}</span>
         </div>
       </a>
         <div class = "votes-container">
-          <i class ='ion-plus-round' ng-click="handleVote(message, 'upVote');"></i> 
+          <i class ='ion-chevron-up' ng-click="handleVote(message, 'upVote');"></i> 
           <b>{{message.votes}}</b>
-          <i class ='ion-minus-round' ng-click="handleVote(message, 'downVote')"></i> 
+          <i class ='ion-chevron-down' ng-click="handleVote(message, 'downVote')"></i> 
         </div>
       <!-- </div> -->
     </ion-item>
