@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateServices', [])
 
-.factory('Private', function($http, $q, $location, $state) {
+.factory('Private', function($http, $q, $location, $state, GeofenceService) {
 
   var messageStorage = {};
 
@@ -12,6 +12,8 @@ angular.module('thoughtdrop.privateServices', [])
   var saveMessage = function(data, dist) {
     messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
     messageStorage.radius = dist;
+
+    // messageStorage.radius = 1000;
     console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
     return $http({
@@ -65,6 +67,37 @@ angular.module('thoughtdrop.privateServices', [])
     return deferred.promise;
   };
 
+  var watchGeoFence = function(message) { //message is an array of message objects
+    console.log('before watching message555: ' + JSON.stringify(message));
+    for (var i = 0; i < message.length; i++){  
+
+      var geoFence = {  //message object to be stored and watched on device
+        id: message[i]._id.toString(),
+        latitude: message[i].location.coordinates[1],
+        longitude: message[i].location.coordinates[0],
+        radius: message[i].radius || 100,
+        transitionType: 1,
+        notification: {
+          id: message[i]._id,
+          title: 'ThoughDrop',
+          text: message[i].message,
+          openAppOnClick: true,
+          data: {
+            id: message[i].id,
+            latitude: message[i].location.coordinates[1],
+            longitude: message[i].location.coordinates[0],
+            radius: message[i].radius || 100,
+            transitionType: 1,
+            notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
+          }
+        }
+      };
+      console.log('final geofence111 : ' + JSON.stringify(geoFence));
+      GeofenceService.addOrUpdate(geoFence);    
+    }
+
+  }
+
 
 
 
@@ -72,6 +105,7 @@ angular.module('thoughtdrop.privateServices', [])
     saveMessage: saveMessage,
     getPrivate: getPrivate,
     pickContact: pickContact,
-    tempStorage: tempStorage
+    tempStorage: tempStorage,
+    watchGeoFence: watchGeoFence
   };
 })

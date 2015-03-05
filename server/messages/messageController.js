@@ -185,13 +185,13 @@ module.exports = {
 
   getPrivate: function(req, res) {
     console.log('user info!!!: ' + JSON.stringify(req.body));
+    // user info!!!: {"latitude":37.7726402,"longitude":-122.40991539999997,"userPhone":5106047443}
     var userPhone = req.body.userPhone;
     console.log('userphone String: ' + userPhone);
-    var recipients = 'recipients';
     console.log(typeof userPhone);
     
-    var locationQuery = module.exports.queryByLocation(req.body.longitude, req.body.latitude, 100);
-
+    var locationQuery = module.exports.queryByLocation(req.body.latitude, req.body.longitude, 100);
+    console.log(JSON.stringify(locationQuery));
     Message
       .find(locationQuery)
       .where('isPrivate').equals(true)
@@ -202,7 +202,7 @@ module.exports = {
         console.log('private message found!: ' + JSON.stringify(messages));
         var result = [];
 
-        if (messages) {
+        if (messages) {   // if any privates are found, loop through and find those user is the recipient of
           for (var i = 0; i < messages.length; i++){
             if (messages[i].recipients.indexOf(userPhone) !== -1){
               result.push(messages[i]);

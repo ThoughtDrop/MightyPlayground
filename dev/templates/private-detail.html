@@ -6,7 +6,7 @@
     </div>  
     <div class="card" ng-repeat="reply in message.replies track by $index">
       <div class="item item-text-wrap">
-        <b>{{reply._creator}}:</b> {{reply.message}}
+       <img ng-src="{{reply.picture.data.url}}"/> <b>{{reply._creator}}:</b> {{reply.message}}
         <!-- <i class ='ion-plus-round'></i>  -->
         <!-- <i class ='ion-minus-round'></i>  -->
       </div>
