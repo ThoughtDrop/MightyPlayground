@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail, GeofenceService) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail, GeofenceService, $state, $stateParams) {
 
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
@@ -148,6 +148,15 @@ angular.module('thoughtdrop.privateController', [])
     $scope.findPrivateMessages('scroll.refreshComplete');
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
+  };
+
+  $scope.removeContact = function(contact) {
+    console.log(contact);
+    for (var i = 0; i <  $scope.data.selectedContacts.length; i++){
+      if (contact.displayName === $scope.data.selectedContacts[i].displayName) {
+        $scope.data.selectedContacts.splice(i, 1);
+      }
+    }
   };
 
   $scope.findPrivateMessages();

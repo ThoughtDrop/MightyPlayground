@@ -16,7 +16,7 @@
 
      <div class="list">
 
-         <a class="item item-thumbnail-left" ng-repeat="contact in data.selectedContacts">
+         <a class="item item-thumbnail-left" ng-repeat="contact in data.selectedContacts" ng-click="removeContact({{contact}})">
              <img src="{{contact.photos[0].value}}" ng-if="contact.photos.length > 0">
              <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Silver_-_replace_this_image_male.svg/200px-Silver_-_replace_this_image_male.svg.png" ng-if="contact.photos.length === 0">
              <h2>{{contact.displayName}}</h2>
