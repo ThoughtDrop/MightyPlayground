@@ -79,11 +79,39 @@ return factory;
 
 })
 
-.factory('Vote', function($http){
+.factory('Vote', function($http, CachePublicMessages){
 
   //Keeps track of which buttons should be locked
   var upVoteButtonLock = {};
   var downVoteButtonLock = {};
+
+  var incrementCacheVote = function(message) {
+    CachePublicMessages.newMessages.forEach(function(cacheMessage) {
+      if (cacheMessage._id === message._id) {
+        cacheMessage.votes++;
+      }
+    })
+
+    CachePublicMessages.topMessages.forEach(function(cacheMessage) {
+      if (cacheMessage._id === message._id) {
+        cacheMessage.votes++;
+      }
+    })
+  };
+
+  var decrementCacheVote = function(message) {
+    CachePublicMessages.newMessages.forEach(function(cacheMessage) {
+      if (cacheMessage._id === message._id) {
+        cacheMessage.votes--;
+      }
+    })
+
+    CachePublicMessages.topMessages.forEach(function(cacheMessage) {
+      if (cacheMessage._id === message._id) {
+        cacheMessage.votes--;
+      }
+    })
+  };
 
   var handleVote = function(message, className) {
     //If upvoting
@@ -91,10 +119,16 @@ return factory;
         //If this message is not an upVoteButtonLock property or the button is not locked
         if (!upVoteButtonLock[message._id] ) {
         //Lock upvote button by setting upVoteButtonLock[message._id] to True
-        upVoteButtonLock[message._id] = true;
-        //Increment vote in DOM and send incremented vote to server
-        incrementVote(message);
-        //Unlock downvote button by setting downVoteButtonLock[message._id] to False
+
+        upVoteButtonLock[message._id] = true; 
+        //Increment vote in DOM and Top/New Cache and send incremented vote to server
+        console.log('////////New messages BEFORE upvote', CachePublicMessages.newMessages);
+        console.log('////////Top messages BEFORE upvote', CachePublicMessages.topMessages);
+        //incrementVote(message);
+        incrementCacheVote(message);
+        console.log('////////New messages AFTER upvote', CachePublicMessages.newMessages);
+        console.log('////////Top messages AFTER upvote', CachePublicMessages.topMessages);
+        //Unlock downvote button by setting downVoteButtonLock[message._id] to False  
         downVoteButtonLock[message._id] = false;
 
         } else if (upVoteButtonLock[message._id] === true) { //Otherwise, if upVoteButtonLock[message._id] is True
@@ -107,9 +141,11 @@ return factory;
         if (!downVoteButtonLock[message._id] ) {
         //Lock downvote button by setting downVoteButtonLock[message._id] to True
         downVoteButtonLock[message._id] = true;
-        //Decrement vote in DOM and send decremented vote to server
-        decrementVote(message);
-        //Unlock upvote button by setting upVoteButtonLock[message._id] to False
+
+        //Decrement vote in DOM and Top/New Cache and send decremented vote to server
+        //decrementVote(message);
+        decrementCacheVote(message);
+        //Unlock upvote button by setting upVoteButtonLock[message._id] to False  
         upVoteButtonLock[message._id] = false;
 
         } else if (upVoteButtonLock[message._id] === true) { //Otherwise, if upVoteButtonLock[message._id] is True
@@ -119,23 +155,23 @@ return factory;
     }
   };
 
-  var incrementVote = function(message) {
-      //Increment vote count in the DOM
-      message.votes++;
-      console.log('upVOTING and changing vote to: ' + message.votes);
-      //send incremented count along with messageID to server
-      sendData('updatevote', message._id, message.votes);
-      console.log('Sending vote of: ' + message.votes + ' to server!');
-  };
+  // var incrementVote = function(message) {    
+  //     //Increment vote count in the DOM
+  //     message.votes++;
+  //     console.log('upVOTING and changing vote to: ' + message.votes);
+  //     //send incremented count along with messageID to server
+  //     sendData('updatevote', message._id, message.votes);
+  //     console.log('Sending vote of: ' + message.votes + ' to server!');
+  // }; 
 
-  var decrementVote = function(message) {
-      //Decrement vote count in the DOM
-      message.votes--;
-      console.log('downVOTING and changing vote to: ' + message.votes);
-      //send decremented count along with messageID to server
-      sendData('updatevote', message._id, message.votes);
-      console.log('Sending vote of: ' + message.votes + ' to server!');
-  };
+  // var decrementVote = function(message) {
+  //     //Decrement vote count in the DOM
+  //     message.votes--;
+  //     console.log('downVOTING and changing vote to: ' + message.votes);
+  //     //send decremented count along with messageID to server
+  //     sendData('updatevote', message._id, message.votes);
+  //     console.log('Sending vote of: ' + message.votes + ' to server!');
+  // };
 
   var sendData = function(route) {
     var data = Array.prototype.slice.call(arguments, 1);
