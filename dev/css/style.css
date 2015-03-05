@@ -87,6 +87,7 @@
 .sort-buttons {
   text-align: left;
   display:inline;
+  margin-left: 2.5%;
 }
 
 .sort-buttons button {
@@ -94,6 +95,13 @@
   border-color: white;
   background-color: Transparent;
   color: white;
+  font-size: 1.5em;
+
+}
+
+.sort-buttons .new-button {
+  margin-left: .5%;
+
 }
 
 .drop-button {
@@ -101,6 +109,8 @@
   text-align: right;
   width: 15%;
   float:right;
+  margin-right: 2.5%;
+
 }
 .drop-button button {
   /*Button Styling*/
@@ -108,23 +118,13 @@
   border-color: white;
   background-color: Transparent;
   color: white;
+  font-size: 1.5em;
+ 
 }
 
 .message-date {
   font-size: .5em;
   
-}
-
-.ion-plus-round {
-  z-index: 10;
-  padding: 3% 6% 3% 3%;
-  position: relative;
-}
-
-.ion-minus-round {
-  z-index: 10;
-  padding: 3% 3% 3% 6%;
-  position: relative;
 }
 
 .message-text {
@@ -145,10 +145,25 @@
 }
 
 .votes-container {
-  width:20%;
-  text-align: right;
-  float:right;
+position: absolute;
+width: 5%;
+text-align: center;
+float: right;
+right: 0;
+top: 50%;
+margin-top: -16px;
+}
 
+.ion-plus-round {
+  padding: 4% 7% 4% 4%;
+  font-size: 1.3em;
+  margin: auto;
+}
+
+.ion-minus-round {
+  padding: 4% 4% 4% 7%;
+  font-size: 1.3em;
+  margin: auto;
 }
 
 /* Message Detail Page Styling */
