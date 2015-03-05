@@ -195,11 +195,10 @@ return factory;
 
 
 .factory('MessageDetail', function(CachePublicMessages){
-  var allMessages = CachePublicMessages.newMessages;
   var get = function(messageid) {
-    for (var i = 0; i < allMessages.length; i++) {
-      if (allMessages[i]._id === parseInt(messageid)) {
-        return allMessages[i];
+    for (var i = 0; i < CachePublicMessages.newMessages.length; i++) {
+      if (CachePublicMessages.newMessages[i]._id === parseInt(messageid)) {
+        return CachePublicMessages.newMessages[i];
       }
     }
     return null;

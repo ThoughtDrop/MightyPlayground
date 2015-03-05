@@ -1,5 +1,5 @@
 angular.module('ionic-geofence', [])
-    .factory('GeofenceService', function ($rootScope, $window, $q, $log, $ionicLoading, toaster) { //add toaster
+    .factory('GeofenceService', function ($rootScope, $window, $q, $log, $ionicLoading) { //add toaster
 
     $window.geofence = $window.geofence || {
         addOrUpdate: function (fences) {
@@ -23,7 +23,7 @@ angular.module('ionic-geofence', [])
         },
         receiveTransition: function (obj) {
             $rootScope.$apply(function () {
-                toaster.pop('info', 'title', 'text');
+                // toaster.pop('info', 'title', 'text'); //UNCOMMENT FOR NOTIFICATIONS!!!
             });
         }
     };
