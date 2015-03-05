@@ -15,8 +15,8 @@ angular.module('thoughtdrop.privateDetailController', [])
     var reply = {
       messageid: messageID,
       message: replyText,
-      _creator: creator
-      // picture: $localStorage.userInfo.picture //store picture later
+      _creator: creator,
+      picture: $localStorage.userInfo.picture //store picture later
     };
 
     console.log("PDC addreply " + reply);

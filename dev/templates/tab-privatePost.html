@@ -1,7 +1,9 @@
 <ion-modal-view style="height:15%">
   <ion-view view-title="New Thought">
     <ion-content class="padding">
-    <i class ='ion-close-round' ng-click="closeMessageBox(0)"></i> 
+      <div class="close-button">
+        <i class ='ion-close-round' ng-click="closeMessageBox(0)"></i> 
+      </div>
       <label class="item item-input">
         <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
       </label>
@@ -14,9 +16,7 @@
       <label class="item">
         <button class="button button-block button-dark" ng-click="sendMessage()">Next</button>
       </label>
-
      <div class="list">
-
          <a class="item item-thumbnail-left" ng-repeat="contact in data.selectedContacts">
              <img src="{{contact.photos[0].value}}" ng-if="contact.photos.length > 0">
              <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Silver_-_replace_this_image_male.svg/200px-Silver_-_replace_this_image_male.svg.png" ng-if="contact.photos.length === 0">

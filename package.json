@@ -62,6 +62,7 @@
     "org.apache.cordova.geolocation",
     "https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git",
     "org.apache.cordova.camera",
-    "org.apache.cordova.file-transfer"
+    "org.apache.cordova.file-transfer",
+    "https://github.com/cowbell/cordova-plugin-geofence"
   ]
 }

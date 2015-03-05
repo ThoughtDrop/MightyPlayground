@@ -193,22 +193,18 @@ return factory;
   };
 })
 
-.factory('MessageDetail', function(CachePublicMessages, $http){
-  var allMessages = CachePublicMessages.newMessages;
-  console.log('all messages = CachePublicMessages = ', allMessages);
-  var clickedMessage;
-
+.factory('MessageDetail', function(CachePublicMessages){
   var get = function(messageid) {
-      for (var i = 0; i < CachePublicMessages.newMessages.length; i++) {
-        if (CachePublicMessages.newMessages[i]._id === parseInt(messageid)) {
-          return CachePublicMessages.newMessages[i];
-        }
+    for (var i = 0; i < CachePublicMessages.newMessages.length; i++) {
+      if (CachePublicMessages.newMessages[i]._id === parseInt(messageid)) {
+        return CachePublicMessages.newMessages[i];
       }
       return null;
     };
     return {
       get: get
     };
+  };
 })
 
 .factory('Facebook', function($http, $localStorage){

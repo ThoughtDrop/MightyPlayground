@@ -1,4 +1,4 @@
-angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices'])
+angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.services', 'thoughtdrop.messageController', 'thoughtdrop.messageDetailController', 'ngCordova.plugins.geolocation', 'thoughtdrop.mapController','ngCordova.plugins.camera', 'ngCordovaOauth', 'ngStorage','thoughtdrop.privateController', 'thoughtdrop.privateServices', 'ionic.utils', 'ngCordova.plugins.contacts', 'thoughtdrop.geolocation', 'thoughtdrop.privateDetailController', 'thoughtdrop.privateDetailServices', 'ionic-geofence']) //add toaster
 
 .run(function($ionicPlatform, $window, $localStorage, $state, $location, CachePublicMessages, $timeout) {
   $ionicPlatform.ready(function() {
