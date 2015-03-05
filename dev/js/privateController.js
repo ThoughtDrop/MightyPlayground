@@ -28,13 +28,13 @@ angular.module('thoughtdrop.privateController', [])
     // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
 
     Geolocation.getPosition()
+      // .then(function(position) {
+      //   // $scope.findNearby('nearby');
+      //   Geolocation.lastPosition = position;
+      //   $state.go('map');
+      //   $scope.closeMessageBox();
+      // }) // redirect to map then package data behind. 
       .then(function(position) {
-        // $scope.findNearby('nearby');
-        Geolocation.lastPosition = position;
-        $state.go('map');
-        $scope.closeMessageBox();
-      }) // redirect to map then package data behind. 
-      .then(function() {
         
         // var creator = $localStorage.userInfo.name; //get user's name from local storage
         var creator = 'p3tuh'; //ONLY FOR TESTING!
@@ -53,20 +53,20 @@ angular.module('thoughtdrop.privateController', [])
           console.log($scope.message);
           $scope.recipients = []; //clear the recipients array for next message
           $scope.closeMessageBox();
-          $scope.data = {selectedContacts: []}; //clear contacts for next message
+          $scope.data.selectedContacts = []; //clear contacts for next message
           //return resp;
           
-        Private.saveMessage(messageData)
-        .then(function(resp) {
-          console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-        })
-        .catch(function(err) {
-          console.log('Error posting private message: ',  JSON.stringify(err));
-        });
-      })
-      .then(function() {
-        // $location.path('/map');
+      //   Private.saveMessage(messageData)
+      //   .then(function(resp) {
+      //     console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
+      //   })
+      //   .catch(function(err) {
+      //     console.log('Error posting private message: ',  JSON.stringify(err));
+      //   });
+      // })
+      // .then(function() {
         $scope.closeMessageBox();
+        $location.path('/map');
       });
   };
 

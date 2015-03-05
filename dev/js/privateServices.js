@@ -12,6 +12,8 @@ angular.module('thoughtdrop.privateServices', [])
   var saveMessage = function(data, dist) {
     messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
     messageStorage.radius = dist;
+
+    // messageStorage.radius = 1000;
     console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
     return $http({
@@ -95,7 +97,7 @@ angular.module('thoughtdrop.privateServices', [])
         id: message[i]._id.toString(),
         latitude: message[i].location.coordinates[1],
         longitude: message[i].location.coordinates[0],
-        radius: 25,
+        radius: message[i].radius,
         transitionType: 1,
         notification: {
           id: message[i]._id,
@@ -106,13 +108,14 @@ angular.module('thoughtdrop.privateServices', [])
             id: message[i].id,
             latitude: message[i].location.coordinates[1],
             longitude: message[i].location.coordinates[0],
-            radius: 25,
+            radius: message[i].radius,
             transitionType: 1,
             notification: {id : message[i]._id, title: 'ThoughtDrop', text: '', openAppOnClick: true}
           }
         }
       };
-      // console.log('final geofence111 : ' + JSON.stringify(geoFence));
+      
+      console.log('final geofence111 : ' + JSON.stringify(geoFence));
       GeofenceService.addOrUpdate(geoFence);    
     }
 
