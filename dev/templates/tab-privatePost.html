@@ -6,16 +6,13 @@
         <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
       </label>
       <label class="item">
-        <button class="button button-block button-dark" ng-click="addImage()">Take a Picture!!!!</button>
+        <button class="button button-block button-dark" ng-click="storeImage()">Take a Picture!!!!</button>
       </label>
       <label class="item">
         <button class="button button-block button-dark" ng-click="pickContact()">Contacts</button>
       </label>
       <label class="item">
-        <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px"/>
-      </label>
-      <label class="item">
-        <button class="button button-block button-dark" ng-click="sendMessage()">Submit!</button>
+        <button class="button button-block button-dark" ng-click="sendMessage()">Next</button>
       </label>
 
      <div class="list">

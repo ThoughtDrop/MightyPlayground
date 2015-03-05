@@ -3,6 +3,17 @@ angular.module('thoughtdrop.privateDetailController', [])
   
   console.log('ID: ' + $stateParams._id);
   $scope.message = PrivateDetail.get($stateParams._id);
+  if ($scope.message.photo_url) {
+    return $http({
+      method: 'GET',
+      url: $scope.message.photo_url
+    })
+    .then(function(resp) {
+      console.log('resp after downloading image to s3' + resp);
+      $scope.message.image = resp.data;
+  });
+  }
+
   console.log('Object in here is: ' + JSON.stringify($scope.message));
   var creator = $localStorage.userInfo.name;
   console.log(JSON.stringify($localStorage.userInfo));

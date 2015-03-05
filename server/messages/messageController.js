@@ -76,7 +76,7 @@ module.exports = {
   getNearbyMessages: function(req, res) {
     console.log('/////Trying to get messages from DATABASE!!!');
     var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
-    var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
+    var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 10000);
     console.log('public query!: ' + JSON.stringify(locationQuery));
 
     Message
