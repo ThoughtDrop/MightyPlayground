@@ -16,8 +16,7 @@ angular.module('thoughtdrop.privateDetailServices', [])
       }
     }
     return null;
-    };
-
+  };
 
   var saveReply = function(data) {
     console.log('PDS saveReply: ' + JSON.stringify(data));

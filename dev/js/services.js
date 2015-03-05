@@ -90,13 +90,13 @@ return factory;
       if (cacheMessage._id === message._id) {
         cacheMessage.votes++;
       }
-    })
+    });
 
     CachePublicMessages.topMessages.forEach(function(cacheMessage) {
       if (cacheMessage._id === message._id) {
         cacheMessage.votes++;
       }
-    })
+    });
   };
 
   var decrementCacheVote = function(message) {
@@ -104,13 +104,13 @@ return factory;
       if (cacheMessage._id === message._id) {
         cacheMessage.votes--;
       }
-    })
+    });
 
     CachePublicMessages.topMessages.forEach(function(cacheMessage) {
       if (cacheMessage._id === message._id) {
         cacheMessage.votes--;
       }
-    })
+    });
   };
 
   var handleVote = function(message, className) {
@@ -198,52 +198,17 @@ return factory;
   console.log('all messages = CachePublicMessages = ', allMessages);
   var clickedMessage;
 
-  var get = function(messageid, callback) {
-    for (var i = 0; i < allMessages.length; i++) {
-      if (allMessages[i]._id === parseInt(messageid)) {
-        return $http({
-          method: 'GET',
-          url: allMessages[i].photo_url
-        })
-        .then(function(resp) {
-          console.log('resp after downloading image to s3' + resp);
-          allMessages[i].image = (resp.data);
-          return allMessages[i];
-        });
+  var get = function(messageid) {
+      for (var i = 0; i < CachePublicMessages.newMessages.length; i++) {
+        if (CachePublicMessages.newMessages[i]._id === parseInt(messageid)) {
+          return CachePublicMessages.newMessages[i];
+        }
       }
-    }
-  return null;
-  };
-
-  var findNearby = function() {
-    var sendPosition = function(data) {
-      return $http({
-        method: 'POST',
-        url: //base
-        '/api/messages/nearby',
-        data: JSON.stringify(data)
-      })
-      .then(function (resp) {
-        console.log('Server resp to func call to findNearby: ', resp);
-        return resp.data;
-      });
+      return null;
     };
-
-    $cordovaGeolocation
-    .getCurrentPosition()
-    .then(function(position) {
-      var coordinates = {};
-      coordinates.lat = position.coords.latitude;
-      coordinates.long = position.coords.longitude;
-      sendPosition(coordinates);
-      console.log('Messages factory sending coordinates to server: ', coordinates);
-    });
-  };
-
-  return {
-    findNearby: findNearby,
-    get: get
-  };
+    return {
+      get: get
+    };
 })
 
 .factory('Facebook', function($http, $localStorage){

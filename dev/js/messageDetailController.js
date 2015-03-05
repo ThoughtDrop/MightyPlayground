@@ -2,8 +2,12 @@ angular.module('thoughtdrop.messageDetailController', [])
 .controller('messageDetailController', function($scope, $state, $http, MessageDetail, $stateParams, $timeout){
   
   $scope.message = MessageDetail.get($stateParams._id);
-  console.log('object in here is: ' + $scope.message);
+  console.log('Object in here is: ' + $scope.message);
   console.log($stateParams._id);
+  console.log($scope);
+  console.log(Object.keys($scope));
+
+  // $scope.particular = MessageDetail.getCurrentMessage();
 
   $scope.sendData = function(route, data) {
     console.log(route);
@@ -30,4 +34,17 @@ angular.module('thoughtdrop.messageDetailController', [])
     $scope.message.replies.push(reply.text);
     $scope.message.text = ''; 
   };
+
+  $scope.message.photo = function() {
+    console.log($scope.message.photo_url);
+    return $http({
+      method: 'GET',
+      url: $scope.message.photo_url,
+    })
+    .then(function(resp) {
+      $scope.message.image = (resp.data);
+    });
+  };
+
+  $scope.message.photo();
 });

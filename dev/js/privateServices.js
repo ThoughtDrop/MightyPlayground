@@ -119,11 +119,12 @@ angular.module('thoughtdrop.privateServices', [])
 
 
   return {
+    returnGlobal: returnGlobal,
+    tempStorage: tempStorage,
     saveMessage: saveMessage,
     getPrivate: getPrivate,
+    formatContact: formatContact,
     pickContact: pickContact,
-    tempStorage: tempStorage,
     storeImage: storeImage,
-    returnGlobal: returnGlobal
   };
 });

@@ -2,12 +2,7 @@
   <ion-content has-header="true" padding="true">
     <div class = 'parent'>
       <h1>{{message.message}}</h1>
-      no base 64
-      <img ng-src="{{image}}"/>
-      base 64
-      <img ng-src="data:image/jpg;base64,{{image}}"/>
-      hard code
-      <img ng-src="data:image/jpg;base64,{{image}}"/>
+      <img ng-src="{{message.image}}"/>
     </div>  
     <div class="card" ng-repeat="reply in message.replies track by $index">
       <div class="item item-text-wrap">
