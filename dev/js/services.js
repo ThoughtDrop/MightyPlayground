@@ -63,7 +63,7 @@ angular.module('thoughtdrop.services', [])
       '/api/messages/' + route,
       data: JSON.stringify(data)
   });
- }
+ };
 
  var factory = {
    newMessages: 'apple',

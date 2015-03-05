@@ -1,28 +1,46 @@
 angular.module('thoughtdrop.privateServices', [])
 
-.factory('Private', function($http, $q, $location, $state) {
+.factory('Private', function($http, $q, $location, $state, $cordovaCamera) {
 
   var messageStorage = {};
+  var globalImage = {};
+
+  var returnGlobal = function() {
+    return globalImage;
+  };
 
   var tempStorage = function(obj) {
     messageStorage = obj;
     console.log(messageStorage);
-  }
+  };
 
   var saveMessage = function(data, dist) {
     messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
     messageStorage.radius = dist;
     console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
+    console.log('/////messageStorage stringified: ' + JSON.stringify(messageStorage));
     return $http({
-      method: 'POST',
-      url:  //base
-      '/api/messages/private',
-      data: JSON.stringify(messageStorage)
-    })
-      .then(function (resp) {
-        console.log("private message saved");
-        $state.go('tab.privateMessages');
+        method: 'PUT',
+        url: messageStorage.signedUrl,
+        data: messageStorage.imageData, //change to image.src?
+        headers: {
+          'Content-Type': 'image/jpeg'
+        }})
+        .then(function(resp) {
+          delete messageStorage.imageData;
+          delete messageStorage.signedUrl;
+          console.log('private image saved');
+        return $http({
+          method: 'POST',
+          url:  //base
+          '/api/messages/private',
+          data: JSON.stringify(messageStorage)
+        })
+        .then(function (resp) {
+          console.log("private message saved");
+          $state.go('tab.privateMessages');
+        });
       });
   };
 
@@ -65,13 +83,47 @@ angular.module('thoughtdrop.privateServices', [])
     return deferred.promise;
   };
 
+  var storeImage = function() {
+    console.log('store image activated');
+    var options = {
+      destinationType : 0,
+      sourceType : 1,
+      allowEdit : true,
+      encodingType: 0,
+      quality: 30,
+      targetWidth: 320,
+      targetHeight: 320,
+    };
 
+    $cordovaCamera.getPicture(options)
+    .then(function(imageData) {
+      globalImage.src = imageData;
+      globalImage.id = Math.floor(Math.random()*100000000);
+      console.log('globalImage src: ' + globalImage.src);
+      console.log('globalImage id: ' + globalImage.id);
+      return $http({
+        method: 'PUT',
+        url: //base
+        '/api/messages/getsignedurl',
+        data: JSON.stringify(globalImage)
+      })
+      .then(function(resp) {
+        globalImage.shortUrl = resp.data.shortUrl;
+        globalImage.signedUrl = resp.data.signedUrl;
+        console.log('successfully got response URL!');
+        console.log('globalimage short img url: ' + globalImage.shortUrl);
+        console.log('globalimage signed img url: ' + globalImage.signedUrl);
+      });
+    });
+  };
 
 
   return {
     saveMessage: saveMessage,
     getPrivate: getPrivate,
     pickContact: pickContact,
-    tempStorage: tempStorage
+    tempStorage: tempStorage,
+    storeImage: storeImage,
+    returnGlobal: returnGlobal
   };
-})
+});
