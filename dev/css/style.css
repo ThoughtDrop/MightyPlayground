@@ -201,16 +201,27 @@
   /*background:url(../img/logo_pin.png) no-repeat;*/
   /*center the marker*/
   top:50%;left:50%;
-  z-index:1;
+  z-index:200;
   /*fix offset when needed*/
-  margin-left:-10px;
-  margin-top:-34px;
+  margin-left:-40px;
+  margin-top:-72px;
   /*size of the image*/
-  height:34px;
+/*  height:34px;
   width:20px;
-  cursor:pointer;
+  cursor:pointer;*/
 }
 
+#coverageText {
+  position:absolute;
+  /*url of the marker*/
+  /*background:url(../img/logo_pin.png) no-repeat;*/
+  /*center the marker*/
+  top:20%;left:5%;
+  z-index:1;
+  /*fix offset when needed*/
+
+
+}
 
 /*currently copy and paste from createmap.html*/
 #map-canvas {
@@ -254,7 +265,9 @@
   width: 350px;
 }
 
-
+h6 {
+  color: red;
+}
 
 .pac-container {
   font-family: Roboto;
@@ -272,6 +285,20 @@
   font-weight: 300;
 }
 
+.circle {
+  width:106px;
+  height:106px;
+  border-radius:50%;
+  line-height:500px;
+  background: rgba(148, 234, 253, 0.4);
+  border: 2px solid rgba(51,113,244,1);
+  
+  position:absolute;
+  top:50%;left:50%;
+  z-index:100;
+  margin-left:-53px;
+  margin-top:-53px;
+}
 
 /*RED CANCEL BUTTON*/ 
 /*http://codepen.io/shidhincr/pen/ICLBD*/
