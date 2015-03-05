@@ -99,7 +99,8 @@ module.exports = {
       message: req.body.text,
       created_at: new Date(),
       photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
-      isPrivate: false
+      isPrivate: false,
+      picture: picture.data.url
     };
     console.log('typeof data id ' + typeof data._id);
     console.log('data id value ' + data._id);
