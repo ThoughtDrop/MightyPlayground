@@ -3,6 +3,7 @@ angular.module('thoughtdrop.messageDetailController', [])
   
   $scope.message = MessageDetail.get($stateParams._id);
   console.log('object in here is: ' + $scope.message);
+  console.log($stateParams._id);
 
   $scope.sendData = function(route, data) {
     console.log(route);

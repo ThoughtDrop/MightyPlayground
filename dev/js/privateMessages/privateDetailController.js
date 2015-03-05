@@ -21,8 +21,8 @@ angular.module('thoughtdrop.privateDetailController', [])
   }
   // $scope.$apply();
   console.log('||||||||||||');
-
-  console.log('scope image: ' + $scope.message.image);
+  console.log('resp after downloading image to s3' + resp);
+  $scope.message.image = resp.data;
 
   console.log('Object in here is: ' + JSON.stringify($scope.message));
   var creator = $localStorage.userInfo.name;
