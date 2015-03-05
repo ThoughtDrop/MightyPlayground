@@ -1,6 +1,8 @@
 angular.module('thoughtdrop.privateDetailController', [])
-.controller('privateDetailController', function($scope, $state, $http, Private, $stateParams, $window, $localStorage, PrivateDetail){
+.controller('privateDetailController', function($scope, $state, $http, $stateParams, $window, $localStorage, PrivateDetail){
   
+  // $scope = {};
+
   console.log('ID: ' + $stateParams._id);
   $scope.message = PrivateDetail.get($stateParams._id);
   if ($scope.message.photo_url) {
@@ -9,10 +11,18 @@ angular.module('thoughtdrop.privateDetailController', [])
       url: $scope.message.photo_url
     })
     .then(function(resp) {
-      console.log('resp after downloading image to s3' + resp);
+      console.log('resp after downloading image to s3' + resp.data);
       $scope.message.image = resp.data;
-  });
+      console.log('/////////');
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
   }
+  // $scope.$apply();
+  console.log('||||||||||||');
+
+  console.log('scope image: ' + $scope.message.image);
 
   console.log('Object in here is: ' + JSON.stringify($scope.message));
   var creator = $localStorage.userInfo.name;
@@ -27,7 +37,7 @@ angular.module('thoughtdrop.privateDetailController', [])
       // picture: $localStorage.userInfo.picture //store picture later
     };
 
-    console.log("PDC addreply " + reply)
+    console.log("PDC addreply " + reply);
     // console.log('reply data: ' + JSON.stringify(reply));
     PrivateDetail.saveReply(reply); //server req to save this reply to the initial message
     $scope.message.replies.push(reply); //pushes to $scope for instant rendering
