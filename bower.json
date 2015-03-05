@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "aws-sdk-js": "~2.1.14",
-    "moment": "~2.9.0",
-    "angularjs-toaster": "~0.4.10"
+    "moment": "~2.9.0"
+    // "angularjs-toaster": "~0.4.10"
   }
 }
