@@ -36,7 +36,6 @@
   margin: 0 auto;
 }
 
-
 /*Add map image to login background*/
 .scroll-content.loginPage {
   position: absolute;
@@ -96,7 +95,7 @@
   margin-left: .5%;
 }
 
-.drop-button {
+.compose-button {
   /*Alignment*/
   text-align: right;
   width: 15%;
@@ -104,7 +103,7 @@
   margin-right: 2.5%;
 
 }
-.drop-button .ion-compose {
+.compose-button .ion-compose {
   /*Button Styling*/
   border: none;
   color: white;
@@ -155,8 +154,30 @@ margin-top: -16px;
 }
 
 /*Post Form for Public Messages*/
+
 .close-button .ion-close-round {
-  font-size: 2em;
+  font-size: 1.6em;
+  color: #0a9ec7;
+}
+.public-post-form p {
+  margin-top: 5%;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.posting-directions span {
+  margin-right: 2%;
+}
+
+.public-camera-button {
+  font-size: 3em;
+  color: #0a9ec7;
+  margin-right: 5%;
+}
+
+.drop-button button {
+  width: 80%;
+  margin: auto;
 }
 
 /* Message Detail Page Styling */
