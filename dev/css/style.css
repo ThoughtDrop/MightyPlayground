@@ -166,6 +166,7 @@ margin-top: -16px;
 .close-button .ion-close-round {
   font-size: 1.6em;
   color: #0a9ec7;
+  padding: 3% 3% 3% 1%;
 }
 
 .posting-directions span {
@@ -179,7 +180,8 @@ margin-top: -16px;
   margin-right: 5%;
   z-index: 1000;
   margin-left: 2%;
-  margin-top: 1%;
+  margin-top: -1%;
+  padding: 2% 2% 2% 2%;
 }
 .public-message-text-label input {
   margin-left: 18%;
