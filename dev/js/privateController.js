@@ -63,7 +63,7 @@ angular.module('thoughtdrop.privateController', [])
           recipients: $scope.recipients,
           isPrivate: true,
           replies: [],
-          picture: $localStorage.userInfo.picture 
+          _creatorPhoto: $localStorage.userInfo.picture 
         };
 
         Private.tempStorage(messageData);
@@ -148,12 +148,15 @@ angular.module('thoughtdrop.privateController', [])
         // console.log('userPHone before DB' + data.userPhone)
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
-          console.log('RESP ' + resp);
-          $scope.privateMessages.messages = resp;
-          console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
-          // console.log('resp.dat: ' + JSON.stringify(resp.data));
-          PrivateDetail.storeMessages(resp);
-          console.log('stored!');
+          console.log('RESP ' + JSON.stringify(resp));
+          // $scope.privateMessages.messages = resp;
+          // console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
+          PrivateDetail.storeMessages(resp); //stores private messgaes for quick 
+
+          $scope.privateMessages.messages = Private.findInRange(data, resp);
+
+          console.log('$scope.privateMessages51000: ' + JSON.stringify($scope.privateMessages.messages))  
+
           Private.watchGeoFence(resp);
         })
         .catch(function(err) {

@@ -17,7 +17,7 @@
     <ion-item class="card" ng-repeat="message in privateMessages.messages" href="#/tab/privateMessages/{{message._id}}">
       <!-- <div class="item item-text-wrap"> -->
 
-      <b>{{ message._creator }}: </b> {{message.message}}
+      {{message._creatorPhoto}} <b>{{ message._creator }}: </b> {{message.message}}
       <!-- <i class ='ion-heart'></i> -->
       <!-- </div> -->
     </ion-item>
