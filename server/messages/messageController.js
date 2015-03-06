@@ -213,8 +213,8 @@ module.exports = {
   //       res.send(result);
   //   });
   // }
-    var result = db.messages.find( { recipients: { $elemMatch: { phoneNumber: userPhone } } } );
-    console.log('db results!' + JSON.stringify(result));
+    // var result = db.messages.find( { recipients: { $elemMatch: { phoneNumber: userPhone } } } );
+    // console.log('db results!' + JSON.stringify(result));
     // return result;
 
     Message.find()
