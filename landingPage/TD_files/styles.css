@@ -1,0 +1,868 @@
+/* =======================================================================
+Kane - Responsive App Landing Page 1.7
+======================================================================= */
+
+/* --------------------------------------
+=========================================
+GLOBAL STYLES
+=========================================
+-----------------------------------------*/
+
+html {
+    font-size: 100%;
+}
+
+body {
+    background: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #313131;
+    line-height: 28px;
+    text-align: center;
+    overflow-x: hidden !important;
+    margin: auto !important;
+}
+
+
+/* Internet Explorer 10 in Windows 8 and Windows Phone 8 Bug fix */
+
+@-webkit-viewport {
+    width: device-width;
+}
+
+@-moz-viewport {
+    width: device-width;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+@-o-viewport {
+    width: device-width;
+}
+
+@viewport {
+    width: device-width;
+}
+
+a {
+    -webkit-transition: all ease 0.25s;
+            transition: all ease 0.25s;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.btn:focus,
+.btn:active {
+    outline: inherit;
+}
+
+
+/* Other fixes*/
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+ul,
+ol {
+    padding-left: 0 !important;
+}
+
+li {
+    list-style: none;
+}
+
+
+/* PRE LOADER */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fefefe;
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+    overflow: hidden !important;
+}
+
+.status {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-image: url(../images/loading.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+            background-size: cover;
+    margin: -20px 0 0 -20px;
+}
+
+/*---------------------------------------
+   Typography                
+-----------------------------------------*/
+
+/* FONT FACE LOADER */
+@font-face {
+    font-family: 'Lane';
+    src: url('../fonts/lanenar_Lane.eot');
+    src: url('../fonts/lanenar_Lane.eot?#iefix') format('embedded-opentype'), url('../fonts/lanenar_Lane.woff') format('woff'), url('../fonts/lanenar_Lane.ttf') format('truetype'), url('../fonts/lanenar_Lane.svg#Lane') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+ 
+    @font-face {
+        font-family: 'Lane';
+        src: url('../fonts/lanenar_Lane.svg#Lane') format('svg');
+    }
+}
+
+/* HEADINGS */
+
+h1,
+h2 {
+    font-family: 'Lane', sans-serif;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 3.75rem;
+    line-height: 4.688rem;
+}
+
+h2 {
+    font-size: 3.125rem;
+    line-height: 4.063rem;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 38px;
+    font-weight: 300;
+}
+
+h4 {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 300;
+}
+
+h5 {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/*---------------------------------------
+   CUSTOM BUTTON              
+-----------------------------------------*/
+
+.standard-button,
+.standard-button2 {
+    font-size: 18px;
+    font-weight: 400 !important;
+    border-radius: 4px !important;
+    text-shadow: 0 !important;
+    color: #ffffff;
+    min-width: 150px;
+    border: none;
+    padding: 16px 25px 16px 25px;
+    margin: 5px;
+    -webkit-transition: all ease 0.25s;
+            transition: all ease 0.25s;
+}
+
+.standard-button:hover,
+.standard-button2:hover {
+    border: none;
+}
+
+.standard-button i,
+.standard-button2 i {
+    vertical-align: inherit;
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+
+/*---------------------------------------
+   TEXTS               
+-----------------------------------------*/
+
+.white-text {
+    color: #ffffff;
+}
+
+.dark-text {
+    color: #272727;
+}
+
+.grey-bg {
+    background: #F7F8FA !important;
+}
+
+
+/*---------------------------------------
+   SECTIONS          
+-----------------------------------------*/
+
+.section-header {
+    padding-bottom: 78px;
+}
+
+.section-header h2 {
+    margin-bottom: 20px;
+}
+
+.section-header .section-description {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/*---------------------------------------
+   LINES          
+-----------------------------------------*/
+
+.colored-line {
+    margin: auto;
+    z-index: 1;
+    width: 165px;
+    height: 1px;
+}
+
+.white-line {
+    margin: auto;
+    z-index: 1;
+    width: 165px;
+    height: 1px;
+    background: #ffffff;
+}
+
+.colored-line-left {
+    float: left;
+    z-index: 1;
+    display: block;
+    width: 165px;
+    height: 1px;
+}
+
+/*---------------------------------------
+=========================================
+ **   SECTION STYLES                
+=========================================
+-----------------------------------------*/
+
+/*---------------------------------------
+   SECTION:  HOME                 
+-----------------------------------------*/
+
+
+header .color-overlay {
+    min-height: 900px;
+    background-image: url("map4.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+header .full-screen {
+    width: 100%;
+    height: 100px;
+}
+
+/* TOP BAR WITH NAVIGATION */
+
+.sticky-navigation {
+  min-height: 60px;
+  background: #FFFFFF;
+  border: none;
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  -webkit-backface-visibility: hidden;
+  -webkit-box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.08);
+          box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.08);
+}
+
+.sticky-navigation .navbar-header img {
+  max-height: 30px;
+  -webkit-backface-visibility: hidden;
+}
+
+.sticky-navigation .main-navigation .current a {
+  color: #000000 !important;
+  position: relative;
+  outline: none;
+}
+
+.sticky-navigation .main-navigation li a {
+  line-height: 30px;
+  font-weight: 400;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.sticky-navigation .main-navigation li a:hover {
+    color: #000000;
+}
+
+.navbar-inverse .navbar-toggle {
+border-color: #313131;
+background: #313131;
+}
+
+header .only-logo .navbar {
+    background: none;
+    padding: 50px;
+}
+
+header .only-logo .navbar .navbar-header {
+    float: none;
+}
+
+/* INTRO */
+
+header .home-contents {
+    margin-top: 5%;
+}
+
+header .intro-section {
+    text-align: left;
+}
+
+header .intro-section .standard-button {
+    margin: 0;
+}
+
+header .phone-image {
+    max-width: 225px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+header .phone-image img {
+    width: 100%;
+}
+
+header .intro-section .intro {
+    color: #000000;
+    margin-bottom: 36px;
+}
+
+header .intro-section h5 {
+    color: #000000;
+}
+
+header .intro-section .buttons {
+    margin-top: 35px;
+}
+
+header .intro-section .intro-text {
+    font-size: 2em;
+    font-family: 'Lane', sans-serif;
+    margin-bottom: 10%;
+}
+
+header .intro-section .intro-subtext {
+    font-size: 1.2em;
+}
+
+.apple-logo {
+    margin-right: 5%;
+    margin-left: 12%;
+}
+/*---------------------------------------
+   SECTION:  FEATURES                 
+-----------------------------------------*/
+
+.features {
+    padding-top: 80px;
+    padding-bottom: 30px;
+    background: #ffffff;
+}
+
+.features .features-left {
+    text-align: right;
+    margin-top: 26px;
+    margin-bottom: 80px;
+}
+
+.features .features-left .icon-container {
+    float: right;
+    margin-left: 20px;
+}
+
+.features .features-right {
+    text-align: left;
+    margin-top: 26px;
+    margin-bottom: 80px;
+}
+
+.features .features-right .icon-container {
+    float: left;
+    margin-right: 20px;
+}
+
+.features .feature {
+    margin-bottom: 40px;
+}
+
+.features .feature .icon-container {
+    display: block;
+    min-height: 120px;
+    margin-top: 5px;
+}
+
+.features .feature .icon-container .icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    line-height: 55px;
+    font-size: 18px;
+    text-align: center;
+    -webkit-transition: all ease-in 0.25s;
+            transition: all ease-in 0.25s;
+    -webkit-background-clip: padding-box;
+           -moz-background-clip: padding;
+            background-clip: padding-box;
+}
+
+.features .phone-image {
+    max-width: 250px;
+    margin: auto;
+    margin-bottom: 80px;
+}
+
+.features .phone-image img {
+    width: 100%;
+}
+
+
+/*---------------------------------------
+   SECTION:  BRIEF                 
+-----------------------------------------*/
+
+.app-brief {
+    padding-top: 110px;
+    padding-bottom: 60px;
+}
+
+.app-brief h2 {
+    margin-bottom: 20px;
+}
+
+.app-brief .phone-image {
+    max-width: 350px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.app-brief .phone-image img {
+    width: 100%;
+}
+
+.app-brief .left-align {
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+.app-brief .left-align p {
+    display: block;
+    float: none;
+    margin-top: 50px;
+}
+
+.app-brief .left-align .feature-list {
+    margin-top: 40px;
+}
+
+.app-brief .left-align .feature-list li {
+    margin-bottom: 26px;
+}
+
+.app-brief .left-align .feature-list li i {
+    margin-right: 10px;
+    vertical-align: inherit;
+}
+
+
+/* VIDEO */
+
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+iframe,
+embed,
+object {
+    max-width: 100%;
+}
+
+.video-container {
+    width: 90%;
+    background: transparent !important;
+    margin: auto;
+    margin-bottom: 50px;
+    margin-top: 40px; 
+}
+
+.video {
+    background: transparent !important;
+}
+
+
+/*---------------------------------------
+   SECTION:  TESTIMONIALS                 
+-----------------------------------------*/
+.testimonials {
+    background: url(../images/bg-2.jpg) no-repeat center fixed;
+    -webkit-background-size: cover;
+            background-size: cover;
+    color: #ffffff;
+}
+
+.testimonials .color-overlay {
+    padding-top: 110px;
+    padding-bottom: 110px;
+}
+
+.testimonials .feedback {
+    max-width: 750px;
+    margin: auto;
+}
+
+.testimonials .feedback .image {
+    font-size: 24px;
+    border: 2px solid transparent;
+    -webkit-box-shadow: 0px 0px 0px 2px #ffffff;
+            box-shadow: 0px 0px 0px 2px #ffffff;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    margin: auto;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.testimonials .feedback .image img {
+    width: 100%;
+    vertical-align: top;
+}
+
+.testimonials .feedback .message {
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.testimonials .feedback .name {
+    margin-top: 15px;
+    font-weight: 400;
+}
+
+.testimonials .feedback .company-info {
+    font-size: 12px;
+}
+
+.testimonials .owl-theme .owl-controls .owl-page span {
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.testimonials .customNavigation a {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+            user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+/*---------------------------------------
+   SECTION:  SERVICES           
+-----------------------------------------*/
+
+.services {
+    padding-top: 80px;
+    padding-bottom: 60px;
+    background: #ffffff;
+}
+
+.services .single-service {
+    padding-bottom: 60px;
+}
+
+.services .single-service .service-icon {
+    font-size: 80px;
+}
+
+.services .single-service h3 {
+    margin-top: 20px;
+}
+
+
+
+/*---------------------------------------
+   SECTION:  SCREENSHOTS 
+-----------------------------------------*/
+
+.screenshots {
+    padding-top: 80px;
+    padding-bottom: 120px;
+}
+
+.screenshots .shot {
+    background: #FFFFFF;
+    padding: 10px;
+    margin: 13px;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    display: block;
+}
+
+.screenshots .shot img {
+    border-radius: 4px;
+    width: 100%;
+}
+
+/*---------------------------------------
+   SECTION:  TEAM 
+-----------------------------------------*/
+
+.teammembers {
+    padding-top: 80px;
+    padding-bottom: 120px;
+}
+
+.teammember {
+    background: #FFFFFF;
+    width: 260px;
+    float: left;
+    position: relative;
+    padding: 10px;
+    margin: 13px;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    display: block;
+}
+
+.team {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 100%;
+    width: 90%;
+}
+
+.bio {
+    font-size: 0.8em;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*---------------------------------------
+   SECTION:  PACKAGES | Added on version 1.7      
+-----------------------------------------*/
+
+.packages {
+    padding-top: 80px;
+    padding-bottom: 60px;
+    background: #ffffff;
+}
+
+.single-package {
+    background: #F7F8FA;
+    overflow: auto;
+    border: 0px solid #161616;
+    border-radius: 3px;
+    margin-bottom: 60px;
+}
+
+.single-package .price {
+    background: #FFFFFF;
+
+}
+.single-package .color-bg {
+    background-color: !important;
+}
+.single-package .price h2 {
+    color: #272727;
+}
+
+.single-package .price .color-bg h2 {
+    color: #FFFFFF !important;
+} 
+
+.single-package .price .sign {
+    vertical-align: super;
+    font-size: 20px;
+}
+
+.single-package .price .month {
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+.single-package .package-feature {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.single-package .package-feature > li {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.single-package .package-feature > li > span {
+  margin-right: 7px;
+}
+
+
+/*---------------------------------------
+   SECTION:  DOWNLOAD                 
+-----------------------------------------*/
+
+.download {
+    background: url('../images/bg-3.jpg') no-repeat center fixed;
+    -webkit-background-size: cover;
+            background-size: cover;
+    color: #ffffff;
+}
+
+.download .color-overlay {
+    padding-top: 110px;
+    padding-bottom: 70px;
+    }
+
+.download .download-container {
+    padding-bottom: 80px;
+}
+
+.download .subscription-form-container {
+    padding-bottom: 80px;
+}
+
+.download .subscription-form .input-box {
+    height: 57px;
+    padding-left: 20px;
+    width: 320px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    background: #FFF;
+    border: 2px solid #FFF;
+}
+
+.download .subscription-form .input-box:focus, 
+.download .subscription-form .input-box:active {
+    color: #000;
+    font-weight: 400;
+}
+
+.download .subscription-form .subscription-success,
+.download .subscription-form .subscription-error {
+    display: none;
+}
+
+.download h2 {
+    margin-bottom: 30px;
+}
+
+/*---------------------------------------
+   SECTION:  FOOTER                
+-----------------------------------------*/
+
+footer .contact-box {
+    margin-bottom: 78px;
+}
+
+footer .contact-box .contact-button {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+    font-size: 30px;
+    line-height: 60px;
+    vertical-align: middle;
+    margin-top: -40px;
+    background: #ffffff;
+    -webkit-box-shadow: 0px 0px 0px 3px #ffffff;
+            box-shadow: 0px 0px 0px 3px #ffffff;
+    -webkit-backface-visibility: hidden;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+footer .contact-box .contact-button:hover {
+    color: #ffffff;
+}
+
+footer .contact-box .expanded-contact-form {
+    margin-top: 40px;
+    display: none;
+}
+
+footer .contact-box .expanded-contact-form .success,
+footer .contact-box .expanded-contact-form .error {
+    display: none;
+}
+
+footer .contact-box .expanded-contact-form .input-box {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 50px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+footer .contact-box .expanded-contact-form .textarea-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+footer .contact-box .expanded-contact-form .textarea-box:active {
+    color: #000;
+}
+
+footer .social-icons {
+    margin-top: 30px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 50px;
+}
+
+footer .social-icons li {
+    display: inline-block;
+    margin: 5px;
+}
+
+footer .social-icons li a {
+    font-size: 30px;
+    color: #c2c2c2;
+}
+
+footer .copyright {
+    color: #808080;
+    padding-top: 10px;
+    margin-bottom: 50px;
+}

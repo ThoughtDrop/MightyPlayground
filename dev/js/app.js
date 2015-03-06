@@ -14,9 +14,9 @@ angular.module('thoughtdrop', ['ionic', 'thoughtdrop.controllers', 'thoughtdrop.
   });
 
   if(window.localStorage.token === undefined) {
-    $location.path('/login');
+    $location.path('/map');
   } else {
-     $state.go('tab.messages');
+     $state.go('map');
   }
 
   var cachePublicMessages = function(route, sortMessagesBy) {

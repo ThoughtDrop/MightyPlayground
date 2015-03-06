@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "app-icons";
+  src:url("fonts/app-icons.eot");
+  src:url("fonts/app-icons.eot?#iefix") format("embedded-opentype"),
+    url("fonts/app-icons.woff") format("woff"),
+    url("fonts/app-icons.ttf") format("truetype"),
+    url("fonts/app-icons.svg#app-icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
+
+
+[data-icon]:before {
+  font-family: "app-icons" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "app-icons" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-app-store:before {
+  content: "\e000";
+}
+.icon-ionicons:before {
+  content: "\e000";
+}
+.icon-google-play:before {
+  content: "\e001";
+}
+.icon-app-download:before {
+  content: "\e002";
+}
+.icon-ionicons-2:before {
+  content: "\e002";
+}
