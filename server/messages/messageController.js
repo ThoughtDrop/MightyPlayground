@@ -189,29 +189,40 @@ module.exports = {
     console.log('userphone String: ' + userPhone);
     console.log(typeof userPhone);
     
-    var locationQuery = module.exports.queryByLocation(req.body.latitude, req.body.longitude, 100);
-    console.log(JSON.stringify(locationQuery));
-    Message
-      .find(locationQuery)
-      .where('isPrivate').equals(true)
-      // .where('5106047443')           // not working!!!!!, looping through on server to find matches
-      // .in(['recipients'])
-      // // // .sort()
-      .exec(function(err, messages) {
-        console.log('private message found!: ' + JSON.stringify(messages));
-        var result = [];
+  //   var locationQuery = module.exports.queryByLocation(req.body.latitude, req.body.longitude, 100);
+  //   console.log(JSON.stringify(locationQuery));
+  //   Message
+  //     .find(locationQuery)
+  //     .where('isPrivate').equals(true)
+  //     // .where('5106047443')           // not working!!!!!, looping through on server to find matches
+  //     // .in(['recipients'])
+  //     // // // .sort()
+  //     .exec(function(err, messages) {
+  //       console.log('private message found!: ' + JSON.stringify(messages));
+  //       var result = [];
 
-        if (messages) {   // if any privates are found, loop through and find those user is the recipient of
-          for (var i = 0; i < messages.length; i++){
-            if (messages[i].recipients.indexOf(userPhone) !== -1){
-              result.push(messages[i]);
-            }
-          }
-        }
+  //       if (messages) {   // if any privates are found, loop through and find those user is the recipient of
+  //         for (var i = 0; i < messages.length; i++){
+  //           if (messages[i].recipients.indexOf(userPhone) !== -1){
+  //             result.push(messages[i]);
+  //           }
+  //         }
+  //       }
         
-        console.log('get private Results: ' + result);
-        res.send(result);
-    });
+  //       console.log('get private Results: ' + result);
+  //       res.send(result);
+  //   });
+  // }
+    var result = db.messages.find( { recipients: { $elemMatch: { phoneNumber: userPhone } } } );
+    console.log('db results!' + JSON.stringify(result));
+    // return result;
+
+    Message.find()
+      .elemMatch("recipients", {"phoneNumber" : userPhone.toString()})
+      .exec(function(err, messages) {
+        console.log('mongoose find: ' + JSON.stringify(messages));
+        res.send(messages);
+      })
   }
 
 };

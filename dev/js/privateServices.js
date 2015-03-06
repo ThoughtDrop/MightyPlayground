@@ -149,24 +149,6 @@ angular.module('thoughtdrop.privateServices', [])
     });
   };
 
-  // var calculateDistance = function(lat1, long1, lat2, long2) { //calculates distance between two coordinates
-
-  //   var deg2rad = function(deg) {
-  //     return deg * (Math.PI/180)
-  //   };
-
-  //   var dLat = deg2rad(lat2-lat1);  
-  //   var dLong = deg2rad(long2-long1); 
-  //   var a = 
-  //     Math.sin(dLat/2) * Math.sin(dLat/2) +
-  //     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-  //     Math.sin(dLong/2) * Math.sin(dLong/2); 
-  //   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  //   var d = R * c; // Distance in km
-      
-  //   return d;
-  // };
-
   var calculateDistance = function (lat1, lon1, lat2, lon2) {
   var R = 6371;
   var a = 
