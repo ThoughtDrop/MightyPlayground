@@ -154,15 +154,18 @@ margin-top: -16px;
 }
 
 /*Post Form for Public Messages*/
-
-.close-button .ion-close-round {
-  font-size: 1.6em;
-  color: #0a9ec7;
+.public-post-form {
+  margin-top: 4%;
 }
 .public-post-form p {
   margin-top: 5%;
   font-size: 1.3em;
   text-align: center;
+}
+
+.close-button .ion-close-round {
+  font-size: 1.6em;
+  color: #0a9ec7;
 }
 
 .posting-directions span {
