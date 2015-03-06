@@ -166,6 +166,24 @@ margin-top: -16px;
   margin:0 auto 0 auto;
 }
 
+.message-detail-image {
+  display: block;
+  margin-left: -7.5%;
+}
+
+/*.message-detail-header {
+  width: 50%;
+  margin: 0 auto;
+}*/
+
+.reply-button-right {
+  margin-left: auto;
+}
+
+.message-detail-reply-input-label {
+  width:80%;
+}
+
 .parent {
   margin:50px; 
   text-align:center;

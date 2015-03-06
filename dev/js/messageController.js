@@ -66,13 +66,7 @@ angular.module('thoughtdrop.messageController', [])
   };
     
   $scope.storeImage = function() {
-    Messages.storeImage()
-    .then(function(resp) {
-      console.log('success: ' + resp);
-    })
-    .catch(function(err) {
-      console.log(err) ;
-    });
+    Messages.storeImage();
   };
 
   $scope.sendMessage = function() {
