@@ -5,6 +5,40 @@ angular.module('thoughtdrop.privateServices', [])
   var messageStorage = {};
   var globalImage = {};
 
+  var storeImage = function() {
+    console.log('store image activated');
+    var options = {
+      destinationType : 0,
+      sourceType : 1,
+      allowEdit : true,
+      encodingType: 0,
+      quality: 30,
+      targetWidth: 320,
+      targetHeight: 320,
+    };
+
+    $cordovaCamera.getPicture(options)
+    .then(function(imageData) {
+      globalImage.src = 'data:image/jpeg;base64,' + imageData;
+      globalImage.id = Math.floor(Math.random()*100000000);
+      console.log('globalImage src: ' + globalImage.src);
+      console.log('globalImage id: ' + globalImage.id);
+      return $http({
+        method: 'PUT',
+        url: //base
+        '/api/messages/getsignedurl',
+        data: JSON.stringify(globalImage)
+      })
+      .then(function(resp) {
+        globalImage.shortUrl = resp.data.shortUrl;
+        globalImage.signedUrl = resp.data.signedUrl;
+        console.log('successfully got response URL!');
+        console.log('globalimage short img url: ' + globalImage.shortUrl);
+        console.log('globalimage signed img url: ' + globalImage.signedUrl);
+      });
+    });
+  };
+
   var returnGlobal = function() {
     return globalImage;
   };
@@ -122,40 +156,6 @@ angular.module('thoughtdrop.privateServices', [])
     }
   };
 
-  var storeImage = function() {
-    console.log('store image activated');
-    var options = {
-      destinationType : 0,
-      sourceType : 1,
-      allowEdit : true,
-      encodingType: 0,
-      quality: 30,
-      targetWidth: 320,
-      targetHeight: 320,
-    };
-
-    $cordovaCamera.getPicture(options)
-    .then(function(imageData) {
-      globalImage.src = 'data:image/jpeg;base64,' + imageData;
-      globalImage.id = Math.floor(Math.random()*100000000);
-      console.log('globalImage src: ' + globalImage.src);
-      console.log('globalImage id: ' + globalImage.id);
-      return $http({
-        method: 'PUT',
-        url: //base
-        '/api/messages/getsignedurl',
-        data: JSON.stringify(globalImage)
-      })
-      .then(function(resp) {
-        globalImage.shortUrl = resp.data.shortUrl;
-        globalImage.signedUrl = resp.data.signedUrl;
-        console.log('successfully got response URL!');
-        console.log('globalimage short img url: ' + globalImage.shortUrl);
-        console.log('globalimage signed img url: ' + globalImage.signedUrl);
-      });
-    });
-  };
-
   var calculateDistance = function (lat1, lon1, lat2, lon2) {
   var R = 6371;
   var a = 
@@ -179,7 +179,6 @@ angular.module('thoughtdrop.privateServices', [])
     }
     return messagesWithinRange;
   };
-
 
   return {
     returnGlobal: returnGlobal,
