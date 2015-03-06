@@ -169,13 +169,7 @@ angular.module('thoughtdrop.privateController', [])
   };
 
   $scope.storeImage = function() {
-    Private.storeImage()
-    .then(function(resp) {
-      console.log('success: ' + resp);
-    })
-    .catch(function(err) {
-      console.log(err) ;
-    });
+    Private.storeImage();
   };
 
 
