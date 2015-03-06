@@ -14,5 +14,5 @@ angular.module('ionic.utils', [])
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
     }
-  }
+  };
 }]);

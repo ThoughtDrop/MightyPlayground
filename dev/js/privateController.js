@@ -1,6 +1,6 @@
 angular.module('thoughtdrop.privateController', [])
 
-.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail, GeofenceService) {
+.controller('privateController', function($scope, $timeout, $ionicModal, Private, Geolocation, $window, $localStorage, $cordovaContacts, $location, PrivateDetail, GeofenceService, $state, $stateParams) {
 
   //TODO: change 'findNearby' to 'findNearbyMessages' (more intuitive)
         //limit number of times user can upvote and downvote to one per message
@@ -23,6 +23,16 @@ angular.module('thoughtdrop.privateController', [])
     $scope.page = page;
   };
 
+  $scope.storeImage = function() {
+    Private.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
   $scope.sendMessage = function() {
     console.log('sendMessage!');
     // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
@@ -39,16 +49,25 @@ angular.module('thoughtdrop.privateController', [])
         // var creator = $localStorage.userInfo.name; //get user's name from local storage
         var creator = 'p3tuh'; //ONLY FOR TESTING!
         
+        var photo = Private.returnGlobal();
+        console.log('/////photo object stringified: ' + JSON.stringify(photo));
+
         var messageData = {
           _id: Math.floor(Math.random()*100000),
           location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
+          photo_url: photo.shortUrl,
+          imageData: photo.src,
+          signedUrl: photo.signedUrl,
           _creator: creator,
           recipients: $scope.recipients,
           isPrivate: true,
-          replies: []
+          replies: [],
+          _creatorPhoto: $localStorage.userInfo.picture 
         };
+
         Private.tempStorage(messageData);
+
           $scope.message.text = ''; //clear the message  for next message
           console.log($scope.message);
           $scope.recipients = []; //clear the recipients array for next message
@@ -85,6 +104,7 @@ angular.module('thoughtdrop.privateController', [])
 
     Private.pickContact()
       .then(function(contact) {
+          $scope.newMessage();
           $scope.data.selectedContacts.push(contact);
           var number = contact.phones[0].value.replace(/\W+/g, "");
           console.log(' # before regex & slice' + number);
@@ -128,12 +148,15 @@ angular.module('thoughtdrop.privateController', [])
         // console.log('userPHone before DB' + data.userPhone)
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
-          console.log('RESP ' + resp);
-          $scope.privateMessages.messages = resp;
-          console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
-          // console.log('resp.dat: ' + JSON.stringify(resp.data));
-          PrivateDetail.storeMessages(resp);
-          console.log('stored!');
+          console.log('RESP ' + JSON.stringify(resp));
+          // $scope.privateMessages.messages = resp;
+          // console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
+          PrivateDetail.storeMessages(resp); //stores private messgaes for quick 
+
+          $scope.privateMessages.messages = Private.findInRange(data, resp);
+
+          console.log('$scope.privateMessages51000: ' + JSON.stringify($scope.privateMessages.messages))  
+
           Private.watchGeoFence(resp);
         })
         .catch(function(err) {
@@ -146,6 +169,26 @@ angular.module('thoughtdrop.privateController', [])
     $scope.findPrivateMessages('scroll.refreshComplete');
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
+  };
+
+  $scope.storeImage = function() {
+    Private.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
+
+  $scope.removeContact = function(contact) {
+    console.log(contact);
+    for (var i = 0; i <  $scope.data.selectedContacts.length; i++){
+      if (contact.displayName === $scope.data.selectedContacts[i].displayName) {
+        $scope.data.selectedContacts.splice(i, 1);
+      }
+    }
   };
 
   $scope.findPrivateMessages();

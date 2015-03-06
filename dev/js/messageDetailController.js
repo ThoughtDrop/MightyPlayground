@@ -1,5 +1,5 @@
 angular.module('thoughtdrop.messageDetailController', [])
-.controller('messageDetailController', function($scope, $state, $http, MessageDetail, $stateParams){
+.controller('messageDetailController', function($scope, $state, $http, MessageDetail, $stateParams, $timeout){
   
   $scope.message = MessageDetail.get($stateParams._id);
   console.log('Object in here is: ' + $scope.message);

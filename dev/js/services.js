@@ -63,7 +63,7 @@ angular.module('thoughtdrop.services', [])
       '/api/messages/' + route,
       data: JSON.stringify(data)
   });
- }
+ };
 
  var factory = {
    newMessages: 'apple',
@@ -90,13 +90,13 @@ return factory;
       if (cacheMessage._id === message._id) {
         cacheMessage.votes++;
       }
-    })
+    });
 
     CachePublicMessages.topMessages.forEach(function(cacheMessage) {
       if (cacheMessage._id === message._id) {
         cacheMessage.votes++;
       }
-    })
+    });
   };
 
   var decrementCacheVote = function(message) {
@@ -104,13 +104,13 @@ return factory;
       if (cacheMessage._id === message._id) {
         cacheMessage.votes--;
       }
-    })
+    });
 
     CachePublicMessages.topMessages.forEach(function(cacheMessage) {
       if (cacheMessage._id === message._id) {
         cacheMessage.votes--;
       }
-    })
+    });
   };
 
   var handleVote = function(message, className) {
@@ -193,49 +193,17 @@ return factory;
   };
 })
 
-
 .factory('MessageDetail', function(CachePublicMessages){
   var get = function(messageid) {
     for (var i = 0; i < CachePublicMessages.newMessages.length; i++) {
       if (CachePublicMessages.newMessages[i]._id === parseInt(messageid)) {
         return CachePublicMessages.newMessages[i];
       }
-    }
-    return null;
+      return null;
+    };
   };
-
   return {
     get: get
-  };
-
-  var findNearby = function() {
-    var sendPosition = function(data) {
-      return $http({
-        method: 'POST',
-        url: //base
-        '/api/messages/nearby',
-        data: JSON.stringify(data)
-      })
-      .then(function (resp) {
-        console.log('Server resp to func call to findNearby: ', resp);
-        return resp.data;
-      });
-    };
-
-    $cordovaGeolocation
-    .getCurrentPosition()
-    .then(function(position) {
-      var coordinates = {};
-      coordinates.lat = position.coords.latitude;
-      coordinates.long = position.coords.longitude;
-      sendPosition(coordinates);
-      console.log('Messages factory sending coordinates to server: ', coordinates);
-    });
-  };
-
-  return {
-    getMessages: getMessages,
-    findNearby: findNearby
   };
 })
 
@@ -283,24 +251,24 @@ return factory;
 
   var sendMessage = function(message, image, callback) {
     //if there is an image, do a put request to the signed url to upload the image
-    console.log(globalImage.signedUrl);
     if (image) {
       return $http({
         method: 'PUT',
-        url: globalImage.signedUrl,
-        data: globalImage.src,
+        url: globalImage.signedUrl, //change to image.signedUrl?
+        data: globalImage.src, //change to image.src?
         headers: {
           'Content-Type': 'image/jpeg'
         },
       })
       .then(function(resp) {
-        console.log('the response image successfully uploaded!');
-        console.log('message from promise -1 exists?: ' + message);
+        console.log('image saved successfully!');
+        //since image sent successfully, set message.id to equal image.id for convenience
         message.id = image.id;
+        message.shortUrl = image.shortUrl;
         return $http({
           method: 'POST',
           url:  //base
-          '/api/messages/' + 'savemessage',
+          '/api/messages/savemessage',
           data: JSON.stringify(message)
         });
       })
@@ -318,7 +286,7 @@ return factory;
       return $http({
         method: 'POST',
         url:  //base
-        '/api/messages/' + 'savemessage',
+        '/api/messages/savemessage',
         data: JSON.stringify(message)
       })
       .then(function(resp) {
@@ -346,7 +314,7 @@ return factory;
 
     $cordovaCamera.getPicture(options)
     .then(function(imageData) {
-      globalImage.src = imageData;
+      globalImage.src = 'data:image/jpeg;base64,' + imageData;
       globalImage.id = Math.floor(Math.random()*100000000);
       console.log('globalImage src: ' + globalImage.src);
       console.log('globalImage id: ' + globalImage.id);
@@ -357,9 +325,6 @@ return factory;
         data: JSON.stringify(globalImage)
       })
       .then(function(resp) {
-        console.log('success!' + JSON.stringify(resp));
-        console.log('resp shorturl!' + resp.data.shortUrl);
-        console.log('resp signedurl!' + resp.data.signedUrl);
         globalImage.shortUrl = resp.data.shortUrl;
         globalImage.signedUrl = resp.data.signedUrl;
         console.log('successfully got response URL!');
