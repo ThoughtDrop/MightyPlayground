@@ -62,9 +62,9 @@
   margin-top: 6%
 }
 
-/* Main Public Message Feed Page Styling */
-/*Prevents pull refresh from sticking out into page*/
+/* Main Public & Private Message Feed Page Styling */
 .text-pulling {
+/*Prevents pull refresh from sticking out into page*/
   margin-bottom: 2.5%; 
 }
 
@@ -188,6 +188,21 @@ margin-top: -16px;
   font-size: 1.5em;
 }
 
+/* Main Public Message Feed Page Styling */
+.compose-button-private {
+  /*Alignment*/
+  text-align: right;
+  width: 15%;
+  float:right;
+  margin-right: 2.5%;
+}
+
+.compose-button-private .ion-compose {
+  /*Button Styling*/
+  border: none;
+  color: white;
+  font-size: 2.5em; 
+}
 
 /* Message Detail Page Styling */
 
