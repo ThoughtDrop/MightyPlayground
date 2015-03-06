@@ -134,21 +134,17 @@ angular.module('thoughtdrop.privateController', [])
           userPhone: userPhone
         };
         
-        // console.log("userData before DB: " + JSON.stringify(data));
-        // console.log('userPHone before DB' + data.userPhone)
-        Private.getPrivate(data) //fetch private messages
+        Private.getPrivate(data) //fetch ALL private messages for user
         .then(function(resp) {
           console.log('RESP ' + JSON.stringify(resp));
-          // $scope.privateMessages.messages = resp;
-          // console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
           $scope.privateMessages.messages = Private.findInRange(data, resp);
 
-          PrivateDetail.storeMessages($scope.privateMessages.messag); //stores private messgaes for quick 
+          PrivateDetail.storeMessages($scope.privateMessages.messages); //stores private messgaes for quick 
 
 
           console.log('$scope.privateMessages51000: ' + JSON.stringify($scope.privateMessages.messages))  
 
-          Private.watchGeoFence(resp);
+          // Private.watchGeoFence(resp); //disabled geofencing for now!!!!
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
