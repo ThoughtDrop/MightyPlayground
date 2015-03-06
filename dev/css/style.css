@@ -161,7 +161,7 @@ margin-top: -16px;
 }
 .public-post-form p {
   margin-top: 5%;
-  font-size: 1.5em;
+  font-size: 1.3em;
   text-align: center;
 }
 
@@ -170,9 +170,15 @@ margin-top: -16px;
 }
 
 .public-camera-button {
+  position: absolute;
   font-size: 3em;
   color: #0a9ec7;
   margin-right: 5%;
+  z-index: 1000;
+  margin-top: -4.5%;
+}
+.public-message-text-label input {
+  margin-left: 18%;
 }
 
 .drop-button button {

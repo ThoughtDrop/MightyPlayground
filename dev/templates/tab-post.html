@@ -1,6 +1,6 @@
 <ion-modal-view style="height:15%">
   <ion-view view-title="New Thought">
-    <ion-content class="padding">
+    <ion-content padding="true" scroll=false>
     <div class="public-post-form">
 
       <!-- Close Button -->
@@ -13,9 +13,10 @@
           </p>
         </div>
 
+        <!-- Camera Button -->
+        <i class= "public-camera-button ion-camera" ng-click="storeImage()"></i>
+        
         <label class="item item-input public-message-text-label">
-            <!-- Camera Button -->
-               <i class= "public-camera-button ion-camera" ng-click="storeImage()"></i>
           <!-- Message text -->
           <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
         </label>  
