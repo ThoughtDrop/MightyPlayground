@@ -22,7 +22,9 @@ angular.module('thoughtdrop.privateServices', [])
     console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
     console.log('/////messageStorage stringified: ' + JSON.stringify(messageStorage));
-    return $http({
+
+    if (messageStorage.imageData) {
+      return $http({
         method: 'PUT',
         url: messageStorage.signedUrl,
         data: messageStorage.imageData, //change to image.src?
@@ -33,17 +35,22 @@ angular.module('thoughtdrop.privateServices', [])
           delete messageStorage.imageData;
           delete messageStorage.signedUrl;
           console.log('private image saved');
-        return $http({
-          method: 'POST',
-          url:  //base
-          '/api/messages/private',
-          data: JSON.stringify(messageStorage)
-        })
-        .then(function (resp) {
-          console.log("private message saved");
-          $state.go('tab.privateMessages');
         });
-      });
+    }
+    return $http({
+      method: 'POST',
+      url:  //base
+      '/api/messages/private',
+      data: JSON.stringify(messageStorage)
+    })
+    .then(function (resp) {
+      console.log("private message saved");
+      $state.go('tab.privateMessages');
+    })
+    .catch(function (err) {
+      console.log('ERROR!!!!: ' + err);
+    });
+
   };
 
   var getPrivate = function(data) {
