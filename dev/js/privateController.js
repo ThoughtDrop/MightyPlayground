@@ -23,6 +23,16 @@ angular.module('thoughtdrop.privateController', [])
     $scope.page = page;
   };
 
+  $scope.storeImage = function() {
+    Private.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
   $scope.sendMessage = function() {
     console.log('sendMessage!');
     // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
@@ -39,17 +49,25 @@ angular.module('thoughtdrop.privateController', [])
         // var creator = $localStorage.userInfo.name; //get user's name from local storage
         var creator = 'p3tuh'; //ONLY FOR TESTING!
         
+        var photo = Private.returnGlobal();
+        console.log('/////photo object stringified: ' + JSON.stringify(photo));
+
         var messageData = {
           _id: Math.floor(Math.random()*100000),
           location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
+          photo_url: photo.shortUrl,
+          imageData: photo.src,
+          signedUrl: photo.signedUrl,
           _creator: creator,
           recipients: $scope.recipients,
           isPrivate: true,
           replies: [],
           picture: $localStorage.userInfo.picture 
         };
+
         Private.tempStorage(messageData);
+
           $scope.message.text = ''; //clear the message  for next message
           console.log($scope.message);
           $scope.recipients = []; //clear the recipients array for next message
@@ -149,6 +167,17 @@ angular.module('thoughtdrop.privateController', [])
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
+
+  $scope.storeImage = function() {
+    Private.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
 
   $scope.removeContact = function(contact) {
     console.log(contact);

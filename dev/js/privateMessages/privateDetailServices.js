@@ -12,7 +12,6 @@ angular.module('thoughtdrop.privateDetailServices', [])
   var get = function(messageid) {
     for (var i = 0; i < messageStorage.length; i++) {
       if (messageStorage[i]._id === parseInt(messageid)) {
-        console.log(messageStorage[i]._id);
         return messageStorage[i];
       }
     }
@@ -30,7 +29,7 @@ angular.module('thoughtdrop.privateDetailServices', [])
     })
     .then(function(resp) {
       console.log('Server resp to func call to private reply: ', resp);
-    }) 
+    }) ;
   };
 
   return {

@@ -49,8 +49,8 @@ angular.module('thoughtdrop.controllers', [])
 
    $scope.storeUser = function() {
     console.log('storeUser triggered - phoneNumber: ', $scope.data.phoneNumber);
-    Facebook.storeUser($scope.data);
     $location.path('/tab/messages');
+    Facebook.storeUser($scope.data);
   };
 
   $scope.goToPublicMessages = function() {

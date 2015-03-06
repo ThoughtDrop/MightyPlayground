@@ -193,7 +193,7 @@ gulp.task('build', function(){
     'inject3',
     'inject4',
     'inject5',
-    'inject6',
+    // 'inject6',
     'inject7',],
     // 'ionic-build',
     // 'browser-sync'
