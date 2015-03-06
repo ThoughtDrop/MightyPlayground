@@ -45,19 +45,20 @@ angular.module('thoughtdrop.privateServices', [])
 
   var tempStorage = function(obj) {
     messageStorage = obj;
-    console.log(messageStorage);
+    console.log('tempstorage2222: ' + JSON.stringify(messageStorage));
   };
 
   var saveMessage = function(data, dist) {
     messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
     messageStorage.radius = dist;
 
-    // messageStorage.radius = 1000;
-    console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
-    //  {"_id":46510,"location":{"coordinates":[-122.4088877813168,37.78386394962462],"type":"Point"},"message":"Peter","_creator":"Peter Kim","recipients":[5106047443],"isPrivate":true,"replies":[]}
+    // console.log('PServices message to save before server: ' + JSON.stringify(messageStorage));
     console.log('/////messageStorage stringified: ' + JSON.stringify(messageStorage));
+    // console.log('!!!messageStorage ' + messageStorage.imageData);
+    console.log('!!URL: ' + messageStorage.signedUrl);
 
     if (messageStorage.imageData) {
+      console.log('!!!!found imageData'); //imagedata is not an object, its a string!
       return $http({
         method: 'PUT',
         url: messageStorage.signedUrl,
@@ -68,6 +69,7 @@ angular.module('thoughtdrop.privateServices', [])
         .then(function(resp) {
           delete messageStorage.imageData;
           delete messageStorage.signedUrl;
+          console.log(JSON.stringify(messageStrorage));
           console.log('private image saved');
         });
     }
@@ -157,11 +159,11 @@ angular.module('thoughtdrop.privateServices', [])
   };
 
   var calculateDistance = function (lat1, lon1, lat2, lon2) {
-  var R = 6371;
-  var a = 
-     0.5 - Math.cos((lat2 - lat1) * Math.PI / 180)/2 + 
-     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-     (1 - Math.cos((lon2 - lon1) * Math.PI / 180))/2;
+    var R = 6371;
+    var a = 
+       0.5 - Math.cos((lat2 - lat1) * Math.PI / 180)/2 + 
+       Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+       (1 - Math.cos((lon2 - lon1) * Math.PI / 180))/2;
 
     return R * 2 * Math.asin(Math.sqrt(a));
   };

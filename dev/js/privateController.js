@@ -44,7 +44,7 @@ angular.module('thoughtdrop.privateController', [])
         var creator = 'p3tuh'; //ONLY FOR TESTING!
         
         var photo = Private.returnGlobal();
-        console.log('/////photo object stringified: ' + JSON.stringify(photo));
+        // console.log('/////photo object stringified: ' + JSON.stringify(photo));
 
         var messageData = {
           _id: Math.floor(Math.random()*100000),
