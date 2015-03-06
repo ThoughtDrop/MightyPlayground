@@ -180,6 +180,15 @@ margin-top: -16px;
   margin: auto;
 }
 
+.drop-pin {
+  margin-right: 0 2% 0 0;
+  margin-bottom: -10%;
+}
+.drop-pin .ion-pin {
+  font-size: 1.5em;
+}
+
+
 /* Message Detail Page Styling */
 
 .message-detail-header-container.header-title {
