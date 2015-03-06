@@ -129,7 +129,7 @@ angular.module('thoughtdrop.privateServices', [])
 
     $cordovaCamera.getPicture(options)
     .then(function(imageData) {
-      globalImage.src = imageData;
+      globalImage.src = 'data:image/jpeg;base64' + imageData;
       globalImage.id = Math.floor(Math.random()*100000000);
       console.log('globalImage src: ' + globalImage.src);
       console.log('globalImage id: ' + globalImage.id);

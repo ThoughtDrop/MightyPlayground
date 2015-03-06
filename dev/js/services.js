@@ -201,9 +201,9 @@ return factory;
       }
       return null;
     };
-    return {
-      get: get
-    };
+  };
+  return {
+    get: get
   };
 })
 

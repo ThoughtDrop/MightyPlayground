@@ -37,6 +37,6 @@ angular.module('thoughtdrop.privateDetailController', [])
       $scope.message.image = (resp.data);
     });
   };
-
+  console.log($scope.message.photo_url);
   $scope.message.photo();
 });
