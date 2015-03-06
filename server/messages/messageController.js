@@ -76,7 +76,7 @@ module.exports = {
   getNearbyMessages: function(req, res) {
     console.log('/////Trying to get messages from DATABASE!!!');
     var sortString = module.exports.computeSortString(req.body[1]);//pass in 'new' or 'top'
-    var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 100);
+    var locationQuery = module.exports.queryByLocation(req.body[0].lat, req.body[0].long, 10000);
     console.log('public query!: ' + JSON.stringify(locationQuery));
 
     Message
@@ -85,22 +85,21 @@ module.exports = {
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
-        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
     });
   },
 
   saveMessage: function (req, res) {
     var createMessage = Q.nbind(Message.create, Message);
-    console.log(req.body);
-    var data = { //TODO: add a facebookID field
+    console.log(JSON.stringify(req.body));
+    var data = {
       _id: Number(req.body.id), 
       location: {coordinates: [req.body.coordinates.long, req.body.coordinates.lat]},
       message: req.body.text,
       created_at: new Date(),
-      photo_url: 'https://mpbucket-hr23.s3-us-west-1.amazonaws.com/' + req.body.id,
-      isPrivate: false,
-      picture: picture.data.url
+      photo_url: req.body.shortUrl || '',
+      isPrivate: false
     };
     console.log('typeof data id ' + typeof data._id);
     console.log('data id value ' + data._id);
@@ -117,7 +116,6 @@ module.exports = {
 
   getSignedUrl: function(req, res) {
     console.log('about to send to AWS');
-    console.log(Object.keys(req.body));
     AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     AWS.config.region = 'us-west-1';
 
@@ -137,7 +135,7 @@ module.exports = {
         console.log('url confirmation: ' + url);
         var return_data = {
           signedUrl: url,
-          shortUrl: 'https://'+ params.Bucket +'.s3.amazonaws.com/'+req.body.id
+          shortUrl: 'https://'+ params.Bucket +'.s3.amazonaws.com/' + req.body.id.toString()
         };
         res.send(JSON.stringify(return_data));
         res.end();
@@ -182,38 +180,26 @@ module.exports = {
             //   new: true,   // return new doc if one is upserted
             //   upsert: true // insert the document if it does not exist
             // })
-  },
+  },    
 
   getPrivate: function(req, res) {
     console.log('user info!!!: ' + JSON.stringify(req.body));
     // user info!!!: {"latitude":37.7726402,"longitude":-122.40991539999997,"userPhone":5106047443}
     var userPhone = req.body.userPhone;
-    console.log('userphone String: ' + userPhone);
-    console.log(typeof userPhone);
     
-    var locationQuery = module.exports.queryByLocation(req.body.latitude, req.body.longitude, 100);
-    console.log(JSON.stringify(locationQuery));
-    Message
-      .find(locationQuery)
-      .where('isPrivate').equals(true)
-      // .where('5106047443')           // not working!!!!!, looping through on server to find matches
-      // .in(['recipients'])
-      // // // .sort()
-      .exec(function(err, messages) {
-        console.log('private message found!: ' + JSON.stringify(messages));
-        var result = [];
+    // Message
+    //   .find()
+    //   .select({recipients: { $elemMatch: {'phoneNumber': userPhone }}})
+    //   .exec(function(err, messages) {
+    //     console.log('mongoose find: ' + JSON.stringify(messages));
+    //     res.send(messages);
+    //   })
 
-        if (messages) {   // if any privates are found, loop through and find those user is the recipient of
-          for (var i = 0; i < messages.length; i++){
-            if (messages[i].recipients.indexOf(userPhone) !== -1){
-              result.push(messages[i]);
-            }
-          }
-        }
-        
-        console.log('get private Results: ' + result);
-        res.send(result);
-    });
+    Message.find()
+      .where('isPrivate').equals(true)
+      .exec(function(err, results) {
+        console.log('mongoose: ' + results);
+      })
   }
 
 };

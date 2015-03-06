@@ -1,27 +1,29 @@
-<ion-view view-title="Message Detail" cache-view="false" animation="none">
+<ion-view view-title="Message Detail">
+  <ion-header-bar align-title="center" class="bar-calm">
+  <div>
+    <div>Message Details</div>
+  </div>
+  </ion-header-bar>
   <ion-content has-header="true" padding="true">
     <div class = 'parent'>
       <h1>{{message.message}}</h1>
-      <img ng-src="data:image/jpeg;base64,{{message.image}}"/>
-      <!-- <img ng-src="{{photo_url}}" isImage /> -->
-    </div>  
+      <div class = 'message-detail-image'>
+      <img ng-src="{{message.image}}"/>
+      </div>
+    </div>
     <div class="card" ng-repeat="reply in message.replies track by $index">
       <div class="item item-text-wrap">
         {{reply}}
-
-        <i class ='ion-plus-round'></i> 
-        <i class ='ion-minus-round'></i> 
       </div>
     </div>
-    <ion-footer-bar align-title="left" class="bar-assertive">
-      <label class="item item-input">
-        <form ng-submit="addReply(message.text, message._id)">
-          <input type="text" ng-model="message.text" placeholder="Reply back here" maxlength="144" autofocus /> 
-        </form>
+    <div class="item item-input-inset">
+      <label class='message-detail-reply-input-label'>
+        <input type="text" ng-model="message.text" placeholder="Reply back here" maxlength="144" autofocus />
       </label>
-      <div class="buttons">
-        <button class="button" ng-click="addReply(message.text, message._id)">Reply!</button>
-      </div>
-    </ion-footer-bar>
+      <button ng-click="addReply(message.text, message._id)" class="button button-small button-calm reply-button-right">
+      Reply!
+      </button>
+    </div>
+
   </ion-content>
 </ion-view>

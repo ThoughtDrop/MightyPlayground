@@ -23,33 +23,45 @@ angular.module('thoughtdrop.privateController', [])
     $scope.page = page;
   };
 
+  $scope.storeImage = function() {
+    Private.storeImage()
+    .then(function(resp) {
+      console.log('success: ' + resp);
+    })
+    .catch(function(err) {
+      console.log(err) ;
+    });
+  };
+
   $scope.sendMessage = function() {
     console.log('sendMessage!');
     // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
 
     Geolocation.getPosition()
-      // .then(function(position) {
-      //   // $scope.findNearby('nearby');
-      //   Geolocation.lastPosition = position;
-      //   $state.go('map');
-      //   $scope.closeMessageBox();
-      // }) // redirect to map then package data behind. 
       .then(function(position) {
         
         // var creator = $localStorage.userInfo.name; //get user's name from local storage
         var creator = 'p3tuh'; //ONLY FOR TESTING!
         
+        var photo = Private.returnGlobal();
+        console.log('/////photo object stringified: ' + JSON.stringify(photo));
+
         var messageData = {
           _id: Math.floor(Math.random()*100000),
           location: { coordinates: [ position.coords.longitude, position.coords.latitude], type: 'Point' },
           message: $scope.message.text,
+          photo_url: photo.shortUrl,
+          imageData: photo.src,
+          signedUrl: photo.signedUrl,
           _creator: creator,
           recipients: $scope.recipients,
           isPrivate: true,
           replies: [],
-          picture: $localStorage.userInfo.picture 
+          _creatorPhoto: $localStorage.userInfo.picture.data.url 
         };
-        Private.tempStorage(messageData);
+
+        Private.tempStorage(messageData); //store the message data and update coordinates later in the map view
+
           $scope.message.text = ''; //clear the message  for next message
           console.log($scope.message);
           $scope.recipients = []; //clear the recipients array for next message
@@ -57,15 +69,6 @@ angular.module('thoughtdrop.privateController', [])
           $scope.data.selectedContacts = []; //clear contacts for next message
           //return resp;
           
-      //   Private.saveMessage(messageData)
-      //   .then(function(resp) {
-      //     console.log('Message ' + "'" + resp + "'" + ' was successfully posted to server');
-      //   })
-      //   .catch(function(err) {
-      //     console.log('Error posting private message: ',  JSON.stringify(err));
-      //   });
-      // })
-      // .then(function() {
         $scope.closeMessageBox();
         $location.path('/map');
       });
@@ -93,10 +96,15 @@ angular.module('thoughtdrop.privateController', [])
           var phoneNumber;
 
           if (number.length > 10) {  
-            phoneNumber = number.slice(1);
-            $scope.recipients.push(parseInt(phoneNumber));
+            var sliced = parseInt(number.slice(1));
+            var phoneNumber = {phoneNumber: sliced};
+            $scope.recipients.push(phoneNumber);
+            console.log(JSON.stringify($scope.recipients));
           } else {
-            $scope.recipients.push(parseInt(number));
+            var parsed = parseInt(number);
+            var phoneNumber = {phoneNumber: parsed};
+            $scope.recipients.push(phoneNumber);
+            console.log(JSON.stringify($scope.recipients));
           }
 
           // $scope.recipients.push(contact.phones[0].value));
@@ -130,12 +138,16 @@ angular.module('thoughtdrop.privateController', [])
         // console.log('userPHone before DB' + data.userPhone)
         Private.getPrivate(data) //fetch private messages
         .then(function(resp) {
-          console.log('RESP ' + resp);
-          $scope.privateMessages.messages = resp;
-          console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
-          // console.log('resp.dat: ' + JSON.stringify(resp.data));
-          PrivateDetail.storeMessages(resp);
-          console.log('stored!');
+          console.log('RESP ' + JSON.stringify(resp));
+          // $scope.privateMessages.messages = resp;
+          // console.log('$scope.privateMessages510: ' + JSON.stringify($scope.privateMessages.messages));
+          $scope.privateMessages.messages = Private.findInRange(data, resp);
+
+          PrivateDetail.storeMessages($scope.privateMessages.messag); //stores private messgaes for quick 
+
+
+          console.log('$scope.privateMessages51000: ' + JSON.stringify($scope.privateMessages.messages))  
+
           Private.watchGeoFence(resp);
         })
         .catch(function(err) {
@@ -149,6 +161,11 @@ angular.module('thoughtdrop.privateController', [])
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
+
+  $scope.storeImage = function() {
+    Private.storeImage();
+  };
+
 
   $scope.removeContact = function(contact) {
     console.log(contact);
