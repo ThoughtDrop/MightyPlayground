@@ -195,16 +195,22 @@ return factory;
 
 .factory('MessageDetail', function(CachePublicMessages){
   var get = function(messageid) {
+
     for (var i = 0; i < CachePublicMessages.newMessages.length; i++) {
-      if (CachePublicMessages.newMessages[i]._id === parseInt(messageid)) {
+        console.log('should be number twice: ' + Number(messageid));
+      if (CachePublicMessages.newMessages[i]._id === (Number(messageid))) {
         return CachePublicMessages.newMessages[i];
       }
-      return null;
     };
+
+    return null;
+
   };
+
   return {
     get: get
   };
+
 })
 
 .factory('Facebook', function($http, $localStorage){

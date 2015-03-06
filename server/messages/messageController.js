@@ -85,7 +85,7 @@ module.exports = {
       .limit(50) 
       .sort(sortString)
       .exec(function (err, messages) {
-        console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
+        // console.log('Sent messages within 100m of (' + req.body[0].lat + ", " + req.body[0].long + ') to client. Here are the messages:' + messages);
         res.send(messages);
     });
   },
@@ -180,38 +180,26 @@ module.exports = {
             //   new: true,   // return new doc if one is upserted
             //   upsert: true // insert the document if it does not exist
             // })
-  },
+  },    
 
   getPrivate: function(req, res) {
     console.log('user info!!!: ' + JSON.stringify(req.body));
     // user info!!!: {"latitude":37.7726402,"longitude":-122.40991539999997,"userPhone":5106047443}
     var userPhone = req.body.userPhone;
-    console.log('userphone String: ' + userPhone);
-    console.log(typeof userPhone);
     
-    var locationQuery = module.exports.queryByLocation(req.body.latitude, req.body.longitude, 100);
-    console.log(JSON.stringify(locationQuery));
-    Message
-      .find(locationQuery)
-      .where('isPrivate').equals(true)
-      // .where('5106047443')           // not working!!!!!, looping through on server to find matches
-      // .in(['recipients'])
-      // // // .sort()
-      .exec(function(err, messages) {
-        console.log('private message found!: ' + JSON.stringify(messages));
-        var result = [];
+    // Message
+    //   .find()
+    //   .select({recipients: { $elemMatch: {'phoneNumber': userPhone }}})
+    //   .exec(function(err, messages) {
+    //     console.log('mongoose find: ' + JSON.stringify(messages));
+    //     res.send(messages);
+    //   })
 
-        if (messages) {   // if any privates are found, loop through and find those user is the recipient of
-          for (var i = 0; i < messages.length; i++){
-            if (messages[i].recipients.indexOf(userPhone) !== -1){
-              result.push(messages[i]);
-            }
-          }
-        }
-        
-        console.log('get private Results: ' + result);
-        res.send(result);
-    });
+    Message.find()
+      .where('isPrivate').equals(true)
+      .exec(function(err, results) {
+        console.log('mongoose: ' + results);
+      })
   }
 
 };

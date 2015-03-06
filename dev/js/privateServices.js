@@ -149,6 +149,30 @@ angular.module('thoughtdrop.privateServices', [])
     });
   };
 
+  var calculateDistance = function (lat1, lon1, lat2, lon2) {
+  var R = 6371;
+  var a = 
+     0.5 - Math.cos((lat2 - lat1) * Math.PI / 180)/2 + 
+     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+     (1 - Math.cos((lon2 - lon1) * Math.PI / 180))/2;
+
+    return R * 2 * Math.asin(Math.sqrt(a));
+  };
+
+  var findInRange = function(userPosition, array) {
+    var messagesWithinRange = [];
+    for (var i = 0; i < array.length; i++){
+      var messageLat = array[i].location.coordinates[1];
+      var messageLong = array[i].location.coordinates[0];
+      var messageRad = array[i].radius || 100;
+        //if message between user and each message is less than message's radius, return as a valid message to be viewed
+      if (calculateDistance(userPosition.latitude, userPosition.longitude, messageLat, messageLong, messageRad) <= messageRad) {
+        messagesWithinRange.push(array[i]);
+      }
+    }
+    return messagesWithinRange;
+  };
+
 
   return {
     returnGlobal: returnGlobal,
@@ -158,6 +182,8 @@ angular.module('thoughtdrop.privateServices', [])
     formatContact: formatContact,
     pickContact: pickContact,
     storeImage: storeImage,
-    watchGeoFence: watchGeoFence
+    watchGeoFence: watchGeoFence,
+    findInRange: findInRange,
+    calculateDistance: calculateDistance
   };
 });

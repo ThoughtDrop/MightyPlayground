@@ -19,7 +19,8 @@ var messagesSchema = new mongoose.Schema({
   isPrivate: Boolean,
   recipients: [],
   replies: [],
-  radius: Number
+  radius: Number,
+  _creatorPhoto: String
 });
 
 messagesSchema.index({ location : '2dsphere' });
