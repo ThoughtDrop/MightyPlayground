@@ -36,14 +36,16 @@ angular.module('thoughtdrop.messageDetailController', [])
   };
 
   $scope.message.photo = function() {
-    console.log($scope.message.photo_url);
-    return $http({
-      method: 'GET',
-      url: $scope.message.photo_url,
-    })
-    .then(function(resp) {
-      $scope.message.image = (resp.data);
-    });
+    if ($scope.message.photo_url) {
+      console.log($scope.message.photo_url);
+      return $http({
+        method: 'GET',
+        url: $scope.message.photo_url,
+      })
+      .then(function(resp) {
+        $scope.message.image = (resp.data);
+      });
+    }
   };
 
   $scope.message.photo();
