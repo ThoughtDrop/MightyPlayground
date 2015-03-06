@@ -195,11 +195,24 @@ module.exports = {
     //     res.send(messages);
     //   })
 
-    Message.find()
+    Message
+      .find()
       .where('isPrivate').equals(true)
-      .exec(function(err, results) {
-        console.log('mongoose: ' + results);
-      })
+      .exec(function(err, messages) {
+        console.log('private message found!: ' + JSON.stringify(messages));
+        var result = [];
+
+        if (messages) {   // if any privates are found, loop through and find those user is the recipient of
+          for (var i = 0; i < messages.length; i++){
+            if (messages[i].recipients.indexOf(userPhone) !== -1){
+              result.push(messages[i]);
+            }
+          }
+        }
+        
+        console.log('get private Results: ' + result);
+        res.send(result);
+    });
   }
 
 };
