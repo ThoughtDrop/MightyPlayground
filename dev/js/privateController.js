@@ -144,7 +144,7 @@ angular.module('thoughtdrop.privateController', [])
 
           console.log('$scope.privateMessages51000: ' + JSON.stringify($scope.privateMessages.messages))  
 
-          Private.watchGeoFence(resp);
+          // Private.watchGeoFence(resp); //disabled geofencing for now!!!!
         })
         .catch(function(err) {
           console.log('Error posting message: ' +  JSON.stringify(err));
