@@ -19,14 +19,17 @@
       <div class="item item-text-wrap message-block">
         <a href="#/tab/messages/{{message._id}}">
           <div class = "message-text">
+            <span ng-if="message.photo_url"><i class ='ion-image'></i></span>
             <span>{{message.message}}</span> <br>
             <span class="message-date">{{formatDate(message.created_at)}}</span>
           </div>
         </a>
         <div class = "votes-container">
-          <i class ='ion-chevron-up' ng-click="handleVote(message, 'upVote');"></i> 
+          <i class ='ion-chevron-up' ng-click="handleVote(message, 'upVote');"></i>
+          <br>
           <b>{{message.votes}}</b>
-          <i class ='ion-chevron-down' ng-click="handleVote(message, 'downVote')"></i> 
+          <br>
+          <i class ='ion-chevron-down' ng-click="handleVote(message, 'downVote')"></i>
         </div>
       </div>
 

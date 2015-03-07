@@ -12,7 +12,7 @@ module.exports = function (app, express) {
   app.use(morgan('dev')); 
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  app.use(express.static(__dirname + './../dev'));
+  app.use(express.static(__dirname + './../landingpage'));
 
 
   app.use('/api/auth', authRouter); // use user router for all auth request

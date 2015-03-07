@@ -18,6 +18,7 @@
       <!-- <div class="item item-text-wrap"> -->
 
       <img ng-src="{{message._creatorPhoto}}" /> <b>{{ message._creator }}: </b> {{message.message}}
+      <span ng-if="message.photo_url"><i class ='ion-image'></i></span>
       <!-- <i class ='ion-heart'></i> -->
       <!-- </div> -->
     </ion-item>
