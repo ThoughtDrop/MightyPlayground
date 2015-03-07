@@ -40,8 +40,8 @@ angular.module('thoughtdrop.privateController', [])
     Geolocation.getPosition()
       .then(function(position) {
         
-        // var creator = $localStorage.userInfo.name; //get user's name from local storage
-        var creator = 'p3tuh'; //ONLY FOR TESTING!
+        var creator = $localStorage.userInfo.name; //get user's name from local storage
+        // var creator = 'p3tuh'; //ONLY FOR TESTING!
         
         var photo = Private.returnGlobal();
         // console.log('/////photo object stringified: ' + JSON.stringify(photo));
