@@ -1,14 +1,14 @@
 <ion-view view-title="Public Messages">
   <ion-header-bar align-title="center" class="bar-calm">
-    <span class="header-container">
+    <div class="header-container">
       <div class="sort-buttons">
         <button class ='top-button' ng-click="sortFeed('top')">Top</button>
         <button class ='new-button' ng-click="sortFeed('new')">New</button>
       </div>
-      <div class="drop-button">
+      <div class="compose-button">
         <i class ='ion-compose' ng-click='newMessage()'></i>
       </div>
-   </span> 
+   </div> 
   </ion-header-bar>
   <ion-content>
     <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
@@ -17,17 +17,20 @@
 <!-- Public Messages -->
     <ion-item class="card" ng-repeat="message in message.messagesToDisplay track by $index" type="item-text-wrap">
       <div class="item item-text-wrap message-block">
-      <a href="#/tab/messages/{{message._id}}">
-        <div class = "message-text">
-          <span>{{message.message}}</span>
-          <span class="message-date">{{formatDate(message.created_at)}}</span>
-        </div>
-      </a>
+        <a href="#/tab/messages/{{message._id}}">
+          <div class = "message-text">
+            <span>{{message.message}}</span> <br>
+            <span class="message-date">{{formatDate(message.created_at)}}</span>
+          </div>
+        </a>
         <div class = "votes-container">
           <i class ='ion-chevron-up' ng-click="handleVote(message, 'upVote');"></i> 
           <b>{{message.votes}}</b>
           <i class ='ion-chevron-down' ng-click="handleVote(message, 'downVote')"></i> 
         </div>
+      </div>
+
+        
       <!-- </div> -->
     </ion-item>
   </ion-content>

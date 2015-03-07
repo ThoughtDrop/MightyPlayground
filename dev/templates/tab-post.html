@@ -1,21 +1,37 @@
 <ion-modal-view style="height:15%">
   <ion-view view-title="New Thought">
-    <ion-content class="padding">
+    <ion-content padding="true" scroll=false>
+    <div class="public-post-form">
+
+      <!-- Close Button -->
       <div class="close-button">
         <i class ='ion-close-round'  ng-click="closeMessageBox(0)"></i>
-      </div>
-      <label class="item item-input">
-        <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
+        </div>
+        <div>
+          <p class="posting-directions">
+            <span> 1.Type </span>  <span> 2.Photo (optional)</span>   3.Drop     
+          </p>
+        </div>
+
+        <!-- Camera Button -->
+        <i class= "public-camera-button ion-camera" ng-click="storeImage()"></i>
+        
+        <label class="item item-input public-message-text-label">
+
+          <!-- Message text -->
+          <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
+        </label>  
+
+    </div>
+
+    <!-- Drop Message Button -->
+      <label class="item drop-button">
+        <button class="button button-block button-calm" ng-click="sendMessage()">
+        <div class="drop-pin"><i class="ion-pin"></i></div>
+        <span>DROP</span>
+        </button>
       </label>
-      <!-- <label class="item filecontainer button button-block button-dark" for='file' data-tap-disabled="true"> <i class="ion-camera"></i> -->
-      <!-- </label> -->
-      <!-- <label class="item"> -->
-      <button class="button button-block button-calm" ng-click="storeImage()">Take pic!</button>
-        <!-- <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px"/> -->
-      </label>
-      <label class="item">
-        <button class="button button-block button-calm" ng-click="sendMessage()">Drop!</button>
-      </label>
+
     </ion-content>
   </ion-view>
 </ion-modal-view> 

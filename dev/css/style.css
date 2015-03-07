@@ -36,7 +36,6 @@
   margin: 0 auto;
 }
 
-
 /*Add map image to login background*/
 .scroll-content.loginPage {
   position: absolute;
@@ -63,10 +62,10 @@
   margin-top: 6%
 }
 
-/* Main Public Message Feed Page Styling */
-/*Prevents pull refresh from sticking out into page*/
+/* Main Public & Private Message Feed Page Styling */
 .text-pulling {
-  margin-bottom: 2%; 
+/*Prevents pull refresh from sticking out into page*/
+  margin-bottom: 2.5%; 
 }
 
 .message-block a {
@@ -96,7 +95,7 @@
   margin-left: .5%;
 }
 
-.drop-button {
+.compose-button {
   /*Alignment*/
   text-align: right;
   width: 15%;
@@ -104,43 +103,66 @@
   margin-right: 2.5%;
 
 }
-.drop-button .ion-compose {
+.compose-button .ion-compose {
   /*Button Styling*/
   border: none;
   color: white;
   font-size: 2.5em; 
 }
 
-.message-date {
-  font-size: .5em;
+.text-pulling {
+/*Prevents pull refresh from sticking out into page*/
+  margin-bottom: 2.5%; 
 }
 
-.message-text {
-  /*Horizontal Centering*/
-  width:75%;
-  text-align: left;
-  float:left;
-  /*Vertical Centering- NOT WORKING!*/
-  margin-top: auto;
-  margin-bottom: auto;
-  vertical-align: middle;
+.card {
+  min-height: 80px;
+}
 
-  /*Message Text Styling*/
-  font-size: 1em;
-  font-family: helvetica;
-  font-weight: 500;
-  height:100%;
+.message-block {
+  min-height: 80px;
+}
+
+.message-block a {
+  color: #0a9ec7;
+  text-decoration: none;
+  width: 80%;
 }
 
 .votes-container {
-position: absolute;
-width: 5%;
-text-align: center;
-float: right;
-right: 0;
-top: 50%;
-margin-top: -16px;
+ width: 10px;
+ float: right;
+ text-align: center;
+ margin-right: -10px;
+ color: #0a9ec7
 }
+
+
+.message-text {
+  width: 100%;
+  float: left;
+  height: 80px;
+  margin-left: -20px;
+  /*font-size: 1em;*/
+  font-family: helvetica;
+  font-weight: 500;
+}
+
+  /*Vertical Centering- NOT WORKING!*/
+ /* margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;*/
+
+/*.votes-container {
+  position: absolute;
+  width: 5%;
+  text-align: center;
+  float: right;
+  right: 0;
+  top: 50%;
+  margin-top: -16px;
+}
+*/
 
 .ion-plus-round {
   padding: 4% 7% 4% 4%;
@@ -154,9 +176,82 @@ margin-top: -16px;
   margin: auto;
 }
 
+.message-date {
+  font-size: .5em;
+}
+
 /*Post Form for Public Messages*/
+
+.public-post-form {
+  margin-top: 4%;
+}
+.public-post-form p {
+  margin-top: 5%;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+
 .close-button .ion-close-round {
-  font-size: 2em;
+  font-size: 1.6em;
+  color: #0a9ec7;
+  padding: 3% 3% 3% 1%;
+}
+.public-post-form p {
+  margin-top: 5%;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.posting-directions span {
+  margin-right: 2%;
+}
+
+.public-camera-button {
+  position: absolute;
+  font-size: 3em;
+  color: #0a9ec7;
+  margin-right: 5%;
+  z-index: 1000;
+  margin-left: 2%;
+  margin-top: -1%;
+  padding: 2% 2% 2% 2%;
+}
+.public-message-text-label input {
+  margin-left: 18%;
+  font-size: 3em;
+  color: #0a9ec7;
+  margin-right: 5%;
+}
+
+.drop-button button {
+  width: 80%;
+  margin: auto;
+}
+
+.drop-pin {
+  margin-right: 0 2% 0 0;
+  margin-bottom: -10%;
+}
+.drop-pin .ion-pin {
+  font-size: 1.5em;
+}
+
+/* Main Public Message Feed Page Styling */
+.compose-button-private {
+  /*Alignment*/
+  text-align: right;
+  width: 15%;
+  float:right;
+  margin-right: 2.5%;
+}
+
+.compose-button-private .ion-compose {
+  /*Button Styling*/
+  border: none;
+  color: white;
+  font-size: 2.5em; 
+  padding: 4% 3% 4% 8%;
 }
 
 /* Message Detail Page Styling */
@@ -245,16 +340,15 @@ margin-top: -16px;
   top:70px;left:120px;
   z-index:1;
   /*fix offset when needed*/
-
-
 }
 
 /*currently copy and paste from createmap.html*/
 #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
+  height: 100%;
+  margin: 0px;
+  padding: 0px
+}
+
 .containerMap {
   position: relative;
 /*  width: 100%;

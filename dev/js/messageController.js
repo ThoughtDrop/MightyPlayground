@@ -60,7 +60,6 @@ angular.module('thoughtdrop.messageController', [])
     }); 
   };
 
-
   $scope.hideLoading = function() {
     $scope.loadingIndicator.hide();
   };
