@@ -63,16 +63,6 @@
 }
 
 /* Main Public & Private Message Feed Page Styling */
-.text-pulling {
-/*Prevents pull refresh from sticking out into page*/
-  margin-bottom: 2.5%; 
-}
-
-.message-block a {
-  color: #0060B6;
-  text-decoration: none;
-}
-
 .header-container {
   width:100%;
 }
@@ -110,36 +100,59 @@
   font-size: 2.5em; 
 }
 
-.message-date {
-  font-size: .5em;
+.text-pulling {
+/*Prevents pull refresh from sticking out into page*/
+  margin-bottom: 2.5%; 
 }
 
-.message-text {
-  /*Horizontal Centering*/
-  width:75%;
-  text-align: left;
-  float:left;
-  /*Vertical Centering- NOT WORKING!*/
-  margin-top: auto;
-  margin-bottom: auto;
-  vertical-align: middle;
+.card {
+  min-height: 80px;
+}
 
-  /*Message Text Styling*/
-  font-size: 1em;
-  font-family: helvetica;
-  font-weight: 500;
-  height:100%;
+.message-block {
+  min-height: 80px;
+}
+
+.message-block a {
+  color: #0a9ec7;
+  text-decoration: none;
+  width: 80%;
 }
 
 .votes-container {
-position: absolute;
-width: 5%;
-text-align: center;
-float: right;
-right: 0;
-top: 50%;
-margin-top: -16px;
+ width: 10px;
+ float: right;
+ text-align: center;
+ margin-right: -10px;
+ color: #0a9ec7
 }
+
+
+.message-text {
+  width: 100%;
+  float: left;
+  height: 80px;
+  margin-left: -20px;
+  /*font-size: 1em;*/
+  font-family: helvetica;
+  font-weight: 500;
+}
+
+  /*Vertical Centering- NOT WORKING!*/
+ /* margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;*/
+
+/*.votes-container {
+  position: absolute;
+  width: 5%;
+  text-align: center;
+  float: right;
+  right: 0;
+  top: 50%;
+  margin-top: -16px;
+}
+*/
 
 .ion-plus-round {
   padding: 4% 7% 4% 4%;
@@ -151,6 +164,10 @@ margin-top: -16px;
   padding: 4% 4% 4% 7%;
   font-size: 1.3em;
   margin: auto;
+}
+
+.message-date {
+  font-size: .5em;
 }
 
 /*Post Form for Public Messages*/
@@ -214,6 +231,8 @@ margin-top: -16px;
   border: none;
   color: white;
   font-size: 2.5em; 
+  padding: 4% 3% 4% 8%;
+
 }
 
 /* Message Detail Page Styling */
@@ -302,16 +321,15 @@ margin-top: -16px;
   top:70px;left:120px;
   z-index:1;
   /*fix offset when needed*/
-
-
 }
 
 /*currently copy and paste from createmap.html*/
 #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
+  height: 100%;
+  margin: 0px;
+  padding: 0px
+}
+
 .containerMap {
   position: relative;
 /*  width: 100%;
