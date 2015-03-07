@@ -108,6 +108,7 @@
   border: none;
   color: white;
   font-size: 2.5em; 
+  padding: 4% 3% 4% 8%;
 }
 
 .text-pulling {
@@ -125,16 +126,16 @@
 
 .message-block a {
   color: #0a9ec7;
-  text-decoration: none;
+  text-decoration: none;  
   width: 80%;
 }
 
 .votes-container {
- width: 10px;
+ width: 30px;
  float: right;
  text-align: center;
  margin-right: -10px;
- color: #0a9ec7
+ color: #0a9ec7;
 }
 
 
@@ -205,6 +206,7 @@
 
 .posting-directions span {
   margin-right: 2%;
+  font-size: 1em;
 }
 
 .public-camera-button {
@@ -214,12 +216,11 @@
   margin-right: 5%;
   z-index: 1000;
   margin-left: 2%;
-  margin-top: -1%;
+  margin-top: -1.6%;
   padding: 2% 2% 2% 2%;
 }
 .public-message-text-label input {
   margin-left: 18%;
-  font-size: 3em;
   color: #0a9ec7;
   margin-right: 5%;
 }
