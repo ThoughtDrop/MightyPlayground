@@ -7,15 +7,9 @@
       <label class="item item-input">
         <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144">
       </label>
-      <label class="item">
-        <button class="button button-block button-dark" ng-click="storeImage()">Take a Picture!!!!</button>
-      </label>
-      <label class="item">
-        <button class="button button-block button-dark" ng-click="pickContact()">Contacts</button>
-      </label>
-      <label class="item">
-        <button class="button button-block button-dark" ng-click="sendMessage()">Next</button>
-      </label>
+        <button class="button button-block button-calm" ng-click="addImage()">Take pic!</button>
+        <button class="button button-block button-calm" ng-click="pickContact()">Contacts</button>
+        <button class="button button-block button-calm" ng-click="sendMessage()">Next</button>
      <div class="list">
 
          <a class="item item-thumbnail-left" ng-repeat="contact in data.selectedContacts" on-swipe-left="removeContact({{contact}})">

@@ -63,6 +63,16 @@
 }
 
 /* Main Public & Private Message Feed Page Styling */
+.text-pulling {
+/*Prevents pull refresh from sticking out into page*/
+  margin-bottom: 2.5%; 
+}
+
+.message-block a {
+  color: #0060B6;
+  text-decoration: none;
+}
+
 .header-container {
   width:100%;
 }
@@ -171,6 +181,7 @@
 }
 
 /*Post Form for Public Messages*/
+
 .public-post-form {
   margin-top: 4%;
 }
@@ -180,10 +191,16 @@
   text-align: center;
 }
 
+
 .close-button .ion-close-round {
   font-size: 1.6em;
   color: #0a9ec7;
   padding: 3% 3% 3% 1%;
+}
+.public-post-form p {
+  margin-top: 5%;
+  font-size: 1.5em;
+  text-align: center;
 }
 
 .posting-directions span {
@@ -202,6 +219,9 @@
 }
 .public-message-text-label input {
   margin-left: 18%;
+  font-size: 3em;
+  color: #0a9ec7;
+  margin-right: 5%;
 }
 
 .drop-button button {
@@ -232,7 +252,6 @@
   color: white;
   font-size: 2.5em; 
   padding: 4% 3% 4% 8%;
-
 }
 
 /* Message Detail Page Styling */
