@@ -49,6 +49,7 @@ angular.module('thoughtdrop.privateServices', [])
   };
 
   var saveMessage = function(data, dist) {
+    console.log(JSON.stringify(data));
     messageStorage.location = { coordinates: [ data.lng(), data.lat()], type: 'Point' };
     messageStorage.radius = dist;
 
@@ -69,10 +70,25 @@ angular.module('thoughtdrop.privateServices', [])
         .then(function(resp) {
           delete messageStorage.imageData;
           delete messageStorage.signedUrl;
-          console.log(JSON.stringify(messageStrorage));
+          console.log(JSON.stringify(messageStorage));
           console.log('private image saved');
+          return $http({
+            method: 'POST',
+            url:  //base
+            '/api/messages/private',
+            data: JSON.stringify(messageStorage)
+          })
+          .then(function (resp) {
+            console.log("private message saved");
+            $state.go('tab.privateMessages');
+          })
+          .catch(function (err) {
+            console.log('ERROR!!!!: ' + err);
+          })
         });
     }
+    
+    console.log('out of first1111');
     return $http({
       method: 'POST',
       url:  //base
