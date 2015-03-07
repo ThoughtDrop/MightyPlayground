@@ -280,6 +280,7 @@ return factory;
       })
       .then(function(resp) {
         console.log('message saved successfully!');
+        globalImage = {};
         //call to DB to get top and new streams, then cache them
         CachePublicMessages.cacheMessages('nearby', message.coordinates, 'new', callback);
         CachePublicMessages.cacheMessages('nearby', message.coordinates, 'top', callback);
