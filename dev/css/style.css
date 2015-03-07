@@ -242,7 +242,7 @@ margin-top: -16px;
   /*url of the marker*/
   /*background:url(../img/logo_pin.png) no-repeat;*/
   /*center the marker*/
-  top:20%;left:5%;
+  top:70px;left:120px;
   z-index:1;
   /*fix offset when needed*/
 
@@ -282,16 +282,16 @@ margin-top: -16px;
 #pac-input {
   background-color: #fff;
   font-family: Roboto;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
+  margin-left: 0px;
+  padding: 0 11px 0 11px;
   text-overflow: ellipsis;
   height: 40px;
-  width: 350px;
+  width: 250px;
 }
 
-h6 {
+h4 {
   color: red;
 }
 

@@ -19,36 +19,6 @@ angular.module('thoughtdrop.mapController', [])
     }
 
     var map = new google.maps.Map(map_canvas, map_options)
-    //WORKS!!!!
-    // setInterval(function(){
-    //   console.log(map.getCenter());
-    // }, 5000);
-    //************** CLICK LISTENER ****************//
-    // google.maps.event.addListener(map, 'click', function (event) {
-    //     var latitude = event.latLng.lat();
-    //     var longitude = event.latLng.lng();
-    // });=
-
-  //************** GEO FENCE OVERLAY *****************//
-  // var circle = {
-  //   strokeColor: '#3371F4',
-  //   strokeOpacity: 0.8,
-  //   strokeWeight: 2,
-  //   fillColor: '#94EAFD',
-  //   fillOpacity: 0.50,
-  //   map: map,
-  //   center: map.getCenter(), //center needs to be dynamic Angulardatabinding. 
-  //   radius: 100
-
-  // };
-  // cityCircle = new google.maps.Circle(circle);
-
-  // var myTitle = document.createElement('h1');
-  // myTitle.style.color = 'red';
-  // myTitle.innerHTML = 'coverage: {{coverage}}'+ "m";
-  // var myTextDiv = document.createElement('div');
-  // myTextDiv.appendChild(myTitle);
-  // map.controls[google.maps.ControlPosition.TOP_LEFT].push(myTextDiv);
 
   //************** SEARCH BAR FUNCTIONALITY ****************//
     var input = (document.getElementById('pac-input'));
@@ -98,11 +68,8 @@ angular.module('thoughtdrop.mapController', [])
       );
       var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
       return newCenter;
-      //map.setCenter(newCenter);
     }// offsetCenter
 
-
-    console.log('center'+ map.getCenter());
     // convert LNG/LAT into distance
     function measure(lat1, lon1, lat2, lon2){  // generally used geo measurement function
         var R = 6378.137; // Radius of earth in KM
@@ -115,6 +82,7 @@ angular.module('thoughtdrop.mapController', [])
         var d = R * c;
         return d * 1000; // meters
     }
+
     function getMeters(){
       var center = map.getCenter();
       console.log("got here");
@@ -126,24 +94,39 @@ angular.module('thoughtdrop.mapController', [])
 
 
     $scope.clearText = function(){
-       getMeters();
-       // var center = map.getCenter();
-       // var offCenter = offsetCenter(map.getCenter(), 53, 0);
-       // var distance = measure(center.lat(), center.lng(), offCenter.lat(), offCenter.lng());
-       // console.log('distance: '+ distance);
-
       document.getElementById('pac-input').value = '';
     }
 
-
+    // meters are captures from getMeters and rounded
+    var meterArr = { 
+      0: 6365453,
+      1: 3256359,
+      2: 1636567,
+      3: 819308,
+      4: 409782,
+      5: 204907,
+      6: 102455,
+      7: 51228,
+      8: 25614,
+      9: 12807,
+      10: 6403,
+      11: 3202,
+      12: 1601,
+      13: 800,
+      14: 400,
+      15: 200,
+      16: 100,
+      17: 50,
+      18: 25,
+      19: 13,
+      20: 6,
+      21: 3
+    };
     $scope.coverage = 100;
-    google.maps.event.addListener(map, 'idle', function(){
-      $scope.coverage = getMeters();//offsetCenter(map.getCenter(), 53, 0);
+    google.maps.event.addListener(map, 'zoom_changed', function(){
+      $scope.coverage = meterArr[map.getZoom()];
       $scope.$apply();
     });
-    // $scope.alert = function(){
-    //   alert(map.getCenter());
-    // };
 
     $scope.submit = function(){
       Private.saveMessage(map.getCenter(), $scope.coverage);
@@ -179,30 +162,19 @@ angular.module('thoughtdrop.mapController', [])
       }
     });
   }
-    //TODO: check logic to see if latt and long exist, if not check. 
-  if(!!Geolocation.lastPosition){
-    var coordinates = Geolocation.lastPosition.coords;
-    global_lat = coordinates.latitude;
-    global_lon = coordinates.longitude;
-    initialize();
-  } else {
-      Geolocation.getPosition().then(function(position){
-        var coordinates = position.coords;
-        global_lat = coordinates.latitude;
-        global_lon = coordinates.longitude;
-        initialize();
-      });  
-  }
+
+    if(!!Geolocation.lastPosition){
+      var coordinates = Geolocation.lastPosition.coords;
+      global_lat = coordinates.latitude;
+      global_lon = coordinates.longitude;
+      initialize();
+    } else {
+        Geolocation.getPosition().then(function(position){
+          var coordinates = position.coords;
+          global_lat = coordinates.latitude;
+          global_lon = coordinates.longitude;
+          initialize();
+        });  
+    }
   
-
-
-  // map title validity checker. 
-  // function submitform () {
-  //   var f = document.getElementsByTagName('form')[0];
-  //   if(f.checkValidity()) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // 
   });
