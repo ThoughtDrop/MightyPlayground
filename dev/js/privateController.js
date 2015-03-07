@@ -23,16 +23,6 @@ angular.module('thoughtdrop.privateController', [])
     $scope.page = page;
   };
 
-  $scope.storeImage = function() {
-    Private.storeImage()
-    .then(function(resp) {
-      console.log('success: ' + resp);
-    })
-    .catch(function(err) {
-      console.log(err) ;
-    });
-  };
-
   $scope.sendMessage = function() {
     console.log('sendMessage!');
     // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));

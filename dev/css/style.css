@@ -63,6 +63,7 @@
 }
 
 /* Main Public & Private Message Feed Page Styling */
+
 .text-pulling {
 /*Prevents pull refresh from sticking out into page*/
   margin-bottom: 2.5%; 
@@ -108,7 +109,7 @@
   border: none;
   color: white;
   font-size: 2.5em; 
-  padding: 4% 3% 4% 8%;
+  padding: 5% 5% 5% 8%;
 }
 
 .text-pulling {
@@ -181,35 +182,28 @@
   font-size: .5em;
 }
 
-/*Post Form for Public Messages*/
+/*Post Form for Public and Private Messages*/
 
-.public-post-form {
+.post-form {
   margin-top: 4%;
 }
-.public-post-form p {
+.post-form p {
   margin-top: 5%;
-  font-size: 1.3em;
+  font-size: .9em;
   text-align: center;
 }
-
 
 .close-button .ion-close-round {
   font-size: 1.6em;
   color: #0a9ec7;
-  padding: 3% 3% 3% 1%;
-}
-.public-post-form p {
-  margin-top: 5%;
-  font-size: 1.5em;
-  text-align: center;
+  padding: 10% 10% 10% 1%;
 }
 
 .posting-directions span {
   margin-right: 2%;
-  font-size: 1em;
 }
 
-.public-camera-button {
+.camera-button {
   position: absolute;
   font-size: 3em;
   color: #0a9ec7;
@@ -219,7 +213,7 @@
   margin-top: -1.6%;
   padding: 2% 2% 2% 2%;
 }
-.public-message-text-label input {
+.message-text-label input {
   margin-left: 18%;
   color: #0a9ec7;
   margin-right: 5%;
@@ -238,22 +232,6 @@
   font-size: 1.5em;
 }
 
-/* Main Public Message Feed Page Styling */
-.compose-button-private {
-  /*Alignment*/
-  text-align: right;
-  width: 15%;
-  float:right;
-  margin-right: 2.5%;
-}
-
-.compose-button-private .ion-compose {
-  /*Button Styling*/
-  border: none;
-  color: white;
-  font-size: 2.5em; 
-  padding: 4% 3% 4% 8%;
-}
 
 /* Message Detail Page Styling */
 
