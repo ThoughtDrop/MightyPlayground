@@ -1,15 +1,60 @@
 <ion-modal-view style="height:15%">
   <ion-view view-title="New Thought">
     <ion-content class="padding">
-      <div class="close-button">
+     <!--  <div class="close-button">
         <i class ='ion-close-round' ng-click="closeMessageBox(0)"></i> 
       </div>
       <label class="item item-input">
         <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144">
       </label>
         <button class="button button-block button-calm" ng-click="addImage()">Take pic!</button>
-        <button class="button button-block button-calm" ng-click="pickContact()">Contacts</button>
-        <button class="button button-block button-calm" ng-click="sendMessage()">Next</button>
+        <button class="button button-block button-calm" ng-click="sendMessage()">Next</button> -->
+
+        <div class="public-post-form">
+
+          <!-- Close Button -->
+          <div class="close-button">
+            <i class ='ion-close-round'  ng-click="closeMessageBox(0)"></i>
+            </div>
+            <div>
+              <p class="posting-directions">
+                <span> 1.Snap Photo </span>  <span> 2.Type Message</span>   3.Pick Location    
+              </p>
+            </div>
+
+            <!-- Camera Button -->
+            <i class= "public-camera-button ion-camera" ng-click="storeImage()"></i>
+            
+            <label class="item item-input public-message-text-label">
+
+              <!-- Message text -->
+              <input type="text" ng-model="message.text" placeholder="What's on your mind?" maxlength="144" autofocus>
+            </label>  
+
+        </div>
+
+        <!-- Drop Message Button -->
+          <label class="item drop-button">
+            <button class="button button-block button-calm" ng-click="sendMessage()">
+            <div class="drop-pin"><i class="ion-pin"></i></div>
+            <span>Pick Location</span>
+            </button>
+          </label>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
      <div class="list">
 
          <a class="item item-thumbnail-left" ng-repeat="contact in data.selectedContacts" on-swipe-left="removeContact({{contact}})">
