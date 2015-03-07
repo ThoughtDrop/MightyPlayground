@@ -9,7 +9,7 @@ angular.module('thoughtdrop.privateController', [])
   $scope.message = {};
   $scope.message.text = '';
   $scope.page = 'new';
-  $scope.recipients = [5106047443]; //number hardcoded for testing reasons
+  $scope.recipients = []; //number hardcoded for testing reasons
   $scope.privateMessages = {};
   $scope.data = {selectedContacts: []};
 
@@ -97,13 +97,15 @@ angular.module('thoughtdrop.privateController', [])
 
           if (number.length > 10) {  
             var sliced = parseInt(number.slice(1));
-            var phoneNumber = {phoneNumber: sliced};
-            $scope.recipients.push(phoneNumber);
+            // var phoneNumber = {phoneNumber: sliced}; //chnage to store as obj
+            // $scope.recipients.push(phoneNumber); //change to store as obj
+            $scope.recipients.push(sliced)
             console.log(JSON.stringify($scope.recipients));
           } else {
             var parsed = parseInt(number);
-            var phoneNumber = {phoneNumber: parsed};
-            $scope.recipients.push(phoneNumber);
+            // var phoneNumber = {phoneNumber: parsed}; //chnage to store as obj
+            // $scope.recipients.push(phoneNumber); //change to store as obj
+            $scope.recipients.push(parsed);
             console.log(JSON.stringify($scope.recipients));
           }
 
