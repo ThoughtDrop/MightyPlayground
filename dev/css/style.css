@@ -188,25 +188,18 @@
 }
 .public-post-form p {
   margin-top: 5%;
-  font-size: 1.3em;
+  font-size: .9em;
   text-align: center;
 }
-
 
 .close-button .ion-close-round {
   font-size: 1.6em;
   color: #0a9ec7;
   padding: 3% 3% 3% 1%;
 }
-.public-post-form p {
-  margin-top: 5%;
-  font-size: 1.5em;
-  text-align: center;
-}
 
 .posting-directions span {
   margin-right: 2%;
-  font-size: 1em;
 }
 
 .public-camera-button {
