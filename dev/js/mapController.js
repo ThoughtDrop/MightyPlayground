@@ -177,4 +177,9 @@ angular.module('thoughtdrop.mapController', [])
         });  
     }
   
+    $scope.$on("$destroy", function() {
+        if (timer) {
+            $timeout.cancel(timer);
+        }
+    });
   });
