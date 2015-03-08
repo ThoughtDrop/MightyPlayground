@@ -23,6 +23,10 @@ angular.module('thoughtdrop.privateController', [])
     $scope.page = page;
   };
 
+  $scope.storeImage = function() {
+    Private.storeImage();
+  };
+
   $scope.sendMessage = function() {
     console.log('sendMessage!');
     // console.log('userInfo: ' + JSON.stringify($localStorage.userInfo));
@@ -149,11 +153,6 @@ angular.module('thoughtdrop.privateController', [])
     $scope.$broadcast('scroll.refreshComplete');
     // $scope.apply();
   };
-
-  $scope.storeImage = function() {
-    Private.storeImage();
-  };
-
 
   $scope.removeContact = function(contact) {
     console.log(contact);

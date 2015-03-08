@@ -26,6 +26,11 @@
   width: 300px;
 }
 
+.new-button {
+  margin-right: 20px
+}
+
+
 /* Phone number Page Styling */
 .bar {
   position: relative;
@@ -34,6 +39,11 @@
 .phone-number-title {
   width: 50%;
   margin: 0 auto;
+}
+
+.message-detail-title {
+  margin-top: 15px; 
+  font-size: 24px;
 }
 
 /*Add map image to login background*/
@@ -84,11 +94,11 @@
 }
 
 .sort-buttons button {
-  border:1.5px solid transparent;
+  border:2.0px solid transparent;
   border-color: white;
-  background-color: Transparent;
+  background-color: transparent;
   color: white;
-  font-size: 1.5em;
+  font-size: 1.25em;
 
 }
 
