@@ -119,7 +119,7 @@
   border: none;
   color: white;
   font-size: 2.5em; 
-  padding: 5% 5% 5% 8%;
+  padding: 10% 30% 10% 30%;
 }
 
 .text-pulling {
@@ -215,7 +215,7 @@
 .close-button .ion-close-round {
   font-size: 1.6em;
   color: #0a9ec7;
-  padding: 10% 10% 10% 1%;
+  padding: 10% 10% 5% 4%;
 }
 
 .posting-directions span {
