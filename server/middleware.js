@@ -12,7 +12,8 @@ module.exports = function (app, express) {
   app.use(morgan('dev')); 
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  app.use(express.static(__dirname + './../dev'));
+
+  app.use(express.static(__dirname + './../landing_page'));
 
   app.use('/api/auth', authRouter); // use user router for all auth request
   app.use('/api/messages', messageRouter); // use message router for all message requests
