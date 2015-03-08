@@ -132,11 +132,12 @@
 }
 
 .votes-container {
- width: 30px;
+ width: 21px;
  float: right;
- text-align: center;
+ text-align: right;
  margin-right: -10px;
  color: #0a9ec7;
+ margin-bottom: .8em;
 }
 
 
@@ -176,6 +177,14 @@
   padding: 4% 4% 4% 7%;
   font-size: 1.3em;
   margin: auto;
+}
+
+.ion-chevron-up {
+  font-size: 1.8em;
+}
+
+.ion-chevron-down {
+  font-size: 1.8em;
 }
 
 .message-date {
