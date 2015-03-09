@@ -201,6 +201,10 @@
   font-size: .5em;
 }
 
+.image-thumbnail {
+  margin-right: 4px
+}
+
 /*Post Form for Public and Private Messages*/
 
 .post-form {
