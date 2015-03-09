@@ -20,7 +20,7 @@
           <div class = "message-text">
             <img ng-src="{{message._creatorPhoto}}" /> 
             <b> {{ message._creator }}: </b> 
-            <span ng-if="message.photo_url"><i class ='ion-image'></i></span>
+            <span class="image-thumbnail" ng-if="message.photo_url"><i class ='ion-image'></i></span>
             {{message.message}}
           </div>  
         </a>
