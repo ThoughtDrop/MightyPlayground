@@ -79,11 +79,6 @@
   margin-bottom: 2.5%; 
 }
 
-.message-block a {
-  color: #0060B6;
-  text-decoration: none;
-}
-
 .header-container {
   width:100%;
 }
@@ -265,6 +260,7 @@
 
 .message-detail-text {
   text-align: center;
+  /*color: #0060B6;*/
 }
 .message-detail-image {
   width: 100%;
