@@ -79,11 +79,6 @@
   margin-bottom: 2.5%; 
 }
 
-.message-block a {
-  color: #0060B6;
-  text-decoration: none;
-}
-
 .header-container {
   width:100%;
 }
@@ -263,9 +258,19 @@
   margin:0 auto 0 auto;
 }
 
+.message-detail-text {
+  text-align: center;
+  /*color: #0060B6;*/
+}
 .message-detail-image {
-  display: block;
-  margin-left: -15%;
+  width: 100%;
+}
+
+.message-detail-image img {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px
 }
 
 /*.message-detail-header {
@@ -279,11 +284,6 @@
 
 .message-detail-reply-input-label {
   width:80%;
-}
-
-.parent {
-  margin:50px; 
-  text-align:center;
 }
 
 .hidden { 

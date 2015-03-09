@@ -7,12 +7,10 @@
   </div>
   </ion-header-bar>
   <ion-content has-header="true" padding="true">
-    <div class = 'parent'>
-      <h3>{{message.message}}</h3>
+      <h3 class="message-detail-text">{{message.message}}</h3>
       <div class = 'message-detail-image'>
       <img ng-src="{{message.image}}"/>
       </div>
-    </div>
     <div class="card" ng-repeat="reply in message.replies track by $index">
       <div class="item item-text-wrap">
         {{reply}}
