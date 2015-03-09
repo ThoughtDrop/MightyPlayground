@@ -14,13 +14,17 @@
    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
     </ion-refresher>
     
-    <ion-item class="card" ng-repeat="message in privateMessages.messages" href="#/tab/privateMessages/{{message._id}}">
-      <!-- <div class="item item-text-wrap"> -->
-
-      <img ng-src="{{message._creatorPhoto}}" /> <b>{{ message._creator }}: </b> {{message.message}}
-      <span ng-if="message.photo_url"><i class ='ion-image'></i></span>
-      <!-- <i class ='ion-heart'></i> -->
-      <!-- </div> -->
+    <ion-item class="card" ng-repeat="message in privateMessages.messages">
+      <div class="item item-text-wrap message-block">
+        <a href="#/tab/privateMessages/{{message._id}}">
+          <div class = "message-text">
+            <img ng-src="{{message._creatorPhoto}}" /> 
+            <b> {{ message._creator }}: </b> 
+            <span ng-if="message.photo_url"><i class ='ion-image'></i></span>
+            {{message.message}}
+          </div>  
+        </a>
+      </div>
     </ion-item>
   </ion-content>
 </ion-view>
