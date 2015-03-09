@@ -9,7 +9,7 @@ angular.module('thoughtdrop.privateServices', [])
     console.log('store image activated');
     var options = {
       destinationType : 0,
-      sourceType : 1,
+      sourceType : 0,
       allowEdit : true,
       encodingType: 0,
       quality: 30,
