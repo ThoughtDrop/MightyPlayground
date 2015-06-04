@@ -14,6 +14,7 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
 
   app.use(express.static(__dirname + './../landing_page'));
+  app.use('/app', express.static(__dirname + './../dev'));
 
   app.use('/api/auth', authRouter); // use user router for all auth request
   app.use('/api/messages', messageRouter); // use message router for all message requests

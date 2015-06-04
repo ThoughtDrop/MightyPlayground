@@ -48,16 +48,17 @@
 
 /*Add map image to login background*/
 .scroll-content.loginPage {
-  position: absolute;
-  background-image: url('../img/map.png');
+  background: url('../img/map.png');
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
 /*Create the overlay on the front page*/
 .overLay {
-  z-index: 1;
   padding: 2em 0 3em 0;
+  z-index: 9999;
   background:rgba(0,0,10,0.55);
+  background-size:100% 100%;
 }
 
 .overLay .logo {
