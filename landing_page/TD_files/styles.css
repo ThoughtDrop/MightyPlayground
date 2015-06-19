@@ -668,8 +668,9 @@ object {
 .team {
     padding-top: 10px;
     padding-bottom: 10px;
-    border-radius: 100%;
-    width: 90%;
+    border-radius: 50%;
+    height: 200px;
+    width: 100%;
 }
 
 .bio {
